@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/recursos/template/template.xhtml">
+
+	<ui:define name="tituloPagina">
+		 Início
+	</ui:define>
+	<ui:define name="tituloPrincipal">
+		<i class="fa fa-home"> </i> Início</ui:define>
+	<ui:define name="tituloSecundario"></ui:define>
+
+	<ui:define name="botoesAcao"></ui:define>
+
+	<ui:insert name="eventos">
+
+		<f:metadata>
+
+			<f:event listener="#{loginBean.validaPagina('Adm')}"
+				type="preRenderView" />
+				
+			<f:event listener="#{loginBean.validaAdm()}" type="preRenderView" />
+
+		</f:metadata>
+
+	</ui:insert>
+
+	<ui:define name="conteudo">
+
+		<h:form>
+
+			<p:panel header="Gerenciar">
+
+				<p:tabView>
+
+					<p:tab title="Gerenciar Usuários">
+
+						<p:dataTable
+							value="#{usuarioEfikaBean.listarUsuarioEfikaAdm(true)}"
+							var="userAdm" style="text-align: center;" emptyMessage="Não há usuários registrados">
+
+							<f:facet name="header">Usuários Adm</f:facet>
+
+							<p:column headerText="Login">
+
+								<h:outputText value="#{userAdm.login}" />
+
+							</p:column>
+
+							<p:column headerText="Ativo">
+
+								<h:outputText value="Ativo" rendered="#{userAdm.ativo}" />
+								<h:outputText value="Inativo" rendered="#{!userAdm.ativo}" />
+
+							</p:column>
+
+							<p:column headerText="Administrador">
+
+								<h:outputText value="Sim" rendered="#{userAdm.adm}" />
+								<h:outputText value="Não" rendered="#{!userAdm.adm}" />
+
+							</p:column>
+
+						</p:dataTable>
+
+						<br />
+
+						<p:dataTable
+							value="#{usuarioEfikaBean.listarUsuarioEfikaAdm(false)}"
+							var="userNonAdm" style="text-align: center;" emptyMessage="Não há usuários registrados">
+
+							<f:facet name="header">Usuários</f:facet>
+
+							<p:column headerText="Login">
+
+								<h:outputText value="#{userNonAdm.login}" />
+
+							</p:column>
+
+							<p:column headerText="Ativo">
+
+								<h:outputText value="Ativo" rendered="#{userNonAdm.ativo}" />
+								<h:outputText value="Inativo" rendered="#{!userNonAdm.ativo}" />
+
+							</p:column>
+
+							<p:column headerText="Administrador">
+
+								<h:outputText value="Sim" rendered="#{userNonAdm.adm}" />
+								<h:outputText value="Não" rendered="#{!userNonAdm.adm}" />
+
+							</p:column>
+
+						</p:dataTable>
+
+					</p:tab>
+
+					<p:tab title="Comandos Wifi">
+
+						<h:panelGrid columns="2">
+
+							<h:outputText value="Nome do Comando" />
+							<p:inputText value="#{wifiConfigBean.wifiConfig.nomeComando}" />
+
+							<h:outputText value="Comando" />
+							<p:inputText value="#{wifiConfigBean.wifiConfig.comando}" />
+
+							<h:outputText value="Ativo?" />
+							<p:selectBooleanCheckbox
+								value="#{wifiConfigBean.wifiConfig.ativo}" />
+
+							<p:commandButton value="Cadastrar"
+								action="#{wifiConfigBean.cadastrarWifiConfig()}" update="@all" />
+
+						</h:panelGrid>
+
+						<br />
+
+						<p:dataTable value="#{wifiConfigBean.listarWifiConfigAll()}"
+							var="configs">
+
+							<p:column headerText="Nome do comando">
+
+								<h:outputText value="#{configs.nomeComando}" />
+
+							</p:column>
+
+							<p:column headerText="Comando">
+
+								<h:outputText value="#{configs.comando}" />
+
+							</p:column>
+
+							<p:column headerText="Ativo?">
+
+								<h:outputText value="Ativo" rendered="#{configs.ativo}" />
+								<h:outputText value="Inativo" rendered="#{!configs.ativo}" />
+
+							</p:column>
+
+							<p:column headerText="Editar">
+
+
+
+							</p:column>
+
+						</p:dataTable>
+
+					</p:tab>
+
+				</p:tabView>
+
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

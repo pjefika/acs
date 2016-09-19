@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/recursos/template/template.xhtml">
+
+	<ui:define name="tituloPagina">
+		 Devices
+	</ui:define>
+	<ui:define name="tituloPrincipal">
+		<i class="fa fa-cogs"> </i> Devices</ui:define>
+	<ui:define name="tituloSecundario"></ui:define>
+
+	<ui:define name="botoesAcao"></ui:define>
+
+	<ui:insert name="eventos">
+
+		<f:metadata>
+
+			<f:event listener="#{loginBean.validaPagina('')}"
+				type="preRenderView" />
+
+			<f:event listener="#{loginBean.validarLogin()}" type="preRenderView" />
+
+		</f:metadata>
+
+	</ui:insert>
+
+	<ui:define name="conteudo">
+
+		<h:form id="form">
+
+			<p:panel header="Consulta de Devices">
+
+				<h:panelGrid columns="3">
+
+					<h:outputText value="Parametro" />
+					<p:inputText value="#{comando.parameter}" />
+
+					<p:commandButton action="#{comando.listDevices()}"
+						update="dataGridResults formTemplate:msgs" value="Buscar">
+
+						<p:ajaxStatus onstart="PF('loadingDialogInfo').show();"
+							onsuccess="PF('loadingDialogInfo').hide();" />
+
+					</p:commandButton>
+
+				</h:panelGrid>
+
+				<br />
+
+				<p:dataGrid value="#{comando.listaResults}" var="results"
+					columns="3" layout="grid" id="dataGridResults"
+					emptyMessage="Nenhum registro encontrado">
+
+					<p:panel header="#{results.vendor} #{results.model}">
+
+						<h:outputText value="Numero de Serie: " />
+						<h:outputText value="#{results.serialNumber}" />
+						<br />
+
+						<h:outputText value="Mac: " />
+						<h:outputText value="#{results.mac}" />
+						<br />
+
+						<h:outputText value="Designador: " />
+						<h:outputText value="#{results.userKey3}" />
+						<br />
+
+						<h:outputText value="Firmware: " />
+						<h:outputText value="#{results.softwareVersion}" />
+						<br />
+
+						<h:outputText value="Ip: " />
+						<h:outputText value="#{results.ip}" />
+						<br />
+
+						<h:outputText value="Primeiro contato: " />
+						<h:outputText value="#{results.firstContactTimeFormat}" />
+						<br />
+
+						<h:outputText value="Status: " />
+						<h:outputText value="#{comando.DeviceStatus(results.id).status}" />
+						<br />
+
+						<h:outputText value="Class: " />
+						<h:outputText value="Modem"
+							rendered="#{results.classification=='IAD'}" />
+						<h:outputText value="Decoder"
+							rendered="#{results.classification=='STB'}" />
+						<br />
+						<br />
+
+						<p:commandButton value="Abrir" oncomplete="PF('infoEqp').show();"
+							update="@form:dataGridResults:infoEqpShow"
+							action="#{comando.getDeviceInfo(results.id, results.classification)}" />
+
+					</p:panel>
+
+					<p:dialog header="Informações de Equipamento" widgetVar="infoEqp"
+						modal="true" height="500" width="800" minWidth="800"
+						minHeight="500" resizable="false">
+
+						<h:panelGroup id="infoEqpShow">
+
+							<p:commandButton value="Reboot"
+								onclick="PF('resetDevice').show();" />
+
+							<p:commandButton value="Reset de Fabrica"
+								onclick="PF('factoryResetDevice').show();" />
+
+							<p:commandButton value="Equipamentos"
+								action="#{comando.getLanHostsTable()}" update="lanHosts"
+								rendered="#{comando.type.equalsIgnoreCase('IAD')}" />
+
+							<p:commandButton value="Wifi Info"
+								action="#{comando.getWiFiInfo()}"
+								rendered="#{comando.type.equalsIgnoreCase('IAD')}"
+								update="infoWifis" oncomplete="PF('infoWifi').show();" />
+
+							<br />
+							<br />
+
+							<p:dataList value="#{comando.values}" var="valuesInfo"
+								type="definition" emptyMessage="Nenhum registro encontrado">
+
+								<h:panelGrid columns="2"
+									style="width: 100%; text-align: center;">
+
+									<h:outputText value="Serial Number: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.sn}" />
+
+									<h:outputText value="Modelo: " style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.model}" />
+
+									<h:outputText value="Versão do Firmware: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.firmver}" />
+
+									<h:outputText value="Ip Address WAN: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.wanIpAddress}" />
+
+									<h:outputText value="Device Type: " style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.devicetype}" />
+
+									<h:outputText value="Uptime" style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.uptime}" />
+
+								</h:panelGrid>
+
+							</p:dataList>
+
+							<br />
+
+							<p:dataGrid value="#{comando.lanHostHolders}" var="lanHost"
+								columns="2" layout="grid" id="lanHosts"
+								emptyMessage="Nenhum registro encontrado">
+
+								<p:panel header="#{lanHost.hostinst}">
+
+									<h:outputText value="Host Name: " style="font-weight: bold;" />
+									<h:outputText value="#{lanHost.hostname}" />
+									<br />
+
+									<h:outputText value="Status: " style="font-weight: bold;" />
+									<h:outputText value="Ativo" rendered="#{lanHost.status}" />
+									<h:outputText value="Inativo" rendered="#{!lanHost.status}" />
+									<br />
+
+									<h:outputText value="Tipo conexão: " style="font-weight: bold;" />
+									<h:outputText value="#{lanHost.iftype}" />
+									<br />
+
+									<h:outputText value="Mac: " style="font-weight: bold;" />
+									<h:outputText value="#{lanHost.hostmac}" />
+									<br />
+
+									<h:outputText value="Tempo de Conexão: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{lanHost.ltremain}" />
+									<br />
+
+								</p:panel>
+
+							</p:dataGrid>
+
+							<p:dialog header="Informações do Wifi" widgetVar="infoWifi"
+								id="infoWifis" resizable="false" minHeight="200" minWidth="300"
+								height="200" width="300">
+
+								<h:panelGrid columns="2"
+									style="width: 100%; text-align: center;" id="infoWifiGets">
+
+									<h:outputText value="EnableStatus" />
+									<h:outputText value="#{comando.wifiInfoHolder.enableStatus}" />
+
+									<h:outputText value="Channel" />
+									<h:outputText value="#{comando.wifiInfoHolder.channel}" />
+
+									<h:outputText value="Encryption" />
+									<h:outputText value="#{comando.wifiInfoHolder.encryption}" />
+
+									<h:outputText value="SSID" />
+									<h:outputText value="#{comando.wifiInfoHolder.SSID}" />
+
+									<h:outputText value="macAddresses" />
+									<h:outputText value="#{comando.wifiInfoHolder.macAddresses}" />
+
+									<h:outputText value="Authentication" />
+									<h:outputText value="#{comando.wifiInfoHolder.authentication}" />
+
+									<h:outputText value="bytesSent" />
+									<h:outputText value="#{comando.wifiInfoHolder.bytesSent}" />
+
+									<h:outputText value="bytesReceived" />
+									<h:outputText value="#{comando.wifiInfoHolder.bytesReceived}" />
+
+								</h:panelGrid>
+
+								<p:commandButton value="Modificar"
+									onclick="PF('wifiConfigs').show()"
+									oncomplete="PF('infoEqp').hide()" />
+
+							</p:dialog>
+
+						</h:panelGroup>
+
+						<p:dialog header="Reset de Modem" widgetVar="resetDevice"
+							resizable="false" height="60" width="145" minHeight="60"
+							minWidth="145">
+
+							<h:outputText value="Você tem certeza?" />
+
+							<h:panelGrid columns="2">
+
+								<p:commandButton value="Sim" update="formTemplate:msgs"
+									action="#{comando.Reboot()}"
+									oncomplete="PF('resetDevice').hide();" />
+								<p:commandButton value="Não"
+									oncomplete="PF('resetDevice').hide();" />
+
+							</h:panelGrid>
+
+						</p:dialog>
+
+						<p:dialog header="Reset de Fabrica" widgetVar="factoryResetDevice"
+							resizable="false" height="60" width="145" minHeight="60"
+							minWidth="145">
+
+							<h:outputText value="Você tem certeza?" />
+
+							<h:panelGrid columns="2">
+
+								<p:commandButton value="Sim" update="formTemplate:msgs"
+									action="#{comando.factoryReset()}"
+									oncomplete="PF('factoryResetDevice').hide();" />
+								<p:commandButton value="Não"
+									oncomplete="PF('factoryResetDevice').hide();" />
+
+							</h:panelGrid>
+
+						</p:dialog>
+
+					</p:dialog>
+
+					<p:dialog header="Configurar Wifi" widgetVar="wifiConfigs" resizable="false"
+						minHeight="200" minWidth="300" height="200" width="300">
+
+						<h:panelGrid columns="2">
+
+							<h:outputText value="Nome do comando" />
+							<p:selectOneMenu value="#{comando.wifiInput}"
+								converter="omnifaces.SelectItemsConverter">
+
+								<f:selectItems
+									value="#{wifiConfigBean.listarWifiConfigAtivo(true)}"
+									var="configs" itemLabel="#{configs.nomeComando}"
+									itemValue="#{configs.comando}" />
+
+							</p:selectOneMenu>
+
+							<h:outputText value="Valor" />
+							<p:inputText value="#{comando.wifiInputValue}" />
+
+							<p:commandButton value="Modificar"
+								action="#{comando.setWiFiConfig()}" update="@all" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+
+				</p:dataGrid>
+
+				<p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
+					resizable="false" width="260" height="25" minWidth="260"
+					minHeight="25" showEffect="fade" hideEffect="fade">
+
+					<img id="j_idt17:form:j_idt45"
+						src="/Acs/recursos/images/ajax-loader.gif" alt="" />
+
+				</p:dialog>
+
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
