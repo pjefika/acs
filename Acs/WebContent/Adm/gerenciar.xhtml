@@ -22,7 +22,7 @@
 
 			<f:event listener="#{loginBean.validaPagina('Adm')}"
 				type="preRenderView" />
-				
+
 			<f:event listener="#{loginBean.validaAdm()}" type="preRenderView" />
 
 		</f:metadata>
@@ -35,13 +35,14 @@
 
 			<p:panel header="Gerenciar">
 
-				<p:tabView>
+				<p:tabView id="tabview">
 
 					<p:tab title="Gerenciar Usuários">
 
 						<p:dataTable
 							value="#{usuarioEfikaBean.listarUsuarioEfikaAdm(true)}"
-							var="userAdm" style="text-align: center;" emptyMessage="Não há usuários registrados">
+							var="userAdm" style="text-align: center;"
+							emptyMessage="Não há usuários registrados">
 
 							<f:facet name="header">Usuários Adm</f:facet>
 
@@ -65,13 +66,27 @@
 
 							</p:column>
 
+							<p:column headerText="Editar">
+
+								<p:commandButton update="@form:tabview:modificaUsuario"
+									oncomplete="PF('modUser').show();" icon="ui-icon-search"
+									title="Modifica Usuário">
+
+									<f:setPropertyActionListener value="#{userAdm}"
+										target="#{usuarioEfikaBean.usuarioEfika}" />
+
+								</p:commandButton>
+
+							</p:column>
+
 						</p:dataTable>
 
 						<br />
 
 						<p:dataTable
 							value="#{usuarioEfikaBean.listarUsuarioEfikaAdm(false)}"
-							var="userNonAdm" style="text-align: center;" emptyMessage="Não há usuários registrados">
+							var="userNonAdm" style="text-align: center;"
+							emptyMessage="Não há usuários registrados">
 
 							<f:facet name="header">Usuários</f:facet>
 
@@ -95,7 +110,44 @@
 
 							</p:column>
 
+							<p:column headerText="Editar">
+
+								<p:commandButton update="@form:tabview:modificaUsuario"
+									oncomplete="PF('modUser').show();" icon="ui-icon-search"
+									title="Modifica Usuário">
+
+									<f:setPropertyActionListener value="#{userNonAdm}"
+										target="#{usuarioEfikaBean.usuarioEfika}" />
+
+								</p:commandButton>
+
+							</p:column>
+
 						</p:dataTable>
+
+						<p:dialog header="Editar Usuário" widgetVar="modUser" width="300"
+							minWidth="300" height="100" minHeight="100" resizable="false">
+
+							<h:panelGrid id="modificaUsuario" columns="2">
+
+								<h:outputText value="Login: " />
+								<h:outputText value="#{usuarioEfikaBean.usuarioEfika.login} " />
+
+								<h:outputText value="Adm: " />
+								<p:selectBooleanCheckbox
+									value="#{usuarioEfikaBean.usuarioEfika.adm}" />
+
+								<h:outputText value="Ativo: " />
+								<p:selectBooleanCheckbox
+									value="#{usuarioEfikaBean.usuarioEfika.ativo}" />
+
+							</h:panelGrid>
+
+							<p:commandButton value="Modificar"
+								action="#{usuarioEfikaBean.modificarUsuarioEfika()}"
+								update="@all" />
+
+						</p:dialog>
 
 					</p:tab>
 

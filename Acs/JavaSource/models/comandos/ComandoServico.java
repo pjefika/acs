@@ -47,6 +47,8 @@ public class ComandoServico {
 			Gson gson = new Gson();
 
 			ResultsHolder resultsHolder = gson.fromJson(output, ResultsHolder.class);
+			
+			clientResponse.close();
 
 			return resultsHolder;
 
@@ -81,6 +83,8 @@ public class ComandoServico {
 			Gson gson = new Gson();			
 
 			InfoHolder infoHolder = gson.fromJson(output, InfoHolder.class);
+			
+			clientResponse.close();
 
 			return infoHolder;
 
@@ -113,6 +117,8 @@ public class ComandoServico {
 		Gson gson = new Gson();
 
 		RebootHolder rebootHolder = gson.fromJson(output, RebootHolder.class);
+		
+		clientResponse.close();
 
 		return rebootHolder;
 
@@ -139,6 +145,8 @@ public class ComandoServico {
 		Gson gson = new Gson();
 
 		LanHostHolder[] lanHostHolders = gson.fromJson(output, LanHostHolder[].class);
+		
+		clientResponse.close();
 
 		return lanHostHolders;
 
@@ -165,6 +173,8 @@ public class ComandoServico {
 		Gson gson = new Gson();
 
 		WifiInfoHolder[] wifiInfoHolders = gson.fromJson(output, WifiInfoHolder[].class);
+		
+		clientResponse.close();
 
 		return wifiInfoHolders;
 
@@ -191,6 +201,8 @@ public class ComandoServico {
 		Gson gson = new Gson();
 
 		FactoryResetHolder factoryResetHolder = gson.fromJson(output, FactoryResetHolder.class);
+		
+		clientResponse.close();
 
 		return factoryResetHolder;
 
@@ -218,6 +230,8 @@ public class ComandoServico {
 		
 		DeviceStatusHolder deviceStatusHolder = gson.fromJson(output, DeviceStatusHolder.class);
 		
+		clientResponse.close();
+		
 		return deviceStatusHolder;
 
 	}
@@ -243,6 +257,8 @@ public class ComandoServico {
 		Gson gson = new Gson();
 		
 		SetWiFiConfigHolder setWiFiConfigHolder = gson.fromJson(output, SetWiFiConfigHolder.class);
+		
+		clientResponse.close();
 		
 		return setWiFiConfigHolder;
 		

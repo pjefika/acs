@@ -90,7 +90,8 @@ public class Comando {
 
 			this.resultsHolder = this.comandoServico.listDevices(this.criteria, this.parameter);
 
-			this.listaResults = this.resultsHolder.getResults();
+			this.listaResults = this.resultsHolder.getResults();			
+			
 						
 		} catch (Exception e) {
 

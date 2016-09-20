@@ -52,5 +52,21 @@ public class UsuarioEfikaBean {
 		return this.usuarioEfikaServico.listarUsuarioEfikaAtivo(ativo);
 		
 	}
+
+	public UsuarioEfika getUsuarioEfika() {
+		return usuarioEfika;
+	}
+
+	public void setUsuarioEfika(UsuarioEfika usuarioEfika) {
+		this.usuarioEfika = usuarioEfika;
+	}
+
+	public UsuarioEfikaServico getUsuarioEfikaServico() {
+		return usuarioEfikaServico;
+	}
+
+	public void setUsuarioEfikaServico(UsuarioEfikaServico usuarioEfikaServico) {
+		this.usuarioEfikaServico = usuarioEfikaServico;
+	}	
 	
 }

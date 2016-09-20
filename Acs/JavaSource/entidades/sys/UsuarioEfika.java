@@ -18,9 +18,9 @@ public class UsuarioEfika{
 	@NotNull
 	private Integer nivel;
 	
-	private Boolean ativo;
+	private Boolean ativo = false;
 	
-	private Boolean adm;
+	private Boolean adm = false;
 	
 	public UsuarioEfika() {
 	}
