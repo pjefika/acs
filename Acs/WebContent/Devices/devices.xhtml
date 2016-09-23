@@ -23,7 +23,7 @@
 			<f:event listener="#{loginBean.validaPagina('')}"
 				type="preRenderView" />
 
-			<f:event listener="#{loginBean.validaAtivo()}" type="preRenderView" />
+			<f:event listener="#{loginBean.validarLogin()}" type="preRenderView" />
 
 		</f:metadata>
 
@@ -38,10 +38,10 @@
 				<h:panelGrid columns="3">
 
 					<h:outputText value="Parametro" />
-					<p:inputText value="#{comando.parameter}" />
+					<p:inputText value="#{listDevices.parameter}" />
 
-					<p:commandButton action="#{comando.listDevices()}"
-						update="dataGridResults formTemplate:msgs" value="Buscar">
+					<p:commandButton action="#{listDevices.listDevices()}"
+						update="dataGridResults" value="Buscar">
 
 						<p:ajaxStatus onstart="PF('loadingDialogInfo').show();"
 							onsuccess="PF('loadingDialogInfo').hide();" />
@@ -52,7 +52,7 @@
 
 				<br />
 
-				<p:dataGrid value="#{comando.listaResults}" var="results"
+				<p:dataGrid value="#{listDevices.listaResults}" var="results"
 					columns="3" layout="grid" id="dataGridResults"
 					emptyMessage="Nenhum registro encontrado">
 
@@ -87,75 +87,90 @@
 							rendered="#{results.classification=='IAD'}" />
 						<h:outputText value="Decoder"
 							rendered="#{results.classification=='STB'}" />
+
 						<br />
 						<br />
 
-						<p:commandButton value="Abrir" oncomplete="PF('infoEqp').show();"
-							update="@form:dataGridResults:infoEqpShow"
-							action="#{comando.getDeviceInfo(results.id, results.classification)}" />
+						<p:commandButton value="Abrir"
+							update="@form:infoEqpShow formTemplate:msgs"
+							oncomplete="PF('infoEqp').show();"
+							action="#{deviceInfo.acao(results.id, results.classification)}" />
 
 					</p:panel>
 
-					<p:dialog header="Informações de Equipamento" widgetVar="infoEqp"
-						modal="true" height="500" width="800" minWidth="800"
-						minHeight="500" resizable="false">
+				</p:dataGrid>
 
-						<h:panelGroup id="infoEqpShow">
 
-							<p:commandButton value="Reboot"
-								onclick="PF('resetDevice').show();" />
+				<p:dialog header="Informações de Equipamento" widgetVar="infoEqp"
+					modal="true" height="500" width="800" minWidth="800"
+					minHeight="500" resizable="false">
 
-							<p:commandButton value="Reset de Fabrica"
-								onclick="PF('factoryResetDevice').show();" />
+					<h:panelGroup id="infoEqpShow">
 
-							<p:commandButton value="Equipamentos"
-								action="#{comando.getLanHostsTable()}" update="lanHosts"
-								rendered="#{comando.type.equalsIgnoreCase('IAD')}" />
+						<p:commandButton value="Reboot"
+							onclick="PF('resetDevice').show();"
+							rendered="#{deviceInfo.reboot}" />
 
-							<p:commandButton value="Wifi Info"
-								action="#{comando.getWiFiInfo()}"
-								rendered="#{comando.type.equalsIgnoreCase('IAD')}"
-								update="infoWifis" oncomplete="PF('infoWifi').show();" />
+						<p:commandButton value="Reset de Fabrica"
+							onclick="PF('factoryResetDevice').show();"
+							rendered="#{deviceInfo.factoryReset}" />
 
-							<br />
-							<br />
+						<p:commandButton value="Equipamentos"
+							action="#{devicesActions.getLanHostsTable(deviceInfo.id)}"
+							update="lanHosts" rendered="#{deviceInfo.lanHost}" />
 
-							<p:dataList value="#{comando.values}" var="valuesInfo"
-								type="definition" emptyMessage="Nenhum registro encontrado">
+						<p:commandButton value="Wifi Info"
+							action="#{devicesActions.getWiFiInfo(deviceInfo.id)}"
+							rendered="#{deviceInfo.wifiInfo}" update="infoWifis"
+							oncomplete="PF('infoWifi').show();" />
 
-								<h:panelGrid columns="2"
-									style="width: 100%; text-align: center;">
+						<p:commandButton value="FXS" rendered="#{deviceInfo.fxs}"
+							oncomplete="PF('sipAccountPro').show();" />
 
-									<h:outputText value="Serial Number: "
-										style="font-weight: bold;" />
-									<h:outputText value="#{valuesInfo.sn}" />
+						<p:commandButton value="Consulta Sip"
+							rendered="#{deviceInfo.sipDiagnostic}"
+							oncomplete="PF('sipDiagnostic').show()" />
 
-									<h:outputText value="Modelo: " style="font-weight: bold;" />
-									<h:outputText value="#{valuesInfo.model}" />
+						<br />
+						<br />
 
-									<h:outputText value="Versão do Firmware: "
-										style="font-weight: bold;" />
-									<h:outputText value="#{valuesInfo.firmver}" />
+						<p:dataList value="#{deviceInfo.values}" var="valuesInfo"
+							type="definition" emptyMessage="Nenhum registro encontrado">
 
-									<h:outputText value="Ip Address WAN: "
-										style="font-weight: bold;" />
-									<h:outputText value="#{valuesInfo.wanIpAddress}" />
+							<h:panelGrid columns="2" style="width: 100%; text-align: center;">
 
-									<h:outputText value="Device Type: " style="font-weight: bold;" />
-									<h:outputText value="#{valuesInfo.devicetype}" />
+								<h:outputText value="Serial Number: " style="font-weight: bold;" />
+								<h:outputText value="#{valuesInfo.sn}" />
 
-									<h:outputText value="Uptime" style="font-weight: bold;" />
-									<h:outputText value="#{valuesInfo.uptime}" />
+								<h:outputText value="Modelo: " style="font-weight: bold;" />
+								<h:outputText value="#{valuesInfo.model}" />
 
-								</h:panelGrid>
+								<h:outputText value="Versão do Firmware: "
+									style="font-weight: bold;" />
+								<h:outputText value="#{valuesInfo.firmver}" />
 
-							</p:dataList>
+								<h:outputText value="Ip Address WAN: "
+									style="font-weight: bold;" />
+								<h:outputText value="#{valuesInfo.wanIpAddress}" />
 
-							<br />
+								<h:outputText value="Device Type: " style="font-weight: bold;" />
+								<h:outputText value="#{valuesInfo.devicetype}" />
 
-							<p:dataGrid value="#{comando.lanHostHolders}" var="lanHost"
-								columns="2" layout="grid" id="lanHosts"
-								emptyMessage="Nenhum registro encontrado">
+								<h:outputText value="Uptime" style="font-weight: bold;" />
+								<h:outputText value="#{valuesInfo.uptime}" />
+
+							</h:panelGrid>
+
+						</p:dataList>
+
+						<br />
+
+						<h:panelGroup id="lanHosts">
+
+							<p:dataGrid value="#{devicesActions.lanHostHolders}"
+								var="lanHost" columns="2" layout="grid"
+								emptyMessage="Nenhum registro encontrado"
+								rendered="#{deviceInfo.type.equalsIgnoreCase('IAD') and not empty devicesActions.lanHostHolders}">
 
 								<p:panel header="#{lanHost.hostinst}">
 
@@ -185,112 +200,210 @@
 
 							</p:dataGrid>
 
-							<p:dialog header="Informações do Wifi" widgetVar="infoWifi"
-								id="infoWifis" resizable="false" minHeight="200" minWidth="300"
-								height="200" width="300">
-
-								<h:panelGrid columns="2"
-									style="width: 100%; text-align: center;" id="infoWifiGets">
-
-									<h:outputText value="EnableStatus" />
-									<h:outputText value="#{comando.wifiInfoHolder.enableStatus}" />
-
-									<h:outputText value="Channel" />
-									<h:outputText value="#{comando.wifiInfoHolder.channel}" />
-
-									<h:outputText value="Encryption" />
-									<h:outputText value="#{comando.wifiInfoHolder.encryption}" />
-
-									<h:outputText value="SSID" />
-									<h:outputText value="#{comando.wifiInfoHolder.SSID}" />
-
-									<h:outputText value="macAddresses" />
-									<h:outputText value="#{comando.wifiInfoHolder.macAddresses}" />
-
-									<h:outputText value="Authentication" />
-									<h:outputText value="#{comando.wifiInfoHolder.authentication}" />
-
-									<h:outputText value="bytesSent" />
-									<h:outputText value="#{comando.wifiInfoHolder.bytesSent}" />
-
-									<h:outputText value="bytesReceived" />
-									<h:outputText value="#{comando.wifiInfoHolder.bytesReceived}" />
-
-								</h:panelGrid>
-
-								<p:commandButton value="Modificar"
-									onclick="PF('wifiConfigs').show()"
-									oncomplete="PF('infoEqp').hide()" />
-
-							</p:dialog>
-
 						</h:panelGroup>
 
-						<p:dialog header="Reset de Modem" widgetVar="resetDevice"
-							resizable="false" height="60" width="145" minHeight="60"
-							minWidth="145">
+						<p:dialog header="Informações do Wifi" widgetVar="infoWifi"
+							id="infoWifis" resizable="false" minHeight="200" minWidth="300"
+							height="200" width="300">
 
-							<h:outputText value="Você tem certeza?" />
+							<h:panelGrid columns="2" style="width: 100%; text-align: center;"
+								id="infoWifiGets">
 
-							<h:panelGrid columns="2">
+								<h:outputText value="EnableStatus" />
+								<h:outputText
+									value="#{devicesActions.wifiInfoHolder.enableStatus}" />
 
-								<p:commandButton value="Sim" update="formTemplate:msgs"
-									action="#{comando.Reboot()}"
-									oncomplete="PF('resetDevice').hide();" />
-								<p:commandButton value="Não"
-									oncomplete="PF('resetDevice').hide();" />
+								<h:outputText value="Channel" />
+								<h:outputText value="#{devicesActions.wifiInfoHolder.channel}" />
+
+								<h:outputText value="Encryption" />
+								<h:outputText
+									value="#{devicesActions.wifiInfoHolder.encryption}" />
+
+								<h:outputText value="SSID" />
+								<h:outputText value="#{devicesActions.wifiInfoHolder.SSID}" />
+
+								<h:outputText value="macAddresses" />
+								<h:outputText
+									value="#{devicesActions.wifiInfoHolder.macAddresses}" />
+
+								<h:outputText value="Authentication" />
+								<h:outputText
+									value="#{devicesActions.wifiInfoHolder.authentication}" />
+
+								<h:outputText value="bytesSent" />
+								<h:outputText value="#{devicesActions.wifiInfoHolder.bytesSent}" />
+
+								<h:outputText value="bytesReceived" />
+								<h:outputText
+									value="#{devicesActions.wifiInfoHolder.bytesReceived}" />
 
 							</h:panelGrid>
 
-						</p:dialog>
-
-						<p:dialog header="Reset de Fabrica" widgetVar="factoryResetDevice"
-							resizable="false" height="60" width="145" minHeight="60"
-							minWidth="145">
-
-							<h:outputText value="Você tem certeza?" />
-
-							<h:panelGrid columns="2">
-
-								<p:commandButton value="Sim" update="formTemplate:msgs"
-									action="#{comando.factoryReset()}"
-									oncomplete="PF('factoryResetDevice').hide();" />
-								<p:commandButton value="Não"
-									oncomplete="PF('factoryResetDevice').hide();" />
-
-							</h:panelGrid>
+							<p:commandButton value="Modificar"
+								onclick="PF('wifiConfigs').show()"
+								oncomplete="PF('infoEqp').hide()" />
 
 						</p:dialog>
 
-					</p:dialog>
+					</h:panelGroup>
 
-					<p:dialog header="Configurar Wifi" widgetVar="wifiConfigs" resizable="false"
-						minHeight="200" minWidth="300" height="200" width="300">
+					<p:dialog header="Reset de Modem" widgetVar="resetDevice"
+						resizable="false" height="60" width="145" minHeight="60"
+						minWidth="145">
+
+						<h:outputText value="Você tem certeza?" />
 
 						<h:panelGrid columns="2">
 
-							<h:outputText value="Nome do comando" />
-							<p:selectOneMenu value="#{comando.wifiInput}"
-								converter="omnifaces.SelectItemsConverter">
-
-								<f:selectItems
-									value="#{wifiConfigBean.listarWifiConfigAtivo(true)}"
-									var="configs" itemLabel="#{configs.nomeComando}"
-									itemValue="#{configs.comando}" />
-
-							</p:selectOneMenu>
-
-							<h:outputText value="Valor" />
-							<p:inputText value="#{comando.wifiInputValue}" />
-
-							<p:commandButton value="Modificar"
-								action="#{comando.setWiFiConfig()}" update="@all" />
+							<p:commandButton value="Sim" update="formTemplate:msgs"
+								action="#{devicesActions.Reboot(deviceInfo.id)}"
+								oncomplete="PF('resetDevice').hide();" />
+							<p:commandButton value="Não"
+								oncomplete="PF('resetDevice').hide();" />
 
 						</h:panelGrid>
 
 					</p:dialog>
 
-				</p:dataGrid>
+					<p:dialog header="Reset de Fabrica" widgetVar="factoryResetDevice"
+						resizable="false" height="60" width="145" minHeight="60"
+						minWidth="145">
+
+						<h:outputText value="Você tem certeza?" />
+
+						<h:panelGrid columns="2">
+
+							<p:commandButton value="Sim" update="formTemplate:msgs"
+								action="#{devicesActions.factoryReset(deviceInfo.id)}"
+								oncomplete="PF('factoryResetDevice').hide();" />
+							<p:commandButton value="Não"
+								oncomplete="PF('factoryResetDevice').hide();" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+
+				</p:dialog>
+
+				<p:dialog header="FXS" widgetVar="sipAccountPro" resizable="false"
+					width="300" minWidth="300" height="250" minHeight="250">
+
+					<h:panelGrid columns="2">
+
+						<h:outputText value="DirectoryNumber" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.directoryNumber}"
+							placeholder="+55 Instância" />
+
+						<h:outputText value="AuthUserName" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.authUserName}"
+							placeholder="Instância" />
+
+						<h:outputText value="AuthPassword" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.authPassword}"
+							placeholder="Senha" />
+
+						<h:outputText value="ProxyServer" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.proxyServer}"
+							placeholder="Proxy" />
+
+						<h:outputText value="RegistrarServer" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.registrarServer}"
+							placeholder="Domain IMS" />
+
+						<h:outputText value="UserAgentDomain" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.userAgentDomain}"
+							placeholder="Domain IMS" />
+
+						<h:outputText value="OutboundProxy" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.outboundProxy}"
+							placeholder="Proxy" />
+
+						<h:outputText value="PhyReferenceList" />
+						<p:inputText
+							value="#{devicesActions.sipAccountProvisioning.directoryNumber}"
+							placeholder="1" />
+
+					</h:panelGrid>
+
+					<p:commandButton value="Eviar FXS"
+						action="#{devicesActions.sipAccountProvisioning(deviceInfo.id)}"
+						update="@all formTemplate:msgs" />
+
+				</p:dialog>
+
+				<p:dialog header="Sip Status" widgetVar="sipDiagnostic"
+					resizable="false" width="300" minWidth="300" height="400"
+					minHeight="400">
+
+					<h:panelGrid columns="2">
+
+						<h:outputText value="PhyReferenceList" />
+						<p:inputText value="#{devicesActions.phyReferenceList}" />
+
+						<p:commandButton value="Consultar"
+							action="#{devicesActions.sipDiagnostics(deviceInfo.id)}"
+							update="sipDiagnosticsValues" />
+
+					</h:panelGrid>
+
+					<br />
+
+					<p:panelGrid columns="2" id="sipDiagnosticsValues"
+						style="width: 100%;">
+
+						<h:outputText value="UserAgentDomain" />
+						<h:outputText value="#{devicesActions.values.userAgentDomain}" />
+
+						<h:outputText value="DirectoryNumber" />
+						<h:outputText value="#{devicesActions.values.directoryNumber}" />
+
+						<h:outputText value="T38Enabled" />
+						<h:outputText value="#{devicesActions.values.t38Enabled}" />
+
+						<h:outputText value="DTMFMethod" />
+						<h:outputText value="#{devicesActions.values.DTMFMethod}" />
+
+						<h:outputText value="VoiceCodec" />
+						<h:outputText value="#{devicesActions.values.voiceCodec}" />
+
+						<h:outputText value="Enable" />
+						<h:outputText value="#{devicesActions.values.enable}" />
+
+						<h:outputText value="Status" />
+						<h:outputText value="#{devicesActions.values.status}" />
+
+						<h:outputText value="AuthUserName" />
+						<h:outputText value="#{devicesActions.values.authUserName}" />
+
+						<h:outputText value="IPAddress" />
+						<h:outputText value="#{devicesActions.values.IPAddress}" />
+
+						<h:outputText value="ProxyServer" />
+						<h:outputText value="#{devicesActions.values.proxyServer}" />
+
+						<h:outputText value="CallState" />
+						<h:outputText value="#{devicesActions.values.callState}" />
+
+						<h:outputText value="LostPackets" />
+						<h:outputText value="#{devicesActions.values.lostPackets}" />
+
+						<h:outputText value="OutboundProxy" />
+						<h:outputText value="#{devicesActions.values.outboundProxy}" />
+
+						<h:outputText value="ConferenceCallURI" />
+						<h:outputText value="#{devicesActions.values.conferenceCallURI}" />
+
+					</p:panelGrid>
+
+				</p:dialog>
 
 				<p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
 					resizable="false" width="260" height="25" minWidth="260"
