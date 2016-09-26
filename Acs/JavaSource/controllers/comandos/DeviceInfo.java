@@ -36,6 +36,10 @@ public class DeviceInfo {
 	private Boolean fxs = false;
 
 	private Boolean sipDiagnostic = false;
+	
+	private Boolean interfaceStatistics = false;
+	
+	private Boolean infoDslConnection = false;
 
 
 	private DeviceInfoServico deviceInfoServico;
@@ -85,6 +89,9 @@ public class DeviceInfo {
 			this.wifiInfo = false;
 			this.fxs = false;
 			this.sipDiagnostic = false;
+			this.interfaceStatistics = false;
+			this.infoDslConnection = false;
+			
 
 			if (this.getValues()!=null) {
 
@@ -116,6 +123,14 @@ public class DeviceInfo {
 
 						this.sipDiagnostic = true;
 
+					} else if (string.equalsIgnoreCase("getInterfaceStats")) {
+						
+						this.interfaceStatistics = true;
+						
+					} else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
+						
+						this.infoDslConnection = true;
+						
 					}
 
 				}
@@ -220,5 +235,20 @@ public class DeviceInfo {
 		this.sipDiagnostic = sipDiagnostic;
 	}
 
+	public Boolean getInterfaceStatistics() {
+		return interfaceStatistics;
+	}
 
+	public void setInterfaceStatistics(Boolean interfaceStatistics) {
+		this.interfaceStatistics = interfaceStatistics;
+	}
+
+	public Boolean getInfoDslConnection() {
+		return infoDslConnection;
+	}
+
+	public void setInfoDslConnection(Boolean infoDslConnection) {
+		this.infoDslConnection = infoDslConnection;
+	}
+		
 }

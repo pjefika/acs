@@ -23,7 +23,7 @@ public class ListDevicesServico {
 	public ResultsHolder listDevices(String criteria, String parameter) throws Exception {
 
 		try {
-
+			
 			Client client = Client.create();
 
 			String url = "http://10.200.6.150/nbbs/api/core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
@@ -45,7 +45,7 @@ public class ListDevicesServico {
 			ResultsHolder resultsHolder = gson.fromJson(output, ResultsHolder.class);
 			
 			clientResponse.close();
-
+			
 			return resultsHolder;
 
 		} catch (Exception e) {

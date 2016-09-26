@@ -24,7 +24,7 @@ public class DeviceInfoServico {
 	public InfoHolder getDeviceInfo(Integer deviceId) throws Exception {
 
 		try {
-
+			
 			Client client = Client.create();
 
 			String url = "http://10.200.6.150:8080/nbbs/api/capability/diagnostic?diagnostic="+ URLEncoder.encode("\"getDeviceInfo\"", "UTF-8") +"&deviceId=" + deviceId;
@@ -52,7 +52,7 @@ public class DeviceInfoServico {
 			InfoHolder infoHolder = gson.fromJson(output, InfoHolder.class);
 
 			clientResponse.close();
-
+			
 			return infoHolder;
 
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class DeviceInfoServico {
 
 	@SuppressWarnings("unchecked")
 	public List<String> listCapabilityNamesFor(Integer deviceId) throws Exception {
-
+		
 		Client client = Client.create();
 
 		String url = "http://10.200.6.150/nbbs/api/capability/listCapabilityNamesFor?deviceId=" + deviceId;
@@ -87,7 +87,7 @@ public class DeviceInfoServico {
 		List<String> values = gson.fromJson(output, List.class);
 
 		clientResponse.close();
-
+		
 		return values;
 
 

@@ -94,8 +94,8 @@
 						<p:commandButton value="Abrir"
 							update="@form:infoEqpShow formTemplate:msgs"
 							oncomplete="PF('infoEqp').show();"
-							action="#{deviceInfo.acao(results.id, results.classification)}" />
-
+							action="#{deviceInfo.acao(results.id, results.classification)}"
+							actionListener="#{devicesActions.clearVariables()}" />
 					</p:panel>
 
 				</p:dataGrid>
@@ -118,6 +118,14 @@
 						<p:commandButton value="Equipamentos"
 							action="#{devicesActions.getLanHostsTable(deviceInfo.id)}"
 							update="lanHosts" rendered="#{deviceInfo.lanHost}" />
+
+						<p:commandButton value="Interface Statistics"
+							rendered="#{deviceInfo.interfaceStatistics}"
+							onclick="PF('interfaceStatistic').show();" />
+
+						<p:commandButton value="DSL Connection Info"
+							rendered="#{deviceInfo.infoDslConnection}"
+							onclick="PF('infoDslConnect').show()" />
 
 						<p:commandButton value="Wifi Info"
 							action="#{devicesActions.getWiFiInfo(deviceInfo.id)}"
@@ -240,9 +248,153 @@
 
 							</h:panelGrid>
 
-							<p:commandButton value="Modificar"
-								onclick="PF('wifiConfigs').show()"
-								oncomplete="PF('infoEqp').hide()" />
+						</p:dialog>
+
+						<p:dialog header="Interface Statistics"
+							widgetVar="interfaceStatistic" resizable="false" width="600"
+							minWidth="600" height="400" minHeight="400">
+
+							<p:commandButton value="Buscar"
+								widgetVar="buscarInterfaceStatics"
+								actionListener="#{devicesActions.interfaceStatics(deviceInfo.id)}"
+								update="interfaceStatistics formTemplate:msgs"
+								onclick="PF('buscarInterfaceStatics').disable()"
+								oncomplete="PF('buscarInterfaceStatics').enable()" />
+
+							<p:dataGrid id="interfaceStatistics"
+								value="#{devicesActions.interfaceStaticsHolder.values}"
+								var="interfaceStatistics" columns="3" layout="grid"
+								emptyMessage="Nenhum registro encontrado">
+
+								<p:panel header="#{interfaceStatistics.name}">
+
+									<h:outputText value="Type:" />
+									<h:outputText value="#{interfaceStatistics.type}" />
+									<br />
+
+									<h:outputText value="Status:" />
+									<h:outputText value="#{interfaceStatistics.status}" />
+									<br />
+
+									<h:outputText value="Enabled:" />
+									<h:outputText value="#{interfaceStatistics.enabled}" />
+									<br />
+
+									<h:outputText value="Name:" />
+									<h:outputText value="#{interfaceStatistics.name}" />
+									<br />
+
+									<h:outputText value="Ip:" />
+									<h:outputText value="#{interfaceStatistics.ip}" />
+									<br />
+
+									<h:outputText value="Mac:" />
+									<h:outputText value="#{interfaceStatistics.mac}" />
+									<br />
+
+									<h:outputText value="Bytes Send:" />
+									<h:outputText value="#{interfaceStatistics.bytesSent}" />
+									<br />
+
+									<h:outputText value="Bytes Received:" />
+									<h:outputText value="#{interfaceStatistics.bytesReceived}" />
+									<br />
+
+									<h:outputText value="Errors Send:" />
+									<h:outputText value="#{interfaceStatistics.errorsSent}" />
+									<br />
+
+									<h:outputText value="Errors Received:" />
+									<h:outputText value="#{interfaceStatistics.errorsReceived}" />
+									<br />
+
+									<h:outputText value="Packet Send:" />
+									<h:outputText value="#{interfaceStatistics.packetsSent}" />
+									<br />
+
+									<h:outputText value="Packet Received:" />
+									<h:outputText value="#{interfaceStatistics.packetsReceived}" />
+									<br />
+
+								</p:panel>
+
+							</p:dataGrid>
+
+						</p:dialog>
+
+						<p:dialog header="Informação DSL Connection"
+							widgetVar="infoDslConnect" resizable="false" width="600"
+							minWidth="600" height="220" minHeight="220">
+							
+							<p:commandButton value="Buscar"
+								widgetVar="buscarDslConnect"
+								actionListener="#{devicesActions.getDSLConnectionInfo(deviceInfo.id)}"
+								update="dslConnectInfos formTemplate:msgs"
+								onclick="PF('buscarDslConnect').disable()"
+								oncomplete="PF('buscarDslConnect').enable()" />
+
+							<p:dataGrid id="dslConnectInfos"
+								value="#{devicesActions.valuesDslConnection}"
+								var="dslConnectInfo" columns="2" layout="grid"
+								emptyMessage="Nenhum registro encontrado">
+
+								<p:panel header="#{dslConnectInfo.direction}">
+
+									<h:outputText value="Modulação: " />
+									<h:outputText value="#{dslConnectInfo.modulationType}" />
+									<br />
+
+									<h:outputText value="Error Seconds: " />
+									<h:outputText value="#{dslConnectInfo.errorSeconds}" />
+									<br />
+
+									<h:outputText value="FEC Errors: " />
+									<h:outputText value="#{dslConnectInfo.FECErrors}" />
+									<br />
+
+									<h:outputText value="CRC Errors: " />
+									<h:outputText value="#{dslConnectInfo.CRCErrors}" />
+									<br />
+
+									<h:outputText value="HEC Errors: " />
+									<h:outputText value="#{dslConnectInfo.HECErrors}" />
+									<br />
+
+									<h:outputText value="Loss of Framing: " />
+									<h:outputText value="#{dslConnectInfo.lossOfFraming}" />
+									<br />
+
+									<h:outputText value="Loss of Link: " />
+									<h:outputText value="#{dslConnectInfo.lossOfLink}" />
+									<br />
+
+									<h:outputText value="Noise Margin: " />
+									<h:outputText value="#{dslConnectInfo.noiseMargin}" />
+									<br />
+
+									<h:outputText value="Max Rate: " />
+									<h:outputText value="#{dslConnectInfo.maxRate}" />
+									<br />
+
+									<h:outputText value="DSL Show Time Start: " />
+									<h:outputText value="#{dslConnectInfo.dslShowtimeStart}" />
+									<br />
+
+									<h:outputText value="Attenuation : " />
+									<h:outputText value="#{dslConnectInfo.attenuation}" />
+									<br />
+
+									<h:outputText value="Power Level: " />
+									<h:outputText value="#{dslConnectInfo.powerLevel}" />
+									<br />
+
+									<h:outputText value="Synch Rate: " />
+									<h:outputText value="#{dslConnectInfo.synchRate}" />
+									<br />
+
+								</p:panel>
+
+							</p:dataGrid>
 
 						</p:dialog>
 
@@ -407,7 +559,7 @@
 
 				<p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
 					resizable="false" width="260" height="25" minWidth="260"
-					minHeight="25" showEffect="fade" hideEffect="fade">
+					minHeight="25" showEffect="fade" hideEffect="fade" modal="true">
 
 					<img id="j_idt17:form:j_idt45"
 						src="/Acs/recursos/images/ajax-loader.gif" alt="" />
