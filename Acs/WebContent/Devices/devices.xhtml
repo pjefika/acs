@@ -107,37 +107,45 @@
 
 					<h:panelGroup id="infoEqpShow">
 
-						<p:commandButton value="Reboot"
-							onclick="PF('resetDevice').show();"
-							rendered="#{deviceInfo.reboot}" />
+						<p:panel header="Ações">
 
-						<p:commandButton value="Reset de Fabrica"
-							onclick="PF('factoryResetDevice').show();"
-							rendered="#{deviceInfo.factoryReset}" />
+							<p:commandButton value="Reboot"
+								onclick="PF('resetDevice').show();"
+								rendered="#{deviceInfo.reboot}" />
 
-						<p:commandButton value="Equipamentos"
-							action="#{devicesActions.getLanHostsTable(deviceInfo.id)}"
-							update="lanHosts" rendered="#{deviceInfo.lanHost}" />
+							<p:commandButton value="Reset de Fabrica"
+								onclick="PF('factoryResetDevice').show();"
+								rendered="#{deviceInfo.factoryReset}" />
 
-						<p:commandButton value="Interface Statistics"
-							rendered="#{deviceInfo.interfaceStatistics}"
-							onclick="PF('interfaceStatistic').show();" />
+							<p:commandButton value="Equipamentos"
+								action="#{lanHostsTable.getLanHostsTableAction(deviceInfo.id)}"
+								update="lanHosts" rendered="#{deviceInfo.lanHost}" />
 
-						<p:commandButton value="DSL Connection Info"
-							rendered="#{deviceInfo.infoDslConnection}"
-							onclick="PF('infoDslConnect').show()" />
+							<p:commandButton value="Interface Statistics"
+								rendered="#{deviceInfo.interfaceStatistics}"
+								onclick="PF('interfaceStatistic').show();" />
 
-						<p:commandButton value="Wifi Info"
-							action="#{devicesActions.getWiFiInfo(deviceInfo.id)}"
-							rendered="#{deviceInfo.wifiInfo}" update="infoWifis"
-							oncomplete="PF('infoWifi').show();" />
+							<p:commandButton value="DSL Connection Info"
+								rendered="#{deviceInfo.infoDslConnection}"
+								onclick="PF('infoDslConnect').show()" />
 
-						<p:commandButton value="FXS" rendered="#{deviceInfo.fxs}"
-							oncomplete="PF('sipAccountPro').show();" />
+							<p:commandButton value="Info Gateway"
+								rendered="#{deviceInfo.infoDslConnection}"
+								onclick="PF('infoGateWay').show()" />
 
-						<p:commandButton value="Consulta Sip"
-							rendered="#{deviceInfo.sipDiagnostic}"
-							oncomplete="PF('sipDiagnostic').show()" />
+							<p:commandButton value="Wifi Info"
+								action="#{devicesActions.getWiFiInfo(deviceInfo.id)}"
+								rendered="#{deviceInfo.wifiInfo}" update="infoWifis"
+								oncomplete="PF('infoWifi').show();" />
+
+							<p:commandButton value="FXS" rendered="#{deviceInfo.fxs}"
+								oncomplete="PF('sipAccountPro').show();" />
+
+							<p:commandButton value="Consulta Sip"
+								rendered="#{deviceInfo.sipDiagnostic}"
+								oncomplete="PF('sipDiagnostic').show()" />
+
+						</p:panel>
 
 						<br />
 						<br />
@@ -175,10 +183,10 @@
 
 						<h:panelGroup id="lanHosts">
 
-							<p:dataGrid value="#{devicesActions.lanHostHolders}"
+							<p:dataGrid value="#{lanHostsTable.lanHostHolders}"
 								var="lanHost" columns="2" layout="grid"
 								emptyMessage="Nenhum registro encontrado"
-								rendered="#{deviceInfo.type.equalsIgnoreCase('IAD') and not empty devicesActions.lanHostHolders}">
+								rendered="#{deviceInfo.type.equalsIgnoreCase('IAD') and not empty lanHostsTable.lanHostHolders}">
 
 								<p:panel header="#{lanHost.hostinst}">
 
@@ -256,13 +264,13 @@
 
 							<p:commandButton value="Buscar"
 								widgetVar="buscarInterfaceStatics"
-								actionListener="#{devicesActions.interfaceStatics(deviceInfo.id)}"
+								action="#{interfaceStatic.interfaceStatics(deviceInfo.id)}"
 								update="interfaceStatistics formTemplate:msgs"
 								onclick="PF('buscarInterfaceStatics').disable()"
 								oncomplete="PF('buscarInterfaceStatics').enable()" />
 
 							<p:dataGrid id="interfaceStatistics"
-								value="#{devicesActions.interfaceStaticsHolder.values}"
+								value="#{interfaceStatic.interfaceStaticsHolder.values}"
 								var="interfaceStatistics" columns="3" layout="grid"
 								emptyMessage="Nenhum registro encontrado">
 
@@ -325,16 +333,15 @@
 						<p:dialog header="Informação DSL Connection"
 							widgetVar="infoDslConnect" resizable="false" width="600"
 							minWidth="600" height="220" minHeight="220">
-							
-							<p:commandButton value="Buscar"
-								widgetVar="buscarDslConnect"
-								actionListener="#{devicesActions.getDSLConnectionInfo(deviceInfo.id)}"
+
+							<p:commandButton value="Buscar" widgetVar="buscarDslConnect"
+								action="#{dSLConnectionInfo.DSLConnectionInfoAction(deviceInfo.id)}"
 								update="dslConnectInfos formTemplate:msgs"
 								onclick="PF('buscarDslConnect').disable()"
 								oncomplete="PF('buscarDslConnect').enable()" />
 
 							<p:dataGrid id="dslConnectInfos"
-								value="#{devicesActions.valuesDslConnection}"
+								value="#{dSLConnectionInfo.valuesDslConnection}"
 								var="dslConnectInfo" columns="2" layout="grid"
 								emptyMessage="Nenhum registro encontrado">
 
@@ -377,7 +384,7 @@
 									<br />
 
 									<h:outputText value="DSL Show Time Start: " />
-									<h:outputText value="#{dslConnectInfo.dslShowtimeStart}" />
+									<h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}" />
 									<br />
 
 									<h:outputText value="Attenuation : " />
@@ -398,6 +405,101 @@
 
 						</p:dialog>
 
+						<p:dialog header="Informações de GateWay" widgetVar="infoGateWay"
+							resizable="false" width="600" minWidth="600" height="280"
+							minHeight="280">
+
+							<p:commandButton value="Buscar" widgetVar="buscarGateWay"
+								action="#{gatewayInfo.GatewayInfoAction(deviceInfo.id)}"
+								update="gateWayInfos formTemplate:msgs"
+								onclick="PF('buscarGateWay').disable()"
+								oncomplete="PF('buscarGateWay').enable()" />
+
+							<p:dataGrid id="gateWayInfos"
+								value="#{gatewayInfo.valuesgatway}" var="gateWayInfo"
+								columns="2" layout="grid"
+								emptyMessage="Nenhum registro encontrado">
+
+								<p:panel header="Info">
+
+									<h:outputText value="primaryDNS: " />
+									<h:outputText value="#{gateWayInfo.primaryDNS}" />
+									<br />
+
+									<h:outputText value="DHCPLeaseTime: " />
+									<h:outputText value="#{gateWayInfo.DHCPLeaseTime}" />
+									<br />
+
+									<h:outputText value="hostname: " />
+									<h:outputText value="#{gateWayInfo.hostname}" />
+									<br />
+
+									<h:outputText value="uptime: " />
+									<h:outputText value="#{gateWayInfo.uptime}" />
+									<br />
+
+									<h:outputText value="alternateDNS: " />
+									<h:outputText value="#{gateWayInfo.alternateDNS}" />
+									<br />
+
+									<h:outputText value="daylightSavingsTime: " />
+									<h:outputText value="#{gateWayInfo.daylightSavingsTime}" />
+									<br />
+
+									<h:outputText value="DHCPServerStatus: " />
+									<h:outputText value="#{gateWayInfo.DHCPServerStatus}" />
+									<br />
+
+									<h:outputText value="UPnP:  " />
+									<h:outputText value="#{gateWayInfo.UPnP}" />
+									<br />
+
+									<h:outputText value="timeZone Name: " />
+									<h:outputText value="#{gateWayInfo.timeZone.name}" />
+									<br />
+
+									<h:outputText value="timeZone Offset " />
+									<h:outputText value="#{gateWayInfo.timeZone.offset}" />
+									<br />
+
+									<h:outputText value="domainName: " />
+									<h:outputText value="#{gateWayInfo.domainName}" />
+									<br />
+
+									<h:outputText value="DHCPRelayAgent: " />
+									<h:outputText value="#{gateWayInfo.DHCPRelayAgent}" />
+									<br />
+
+									<h:outputText value="alternateNTPServer:  " />
+									<h:outputText value="#{gateWayInfo.alternateNTPServer}" />
+									<br />
+
+									<h:outputText value="DHCPEndingAddress: " />
+									<h:outputText value="#{gateWayInfo.DHCPEndingAddress}" />
+									<br />
+
+									<h:outputText value="NTPClientStatus: " />
+									<h:outputText value="#{gateWayInfo.NTPClientStatus}" />
+									<br />
+
+									<h:outputText value="wanIpAddress: " />
+									<h:outputText value="#{gateWayInfo.wanIpAddress}" />
+									<br />
+
+									<h:outputText value="primaryNTPServer: " />
+									<h:outputText value="#{gateWayInfo.primaryNTPServer}" />
+									<br />
+
+									<h:outputText value="DHCPStartingAddress: " />
+									<h:outputText value="#{gateWayInfo.DHCPStartingAddress}" />
+									<br />
+
+								</p:panel>
+
+							</p:dataGrid>
+
+						</p:dialog>
+
 					</h:panelGroup>
 
 					<p:dialog header="Reset de Modem" widgetVar="resetDevice"
@@ -409,7 +511,7 @@
 						<h:panelGrid columns="2">
 
 							<p:commandButton value="Sim" update="formTemplate:msgs"
-								action="#{devicesActions.Reboot(deviceInfo.id)}"
+								action="#{reboot.RebootAction(deviceInfo.id)}"
 								oncomplete="PF('resetDevice').hide();" />
 							<p:commandButton value="Não"
 								oncomplete="PF('resetDevice').hide();" />
@@ -427,7 +529,7 @@
 						<h:panelGrid columns="2">
 
 							<p:commandButton value="Sim" update="formTemplate:msgs"
-								action="#{devicesActions.factoryReset(deviceInfo.id)}"
+								action="#{factoryReset.factoryResetAction(deviceInfo.id)}"
 								oncomplete="PF('factoryResetDevice').hide();" />
 							<p:commandButton value="Não"
 								oncomplete="PF('factoryResetDevice').hide();" />
@@ -445,48 +547,48 @@
 
 						<h:outputText value="DirectoryNumber" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.directoryNumber}"
+							value="#{accountProvisioning.sipAccountProvisioning.directoryNumber}"
 							placeholder="+55 Instância" />
 
 						<h:outputText value="AuthUserName" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.authUserName}"
+							value="#{accountProvisioning.sipAccountProvisioning.authUserName}"
 							placeholder="Instância" />
 
 						<h:outputText value="AuthPassword" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.authPassword}"
+							value="#{accountProvisioning.sipAccountProvisioning.authPassword}"
 							placeholder="Senha" />
 
 						<h:outputText value="ProxyServer" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.proxyServer}"
+							value="#{accountProvisioning.sipAccountProvisioning.proxyServer}"
 							placeholder="Proxy" />
 
 						<h:outputText value="RegistrarServer" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.registrarServer}"
+							value="#{accountProvisioning.sipAccountProvisioning.registrarServer}"
 							placeholder="Domain IMS" />
 
 						<h:outputText value="UserAgentDomain" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.userAgentDomain}"
+							value="#{accountProvisioning.sipAccountProvisioning.userAgentDomain}"
 							placeholder="Domain IMS" />
 
 						<h:outputText value="OutboundProxy" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.outboundProxy}"
+							value="#{accountProvisioning.sipAccountProvisioning.outboundProxy}"
 							placeholder="Proxy" />
 
 						<h:outputText value="PhyReferenceList" />
 						<p:inputText
-							value="#{devicesActions.sipAccountProvisioning.directoryNumber}"
+							value="#{accountProvisioning.sipAccountProvisioning.directoryNumber}"
 							placeholder="1" />
 
 					</h:panelGrid>
 
 					<p:commandButton value="Eviar FXS"
-						action="#{devicesActions.sipAccountProvisioning(deviceInfo.id)}"
+						action="#{accountProvisioning.sipAccountProvisioningAction(deviceInfo.id)"}
 						update="@all formTemplate:msgs" />
 
 				</p:dialog>
@@ -498,10 +600,10 @@
 					<h:panelGrid columns="2">
 
 						<h:outputText value="PhyReferenceList" />
-						<p:inputText value="#{devicesActions.phyReferenceList}" />
+						<p:inputText value="#{sipDiagnostics.phyReferenceList}" />
 
 						<p:commandButton value="Consultar"
-							action="#{devicesActions.sipDiagnostics(deviceInfo.id)}"
+							action="#{sipDiagnostics.sipDiagnostics(deviceInfo.id)}"
 							update="sipDiagnosticsValues" />
 
 					</h:panelGrid>
@@ -512,46 +614,46 @@
 						style="width: 100%;">
 
 						<h:outputText value="UserAgentDomain" />
-						<h:outputText value="#{devicesActions.values.userAgentDomain}" />
+						<h:outputText value="#{sipDiagnostics.values.userAgentDomain}" />
 
 						<h:outputText value="DirectoryNumber" />
-						<h:outputText value="#{devicesActions.values.directoryNumber}" />
+						<h:outputText value="#{sipDiagnostics.values.directoryNumber}" />
 
 						<h:outputText value="T38Enabled" />
-						<h:outputText value="#{devicesActions.values.t38Enabled}" />
+						<h:outputText value="#{sipDiagnostics.values.t38Enabled}" />
 
 						<h:outputText value="DTMFMethod" />
-						<h:outputText value="#{devicesActions.values.DTMFMethod}" />
+						<h:outputText value="#{sipDiagnostics.values.DTMFMethod}" />
 
 						<h:outputText value="VoiceCodec" />
-						<h:outputText value="#{devicesActions.values.voiceCodec}" />
+						<h:outputText value="#{sipDiagnostics.values.voiceCodec}" />
 
 						<h:outputText value="Enable" />
-						<h:outputText value="#{devicesActions.values.enable}" />
+						<h:outputText value="#{sipDiagnostics.values.enable}" />
 
 						<h:outputText value="Status" />
-						<h:outputText value="#{devicesActions.values.status}" />
+						<h:outputText value="#{sipDiagnostics.values.status}" />
 
 						<h:outputText value="AuthUserName" />
-						<h:outputText value="#{devicesActions.values.authUserName}" />
+						<h:outputText value="#{sipDiagnostics.values.authUserName}" />
 
 						<h:outputText value="IPAddress" />
-						<h:outputText value="#{devicesActions.values.IPAddress}" />
+						<h:outputText value="#{sipDiagnostics.values.IPAddress}" />
 
 						<h:outputText value="ProxyServer" />
-						<h:outputText value="#{devicesActions.values.proxyServer}" />
+						<h:outputText value="#{sipDiagnostics.values.proxyServer}" />
 
 						<h:outputText value="CallState" />
-						<h:outputText value="#{devicesActions.values.callState}" />
+						<h:outputText value="#{sipDiagnostics.values.callState}" />
 
 						<h:outputText value="LostPackets" />
-						<h:outputText value="#{devicesActions.values.lostPackets}" />
+						<h:outputText value="#{sipDiagnostics.values.lostPackets}" />
 
 						<h:outputText value="OutboundProxy" />
-						<h:outputText value="#{devicesActions.values.outboundProxy}" />
+						<h:outputText value="#{sipDiagnostics.values.outboundProxy}" />
 
 						<h:outputText value="ConferenceCallURI" />
-						<h:outputText value="#{devicesActions.values.conferenceCallURI}" />
+						<h:outputText value="#{sipDiagnostics.values.conferenceCallURI}" />
 
 					</p:panelGrid>
 

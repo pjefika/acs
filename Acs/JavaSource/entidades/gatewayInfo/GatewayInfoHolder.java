@@ -1,9 +1,7 @@
-package entidades.interfaceStatics;
+package entidades.gatewayInfo;
 
-import entidades.interfaceStatics.Values;
+public class GatewayInfoHolder {
 
-public class InterfaceStaticsHolder {
-	
 	private Values[] values;
 
 	public Values[] getValues() {
@@ -12,5 +10,6 @@ public class InterfaceStaticsHolder {
 
 	public void setValues(Values[] values) {
 		this.values = values;
-	}	
+	}
+		
 }

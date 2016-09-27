@@ -1,9 +1,7 @@
-package entidades.interfaceStatics;
+package entidades.LanEthernetInfo;
 
-import entidades.interfaceStatics.Values;
+public class LanEthernetInfoHolder {
 
-public class InterfaceStaticsHolder {
-	
 	private Values[] values;
 
 	public Values[] getValues() {

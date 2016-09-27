@@ -1,6 +1,7 @@
 package util;
 
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -83,6 +84,30 @@ public class JSFUtil {
 		return dataFormatada;
 
 
+	}
+	
+	public static String formatarTimeStampHra(Long date) {
+		
+		Date dateStamp = new Date(date);
+		
+		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+		
+		String dataFormatada = formatter.format(dateStamp);
+		
+		return dataFormatada;
+		
+	}
+	
+	public static String autenticacao() {
+		
+		String username = "efika_system";
+		String password = "Efika@viv0Gvt";
+		String userPassword = username + ":" + password;
+		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
+		String concat = "Basic " + encoding;
+		
+		return concat;	
+		
 	}
 	
 }

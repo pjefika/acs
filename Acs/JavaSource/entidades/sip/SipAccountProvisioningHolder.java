@@ -1,4 +1,4 @@
-package entidades.siptProvisioning;
+package entidades.sip;
 
 public class SipAccountProvisioningHolder {
 

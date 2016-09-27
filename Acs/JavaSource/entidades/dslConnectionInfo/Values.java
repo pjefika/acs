@@ -1,5 +1,7 @@
 package entidades.dslConnectionInfo;
 
+import util.JSFUtil;
+
 public class Values {
 
 	private String lossOfLink;
@@ -14,7 +16,7 @@ public class Values {
 	
 	private Integer maxRate;
 	
-	private Integer dslShowtimeStart;
+	private Long dslShowtimeStart;
 	
 	private Integer attenuation;
 
@@ -77,12 +79,19 @@ public class Values {
 	public void setMaxRate(Integer maxRate) {
 		this.maxRate = maxRate;
 	}
-
-	public Integer getDslShowtimeStart() {
+	
+	
+	public Long getDslShowtimeStart() {
 		return dslShowtimeStart;
 	}
+	
+	public String getDslShowtimeStartStamp() {
+		
+		return JSFUtil.formatarTimeStampHra(this.dslShowtimeStart);
+		
+	}
 
-	public void setDslShowtimeStart(Integer dslShowtimeStart) {
+	public void setDslShowtimeStart(Long dslShowtimeStart) {
 		this.dslShowtimeStart = dslShowtimeStart;
 	}
 

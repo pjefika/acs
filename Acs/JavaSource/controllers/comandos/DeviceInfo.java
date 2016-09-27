@@ -36,10 +36,12 @@ public class DeviceInfo {
 	private Boolean fxs = false;
 
 	private Boolean sipDiagnostic = false;
-	
+
 	private Boolean interfaceStatistics = false;
-	
+
 	private Boolean infoDslConnection = false;
+
+	private Boolean gateWayInfo = false;
 
 
 	private DeviceInfoServico deviceInfoServico;
@@ -91,7 +93,8 @@ public class DeviceInfo {
 			this.sipDiagnostic = false;
 			this.interfaceStatistics = false;
 			this.infoDslConnection = false;
-			
+			this.gateWayInfo = false;
+
 
 			if (this.getValues()!=null) {
 
@@ -124,13 +127,17 @@ public class DeviceInfo {
 						this.sipDiagnostic = true;
 
 					} else if (string.equalsIgnoreCase("getInterfaceStats")) {
-						
+
 						this.interfaceStatistics = true;
-						
+
 					} else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
-						
+
 						this.infoDslConnection = true;
-						
+
+					} else if (string.equalsIgnoreCase("getGatewayInfo")) {
+
+						this.gateWayInfo = true;
+
 					}
 
 				}
@@ -250,5 +257,13 @@ public class DeviceInfo {
 	public void setInfoDslConnection(Boolean infoDslConnection) {
 		this.infoDslConnection = infoDslConnection;
 	}
-		
+
+	public Boolean getGateWayInfo() {
+		return gateWayInfo;
+	}
+
+	public void setGateWayInfo(Boolean gateWayInfo) {
+		this.gateWayInfo = gateWayInfo;
+	}	
+
 }

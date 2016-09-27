@@ -1,8 +1,6 @@
-package entidades.interfaceStatics;
+package entidades.portMapping;
 
-import entidades.interfaceStatics.Values;
-
-public class InterfaceStaticsHolder {
+public class PortMappingTableHolder {
 	
 	private Values[] values;
 
@@ -12,5 +10,6 @@ public class InterfaceStaticsHolder {
 
 	public void setValues(Values[] values) {
 		this.values = values;
-	}	
+	}
+
 }

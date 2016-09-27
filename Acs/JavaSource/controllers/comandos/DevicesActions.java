@@ -5,13 +5,14 @@ import javax.faces.bean.RequestScoped;
 
 import entidades.dslConnectionInfo.DslConnectionInfoHolder;
 import entidades.factoryReset.FactoryResetHolder;
+import entidades.gatewayInfo.GatewayInfoHolder;
 import entidades.interfaceStatics.InterfaceStaticsHolder;
 import entidades.lanHost.LanHostHolder;
 import entidades.reboot.RebootHolder;
-import entidades.siptProvisioning.SipAccountProvisioning;
-import entidades.siptProvisioning.SipAccountProvisioningHolder;
-import entidades.siptProvisioning.SipDiagnosticsHolder;
-import entidades.siptProvisioning.Values;
+import entidades.sip.SipAccountProvisioning;
+import entidades.sip.SipAccountProvisioningHolder;
+import entidades.sip.SipDiagnosticsHolder;
+import entidades.sip.Values;
 import entidades.wifiInfo.WifiInfoHolder;
 import models.comandos.DevicesActionsServico;
 import util.JSFUtil;
@@ -39,17 +40,23 @@ public class DevicesActions {
 	private SipDiagnosticsHolder sipDiagnosticsHolder;
 
 	private Values values;
-	
+
 	private InterfaceStaticsHolder interfaceStaticsHolder;
 
 	private entidades.interfaceStatics.Values[] valuesInterfaces;
-	
+
 	private DslConnectionInfoHolder dslConnectionInfoHolder;
-	
+
 	private entidades.dslConnectionInfo.Values[] valuesDslConnection;
-	
+
+	private GatewayInfoHolder gatewayInfoHolder;
+
+	private entidades.gatewayInfo.Values[] valuesgatway;
+
 
 	private String phyReferenceList = "1";
+	
+	private Integer cont = 0;
 
 	public DevicesActions() {
 
@@ -223,64 +230,105 @@ public class DevicesActions {
 		}
 
 	}
-	
+
 	public void interfaceStatics(Integer deviceId) {
-		
-		int cont = 0;
-		
+
 		try {
-									
+
 			this.interfaceStaticsHolder = this.devicesActionsServico.interfaceStatics(deviceId);
-			
+
 			this.valuesInterfaces = this.interfaceStaticsHolder.getValues();
-			
+
+			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
+
+			this.cont = 0;
+
+		} catch (Exception e) {
+
+			if (this.cont < 11) {
+				
+				this.cont++;
+								
+				this.interfaceStatics(deviceId);				
+
+			} else {
+
+				System.out.println(e.getMessage());
+
+				JSFUtil.addErrorMessage(e.getMessage());
+				
+				this.cont = 0;
+
+			}	
+
+		}
+
+	}
+
+	public void getDSLConnectionInfo(Integer deviceId) {
+
+		try {
+
+			this.dslConnectionInfoHolder = this.devicesActionsServico.getDSLConnectionInfo(deviceId);
+
+			this.valuesDslConnection = this.dslConnectionInfoHolder.getValues();
+
 			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
 			
+			this.cont = 0;
+
 		} catch (Exception e) {
-			
-			if (cont < 11) {
-				
-				this.interfaceStatics(deviceId);
-				
-				cont++;
-				
-			} else {
-				
-				JSFUtil.addErrorMessage(e.getMessage());
-				
-			}			
-			
-		}
-		
-	}
-	
-	public void getDSLConnectionInfo(Integer deviceId) {
-		
-		int cont = 0;
-		
-		try {
-			
-			this.dslConnectionInfoHolder = this.devicesActionsServico.getDSLConnectionInfo(deviceId);
-			
-			this.valuesDslConnection = this.dslConnectionInfoHolder.getValues();
-			
-			JSFUtil.addInfoMessage("Busca Realizada com sucesso.");
-			
-		} catch (Exception e) {
-			
-			if (cont < 11) {
-				
+
+			if (this.cont < 11) {
+
+				this.cont++;
+
 				this.getDSLConnectionInfo(deviceId);
-				cont++;
 				
 			} else {
-				
+
 				JSFUtil.addErrorMessage(e.getMessage());
 				
+				this.cont = 0;
+
 			}		
-			
+
 		}
-		
+
+	}
+
+	public void getGatewayInfoHolder(Integer deviceId) {
+
+		try {
+
+			this.gatewayInfoHolder = this.devicesActionsServico.getGatewayInfoHolder(deviceId);
+
+			this.valuesgatway = this.gatewayInfoHolder.getValues();
+
+			JSFUtil.addInfoMessage("Busca realizada com sucesso,");
+			
+			this.cont = 0;
+
+		} catch (Exception e) {
+
+			if (this.cont < 11) {
+				
+				this.cont++;
+								
+				this.getGatewayInfoHolder(deviceId);				
+
+			} else {
+
+				System.out.println(e.getMessage());
+
+				JSFUtil.addErrorMessage(e.getMessage());
+				
+				this.cont = 0;
+
+			}	
+
+		}
+
 	}
 
 	public RebootHolder getRebootHolder() {
@@ -393,6 +441,30 @@ public class DevicesActions {
 
 	public void setValuesDslConnection(entidades.dslConnectionInfo.Values[] valuesDslConnection) {
 		this.valuesDslConnection = valuesDslConnection;
+	}
+
+	public GatewayInfoHolder getGatewayInfoHolder() {
+		return gatewayInfoHolder;
+	}
+
+	public void setGatewayInfoHolder(GatewayInfoHolder gatewayInfoHolder) {
+		this.gatewayInfoHolder = gatewayInfoHolder;
+	}
+
+	public entidades.gatewayInfo.Values[] getValuesgatway() {
+		return valuesgatway;
+	}
+
+	public void setValuesgatway(entidades.gatewayInfo.Values[] valuesgatway) {
+		this.valuesgatway = valuesgatway;
+	}
+
+	public Integer getCont() {
+		return cont;
+	}
+
+	public void setCont(Integer cont) {
+		this.cont = cont;
 	}	
-	
+
 }
