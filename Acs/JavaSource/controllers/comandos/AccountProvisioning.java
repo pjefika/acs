@@ -20,6 +20,8 @@ public class AccountProvisioning {
 	private SipAccountProvisioningAction sipAccountProvisioningAction;
 	
 	public AccountProvisioning() {
+		
+		this.sipAccountProvisioning = new SipAccountProvisioning();
 
 		this.sipAccountProvisioningAction = new SipAccountProvisioningAction();
 		
