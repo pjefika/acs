@@ -24,7 +24,6 @@ public class DeviceInfo {
 
 	private Integer id;	
 
-
 	private Boolean reboot = false;
 
 	private Boolean factoryReset = false;
