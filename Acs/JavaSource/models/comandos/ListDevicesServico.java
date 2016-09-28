@@ -19,7 +19,7 @@ public class ListDevicesServico {
 			Client client = Client.create();
 
 			String url = JSFUtil.acs() + "core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
-
+			
 			WebResource webResource = client.resource(url);
 
 			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);

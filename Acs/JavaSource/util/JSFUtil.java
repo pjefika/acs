@@ -100,8 +100,12 @@ public class JSFUtil {
 	
 	public static String autenticacao() {
 		
-		String username = "efika_system";
-		String password = "Efika@viv0Gvt";
+		/*String username = "efika_system";
+		String password = "Efika@viv0Gvt";*/
+		
+		String username = "co_g0047217";
+		String password = "chk123";
+		
 		String userPassword = username + ":" + password;
 		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
 		String concat = "Basic " + encoding;

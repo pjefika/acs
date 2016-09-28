@@ -18,6 +18,8 @@ public class SipDiagnostics {
 	
 	private String phyReferenceList = "1";
 	
+	private Integer contTentativas = 0;
+	
 	private SipDiagnosticsAction sipDiagnosticsAction;
 	
 	public SipDiagnostics() {
@@ -45,10 +47,24 @@ public class SipDiagnostics {
 				cont++;
 
 			}
+			
+			this.contTentativas = 0;
 
 		} catch (Exception e) {
-
-			JSFUtil.addErrorMessage(e.getMessage());
+			
+			if (contTentativas < 11) {
+				
+				contTentativas++;
+				
+				this.sipDiagnostics(deviceId);
+				
+			} else {
+				
+				JSFUtil.addErrorMessage(e.getMessage());
+				JSFUtil.addErrorMessage("Erro ao realizar Sip Diagnostics");
+				this.contTentativas = 0;
+				
+			}		
 
 		}
 
@@ -76,6 +92,14 @@ public class SipDiagnostics {
 
 	public void setPhyReferenceList(String phyReferenceList) {
 		this.phyReferenceList = phyReferenceList;
+	}
+
+	public Integer getContTentativas() {
+		return contTentativas;
+	}
+
+	public void setContTentativas(Integer contTentativas) {
+		this.contTentativas = contTentativas;
 	}	
 
 }

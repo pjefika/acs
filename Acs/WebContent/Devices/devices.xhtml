@@ -135,9 +135,8 @@
 								onclick="PF('infoGateWay').show()" />
 
 							<p:commandButton value="Wifi Info"
-								action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
-								rendered="#{capabilityNames.wifiInfo}" update="infoWifis"
-								oncomplete="PF('infoWifi').show();" />
+								rendered="#{capabilityNames.wifiInfo}"
+								onclick="PF('infoWifi').show()" />
 
 							<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
 								onclick="PF('sipAccountPro').show();" />
@@ -239,41 +238,42 @@
 
 						</p:dialog>
 
-						<p:dialog header="Informações do Wifi" widgetVar="infoWifi"
-							id="infoWifis" resizable="false" minHeight="200" minWidth="300"
-							height="200" width="300">
+						<p:dialog header="Informações de Host" widgetVar="infoWifi"
+							resizable="false" minHeight="200" minWidth="300" height="200"
+							width="300">
+
+							<p:commandButton value="Buscar" widgetVar="buscarWifi"
+								action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
+								update="infoWifiGets formTemplate:msgs"
+								onclick="PF('buscarWifi').disable()"
+								oncomplete="PF('buscarWifi').enable()" />
 
 							<h:panelGrid columns="2" style="width: 100%; text-align: center;"
 								id="infoWifiGets">
 
 								<h:outputText value="EnableStatus" />
-								<h:outputText
-									value="#{wiFiInfo.wifiInfoHolder.enableStatus}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.enableStatus}" />
 
 								<h:outputText value="Channel" />
 								<h:outputText value="#{wiFiInfo.wifiInfoHolder.channel}" />
 
 								<h:outputText value="Encryption" />
-								<h:outputText
-									value="#{wiFiInfo.wifiInfoHolder.encryption}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.encryption}" />
 
 								<h:outputText value="SSID" />
 								<h:outputText value="#{wiFiInfo.wifiInfoHolder.SSID}" />
 
 								<h:outputText value="macAddresses" />
-								<h:outputText
-									value="#{wiFiInfo.wifiInfoHolder.macAddresses}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.macAddresses}" />
 
 								<h:outputText value="Authentication" />
-								<h:outputText
-									value="#{wiFiInfo.wifiInfoHolder.authentication}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.authentication}" />
 
 								<h:outputText value="bytesSent" />
 								<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesSent}" />
 
 								<h:outputText value="bytesReceived" />
-								<h:outputText
-									value="#{wiFiInfo.wifiInfoHolder.bytesReceived}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesReceived}" />
 
 							</h:panelGrid>
 

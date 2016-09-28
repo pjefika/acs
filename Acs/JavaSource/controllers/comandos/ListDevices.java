@@ -56,7 +56,7 @@ public class ListDevices {
 			this.parameter = this.parameter.trim();
 
 			this.resultsHolder = this.listDevicesServico.listDevices(this.criteria, this.parameter, JSFUtil.autenticacao());
-
+			
 			this.listaResults = this.resultsHolder.getResults();			
 						
 		} catch (Exception e) {

@@ -6,7 +6,7 @@ public class Values {
 
 	private String lossOfLink;
 	
-	private Integer noiseMargin;
+	private Float noiseMargin;
 	
 	private Integer HECErrors;
 	
@@ -18,9 +18,9 @@ public class Values {
 	
 	private Long dslShowtimeStart;
 	
-	private Integer attenuation;
+	private Float attenuation;
 
-	private Integer powerLevel;
+	private Float powerLevel;
 	
 	private Integer FECErrors;
 	
@@ -40,11 +40,11 @@ public class Values {
 		this.lossOfLink = lossOfLink;
 	}
 
-	public Integer getNoiseMargin() {
+	public Float getNoiseMargin() {
 		return noiseMargin;
 	}
 
-	public void setNoiseMargin(Integer noiseMargin) {
+	public void setNoiseMargin(Float noiseMargin) {
 		this.noiseMargin = noiseMargin;
 	}
 
@@ -93,21 +93,21 @@ public class Values {
 
 	public void setDslShowtimeStart(Long dslShowtimeStart) {
 		this.dslShowtimeStart = dslShowtimeStart;
-	}
+	}	
 
-	public Integer getAttenuation() {
+	public Float getAttenuation() {
 		return attenuation;
 	}
 
-	public void setAttenuation(Integer attenuation) {
+	public void setAttenuation(Float attenuation) {
 		this.attenuation = attenuation;
 	}
 
-	public Integer getPowerLevel() {
+	public Float getPowerLevel() {
 		return powerLevel;
 	}
 
-	public void setPowerLevel(Integer powerLevel) {
+	public void setPowerLevel(Float powerLevel) {
 		this.powerLevel = powerLevel;
 	}
 

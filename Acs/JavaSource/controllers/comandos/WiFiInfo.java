@@ -10,19 +10,21 @@ import models.comandos.WiFiInfoAction;
 @ManagedBean
 @RequestScoped
 public class WiFiInfo {
-	
+
 	private WifiInfoHolder[] wifiInfoHolders;
-	
+
 	private WifiInfoHolder wifiInfoHolder;
-	
+
+	private Integer contTentativas = 0;
+
 	private WiFiInfoAction wiFiInfoAction;
-	
+
 	public WiFiInfo() {
 
 		this.wiFiInfoAction = new WiFiInfoAction();
-		
+
 	}
-	
+
 	public void WiFiInfoAction(Integer deviceId) {
 
 		try {
@@ -43,11 +45,24 @@ public class WiFiInfo {
 
 			}
 
+			this.contTentativas = 0;
+
 		} catch (Exception e) {
 
-			JSFUtil.addErrorMessage(e.getMessage());
-			JSFUtil.addErrorMessage("Erro ao consultar informações do Wifi.");
+			if (this.contTentativas < 11) {
 
+				this.contTentativas++;
+
+				this.WiFiInfoAction(deviceId);
+
+			} else {
+
+				JSFUtil.addErrorMessage(e.getMessage());
+				JSFUtil.addErrorMessage("Erro ao consultar informações do Wifi.");
+				this.contTentativas = 0;
+				
+			}
+			
 		}
 
 	}
@@ -66,6 +81,14 @@ public class WiFiInfo {
 
 	public void setWifiInfoHolder(WifiInfoHolder wifiInfoHolder) {
 		this.wifiInfoHolder = wifiInfoHolder;
-	}	
+	}
+
+	public Integer getContTentativas() {
+		return contTentativas;
+	}
+
+	public void setContTentativas(Integer contTentativas) {
+		this.contTentativas = contTentativas;
+	}
 
 }
