@@ -110,4 +110,16 @@ public class JSFUtil {
 		
 	}
 	
+	public static String acs() {
+		
+		//Produção
+		//String link = "http://10.200.6.150/nbbs/api/";
+		
+		//Teste
+		String link = "http://10.200.38.235/nbbs/api/";		
+		
+		return link;
+		
+	}
+	
 }

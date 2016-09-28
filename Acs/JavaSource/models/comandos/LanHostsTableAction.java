@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.lanHost.LanHostHolder;
+import util.JSFUtil;
 
 public class LanHostsTableAction {
 
@@ -18,7 +19,7 @@ public class LanHostsTableAction {
 
 		Client client = Client.create();
 
-		String url = "http://10.200.6.150:8080/nbbs/api/capability/execute?capability="+ URLEncoder.encode("\"getLanHostsTable\"", "UTF-8") +"&deviceId=" + deviceId;
+		String url = JSFUtil.acs() + "capability/execute?capability="+ URLEncoder.encode("\"getLanHostsTable\"", "UTF-8") +"&deviceId=" + deviceId;
 
 		WebResource webResource = client.resource(url);
 

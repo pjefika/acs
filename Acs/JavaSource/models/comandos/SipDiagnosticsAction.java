@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.sip.SipDiagnosticsHolder;
+import util.JSFUtil;
 
 public class SipDiagnosticsAction {
 	
@@ -19,7 +20,7 @@ public class SipDiagnosticsAction {
 
 		Client client = Client.create();
 
-		String url = "http://10.200.6.150:8080/nbbs/api/capability/diagnostic?diagnostic=" + URLEncoder.encode("\"sipDiagnostics\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"PhyReferenceList\":\"" + phyReferenceList + "\"}", "UTF-8");
+		String url = JSFUtil.acs() + "capability/diagnostic?diagnostic=" + URLEncoder.encode("\"sipDiagnostics\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"PhyReferenceList\":\"" + phyReferenceList + "\"}", "UTF-8");
 
 		WebResource webResource = client.resource(url);
 

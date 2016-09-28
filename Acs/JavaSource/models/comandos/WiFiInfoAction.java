@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.wifiInfo.WifiInfoHolder;
+import util.JSFUtil;
 
 public class WiFiInfoAction {
 
@@ -19,7 +20,7 @@ public class WiFiInfoAction {
 
 		Client client = Client.create();
 
-		String url = "http://10.200.6.150:8080/nbbs/api/capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"frequency\":\"2.4GHz\"}", "UTF-8");
+		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"frequency\":\"2.4GHz\"}", "UTF-8");
 
 		WebResource webResource = client.resource(url);
 

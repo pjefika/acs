@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.interfaceStatics.InterfaceStaticsHolder;
+import util.JSFUtil;
 
 public class InterfaceStaticsAction {
 	
@@ -19,7 +20,7 @@ public class InterfaceStaticsAction {
 
 		Client client = Client.create();		
 
-		String url = "http://10.200.6.150/nbbs/api/capability/diagnostic?diagnostic=" + URLEncoder.encode("\"getInterfaceStats\"", "UTF-8") + "&deviceId=" + deviceId;
+		String url = JSFUtil.acs() + "capability/diagnostic?diagnostic=" + URLEncoder.encode("\"getInterfaceStats\"", "UTF-8") + "&deviceId=" + deviceId;
 
 		WebResource webResource = client.resource(url);
 

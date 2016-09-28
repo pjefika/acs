@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import entidades.sip.SipAccountProvisioning;
 import entidades.sip.SipAccountProvisioningHolder;
+import util.JSFUtil;
 
 public class SipAccountProvisioningAction {
 
@@ -20,7 +21,7 @@ public class SipAccountProvisioningAction {
 
 		Client client = Client.create();	
 
-		String url = "http://10.200.6.150:8080/nbbs/api/capability/execute?capability=" + URLEncoder.encode("\"sipAccountProvisioning\"", "UTF-8") + "&deviceId="+ deviceId +"&input=" + URLEncoder.encode("{\"DirectoryNumber\":\"" + sipAccountProvisioning.getDirectoryNumber() + "\",\"AuthUserName\":\"" + sipAccountProvisioning.getAuthUserName() + "\",\"AuthPassword\":\"" + sipAccountProvisioning.getAuthPassword() + "\",\"ProxyServer\":\"" + sipAccountProvisioning.getProxyServer() + "\",\"RegistrarServer\":\"" + sipAccountProvisioning.getRegistrarServer() + "\",\"UserAgentDomain\":\"" + sipAccountProvisioning.getUserAgentDomain() + "\",\"OutboundProxy\":\"" + sipAccountProvisioning.getOutboundProxy() + "\",\"PhyReferenceList\":\"" + sipAccountProvisioning.getPhyReferenceList() + "\"}", "UTF-8");
+		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"sipAccountProvisioning\"", "UTF-8") + "&deviceId="+ deviceId +"&input=" + URLEncoder.encode("{\"DirectoryNumber\":\"" + sipAccountProvisioning.getDirectoryNumber() + "\",\"AuthUserName\":\"" + sipAccountProvisioning.getAuthUserName() + "\",\"AuthPassword\":\"" + sipAccountProvisioning.getAuthPassword() + "\",\"ProxyServer\":\"" + sipAccountProvisioning.getProxyServer() + "\",\"RegistrarServer\":\"" + sipAccountProvisioning.getRegistrarServer() + "\",\"UserAgentDomain\":\"" + sipAccountProvisioning.getUserAgentDomain() + "\",\"OutboundProxy\":\"" + sipAccountProvisioning.getOutboundProxy() + "\",\"PhyReferenceList\":\"" + sipAccountProvisioning.getPhyReferenceList() + "\"}", "UTF-8");
 
 		WebResource webResource = client.resource(url);
 

@@ -3,17 +3,16 @@ package controllers.comandos;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import models.comandos.CapabilityNamesAction;
 import util.JSFUtil;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class CapabilityNames {
 
-	private List<String> capabilitValues;
-	
+	private List<String> capabilitValues;	
 	
 	private Boolean reboot = false;
 
@@ -36,7 +35,6 @@ public class CapabilityNames {
 	private Boolean portMapping = false;
 	
 	private Boolean lanEthernetInfo = false;	
-	
 
 	private CapabilityNamesAction capabilityNamesAction;
 
@@ -49,7 +47,7 @@ public class CapabilityNames {
 	public void listCapabilityNamesFor(Integer deviceId, Boolean ativo) {
 
 		try {
-
+			
 			if (ativo) {
 
 				List<String> values = this.capabilityNamesAction.listCapabilityNamesFor(deviceId, JSFUtil.autenticacao());

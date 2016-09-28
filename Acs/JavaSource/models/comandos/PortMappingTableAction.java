@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.portMapping.PortMappingTableHolder;
+import util.JSFUtil;
 
 public class PortMappingTableAction {
 	
@@ -15,7 +16,7 @@ public class PortMappingTableAction {
 
 		Client client = Client.create();
 		
-		String url = "http://10.200.6.150/nbbs/api/capability/diagnostic?diagnostic=" + URLEncoder.encode("\"getPortMappingTable\"", "UTF-8") + "&deviceId=" + deviceId;	
+		String url = JSFUtil.acs() + "capability/diagnostic?diagnostic=" + URLEncoder.encode("\"getPortMappingTable\"", "UTF-8") + "&deviceId=" + deviceId;	
 
 		WebResource webResource = client.resource(url);
 

@@ -6,6 +6,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import util.JSFUtil;
+
 public class CapabilityNamesAction {
 	
 	@SuppressWarnings("unchecked")
@@ -13,7 +15,7 @@ public class CapabilityNamesAction {
 		
 		Client client = Client.create();
 
-		String url = "http://10.200.6.150/nbbs/api/capability/listCapabilityNamesFor?deviceId=" + deviceId;
+		String url = JSFUtil.acs() + "capability/listCapabilityNamesFor?deviceId=" + deviceId;
 
 		WebResource webResource = client.resource(url);
 
