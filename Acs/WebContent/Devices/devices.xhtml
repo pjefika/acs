@@ -91,11 +91,12 @@
 						<br />
 						<br />
 
-						<p:commandButton value="Abrir"
+						<p:commandButton value="Abrir" id="buscarEqpShow"
 							update="@form:infoEqpShow formTemplate:msgs"
 							oncomplete="PF('infoEqp').show();"
-							action="#{infoDevice.getDeviceInfo(results.id)}"
-							actionListener="#{capabilityNames.listCapabilityNamesFor(results.id)}" />
+							actionListener="#{infoDevice.getDeviceInfo(results.id)}"
+							action="#{capabilityNames.listCapabilityNamesFor(results.id, infoDevice.ativo)}"/>
+
 					</p:panel>
 
 				</p:dataGrid>
@@ -116,8 +117,8 @@
 							<p:commandButton value="Reset de Fabrica"
 								onclick="PF('factoryResetDevice').show();"
 								rendered="#{capabilityNames.factoryReset}" />
-								
-							<p:commandButton value="Equipamentos"
+
+							<p:commandButton value="Hosts"
 								rendered="#{capabilityNames.interfaceStatistics}"
 								onclick="PF('infoLanHosts').show();" />
 
@@ -145,54 +146,67 @@
 								rendered="#{capabilityNames.sipDiagnostic}"
 								oncomplete="PF('sipDiagnostic').show()" />
 
+							<p:commandButton value="Port Mapping Table"
+								rendered="#{capabilityNames.portMapping}"
+								onclick="PF('infoPortMappingTable').show()" />
+
+							<p:commandButton value="Lan Ethernet Info"
+								rendered="#{capabilityNames.lanEthernetInfo}"
+								onclick="PF('infoLanEthernetInfo').show()" />
+
 						</p:panel>
 
 						<br />
 						<br />
 
-						<p:dataList value="#{infoDevice.values}" var="valuesInfo"
-							type="definition" emptyMessage="Nenhum registro encontrado">
+						<p:panel header="Informações de Equipamento">
 
-							<h:panelGrid columns="2" style="width: 100%; text-align: center;">
+							<p:dataList value="#{infoDevice.values}" var="valuesInfo"
+								type="definition" emptyMessage="Nenhum registro encontrado">
 
-								<h:outputText value="Serial Number: " style="font-weight: bold;" />
-								<h:outputText value="#{valuesInfo.sn}" />
+								<h:panelGrid columns="2"
+									style="width: 100%; text-align: center;">
 
-								<h:outputText value="Modelo: " style="font-weight: bold;" />
-								<h:outputText value="#{valuesInfo.model}" />
+									<h:outputText value="Serial Number: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.sn}" />
 
-								<h:outputText value="Versão do Firmware: "
-									style="font-weight: bold;" />
-								<h:outputText value="#{valuesInfo.firmver}" />
+									<h:outputText value="Modelo: " style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.model}" />
 
-								<h:outputText value="Ip Address WAN: "
-									style="font-weight: bold;" />
-								<h:outputText value="#{valuesInfo.wanIpAddress}" />
+									<h:outputText value="Versão do Firmware: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.firmver}" />
 
-								<h:outputText value="Device Type: " style="font-weight: bold;" />
-								<h:outputText value="#{valuesInfo.devicetype}" />
+									<h:outputText value="Ip Address WAN: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.wanIpAddress}" />
 
-								<h:outputText value="Uptime" style="font-weight: bold;" />
-								<h:outputText value="#{valuesInfo.uptime}" />
+									<h:outputText value="Device Type: " style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.devicetype}" />
 
-							</h:panelGrid>
+									<h:outputText value="Uptime" style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.uptime}" />
 
-						</p:dataList>
-						
-						<p:dialog header="Informações de Host"
-							widgetVar="infoLanHosts" resizable="false" width="600"
-							minWidth="600" height="400" minHeight="400">
+								</h:panelGrid>
 
-							<p:commandButton value="Buscar"
-								widgetVar="buscarLanHosts"
+							</p:dataList>
+
+						</p:panel>
+
+						<p:dialog header="Informações de Host" widgetVar="infoLanHosts"
+							resizable="false" width="600" minWidth="600" height="400"
+							minHeight="400">
+
+							<p:commandButton value="Buscar" widgetVar="buscarLanHosts"
 								action="#{lanHostsTable.getLanHostsTableAction(infoDevice.id)}"
 								update="infoLanHosts formTemplate:msgs"
 								onclick="PF('buscarLanHosts').disable()"
 								oncomplete="PF('buscarLanHosts').enable()" />
 
 							<p:dataGrid id="infoLanHosts"
-								value="#{lanHostsTable.lanHostHolders}"
-								var="lanHost" columns="3" layout="grid"
+								value="#{lanHostsTable.lanHostHolders}" var="lanHost"
+								columns="3" layout="grid"
 								emptyMessage="Nenhum registro encontrado">
 
 								<p:panel header="#{lanHost.hostinst}">
@@ -498,6 +512,115 @@
 
 									<h:outputText value="DHCPStartingAddress: " />
 									<h:outputText value="#{gateWayInfo.DHCPStartingAddress}" />
+									<br />
+
+								</p:panel>
+
+							</p:dataGrid>
+
+						</p:dialog>
+
+						<p:dialog header="Port Mapping Table"
+							widgetVar="infoPortMappingTable" resizable="false" width="600"
+							minWidth="600" height="280" minHeight="280">
+
+							<p:commandButton value="Buscar"
+								widgetVar="buscarPortMappingTable"
+								action="#{portMappingTable.getPortMappingTableAction(infoDevice.id)}"
+								update="portMappingTables formTemplate:msgs"
+								onclick="PF('buscarPortMappingTable').disable()"
+								oncomplete="PF('buscarPortMappingTable').enable()" />
+
+							<p:dataGrid id="portMappingTables"
+								value="#{portMappingTable.values}" var="portMapping" columns="2"
+								layout="grid" emptyMessage="Nenhum registro encontrado">
+
+								<p:panel header="Info">
+
+									<h:outputText value="protocol: " />
+									<h:outputText value="#{portMapping.protocol}" />
+									<br />
+
+									<h:outputText value="intport: " />
+									<h:outputText value="#{portMapping.intport}" />
+									<br />
+
+									<h:outputText value="status: " />
+									<h:outputText value="#{portMapping.status}" />
+									<br />
+
+									<h:outputText value="LeaseDuration: " />
+									<h:outputText value="#{portMapping.leaseDuration}" />
+									<br />
+
+									<h:outputText value="intip: " />
+									<h:outputText value="#{portMapping.intip}" />
+									<br />
+
+									<h:outputText value="portMapName: " />
+									<h:outputText value="#{portMapping.portMapName}" />
+									<br />
+
+									<h:outputText value="RemoteAddress: " />
+									<h:outputText value="#{portMapping.remoteAddress}" />
+									<br />
+
+									<h:outputText value="extport: " />
+									<h:outputText value="#{portMapping.extport}" />
+									<br />
+
+								</p:panel>
+
+							</p:dataGrid>
+
+						</p:dialog>
+
+						<p:dialog header="Lan Ethernet Info"
+							widgetVar="infoLanEthernetInfo" resizable="false" width="600"
+							minWidth="600" height="280" minHeight="280">
+
+							<p:commandButton value="Buscar" widgetVar="buscarLanEthernetInfo"
+								action="#{lanEthernetInfo.getLanEthernetInfoAction(infoDevice.id)}"
+								update="lanEthernetInfos formTemplate:msgs"
+								onclick="PF('buscarLanEthernetInfo').disable()"
+								oncomplete="PF('buscarLanEthernetInfo').enable()" />
+
+							<p:dataGrid id="lanEthernetInfos"
+								value="#{lanEthernetInfo.values}" var="lanEthernet" columns="2"
+								layout="grid" emptyMessage="Nenhum registro encontrado">
+
+								<p:panel header="Info">
+
+									<h:outputText value="EthernetStatus: " />
+									<h:outputText value="#{lanEthernet.ethernetStatus}" />
+									<br />
+
+									<h:outputText value="EthernetEnable: " />
+									<h:outputText value="#{lanEthernet.ethernetEnable}" />
+									<br />
+
+									<h:outputText value="EthernetErrorsSentRcvd: " />
+									<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}" />
+									<br />
+
+									<h:outputText value="EthernetDuplexMode: " />
+									<h:outputText value="#{lanEthernet.ethernetDuplexMode}" />
+									<br />
+
+									<h:outputText value="EthernetMACAddress: " />
+									<h:outputText value="#{lanEthernet.ethernetMACAddress}" />
+									<br />
+
+									<h:outputText value="EthernetBytesSentReceived: " />
+									<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}" />
+									<br />
+
+									<h:outputText value="EthernetMACCtrlEnabled: " />
+									<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}" />
+									<br />
+
+									<h:outputText value="EthernetMaxBitRate: " />
+									<h:outputText value="#{lanEthernet.ethernetMaxBitRate}" />
 									<br />
 
 								</p:panel>
