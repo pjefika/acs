@@ -94,8 +94,8 @@
 						<p:commandButton value="Abrir" id="buscarEqpShow"
 							update="@form:infoEqpShow formTemplate:msgs"
 							oncomplete="PF('infoEqp').show();"
-							actionListener="#{infoDevice.getDeviceInfo(results.id)}"
-							action="#{capabilityNames.listCapabilityNamesFor(results.id, infoDevice.ativo)}"/>
+							actionListener="#{deviceInfo.getDeviceInfoAction(results.id)}"
+							action="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
 
 					</p:panel>
 
@@ -119,7 +119,7 @@
 								rendered="#{capabilityNames.factoryReset}" />
 
 							<p:commandButton value="Hosts"
-								rendered="#{capabilityNames.interfaceStatistics}"
+								rendered="#{capabilityNames.lanHost}"
 								onclick="PF('infoLanHosts').show();" />
 
 							<p:commandButton value="Interface Statistics"
@@ -131,20 +131,20 @@
 								onclick="PF('infoDslConnect').show()" />
 
 							<p:commandButton value="Info Gateway"
-								rendered="#{capabilityNames.infoDslConnection}"
+								rendered="#{capabilityNames.gateWayInfo}"
 								onclick="PF('infoGateWay').show()" />
 
 							<p:commandButton value="Wifi Info"
-								action="#{devicesActions.getWiFiInfo(infoDevice.id)}"
+								action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
 								rendered="#{capabilityNames.wifiInfo}" update="infoWifis"
 								oncomplete="PF('infoWifi').show();" />
 
 							<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
-								oncomplete="PF('sipAccountPro').show();" />
+								onclick="PF('sipAccountPro').show();" />
 
 							<p:commandButton value="Consulta Sip"
 								rendered="#{capabilityNames.sipDiagnostic}"
-								oncomplete="PF('sipDiagnostic').show()" />
+								onclick="PF('sipDiagnostic').show()" />
 
 							<p:commandButton value="Port Mapping Table"
 								rendered="#{capabilityNames.portMapping}"
@@ -161,7 +161,7 @@
 
 						<p:panel header="Informações de Equipamento">
 
-							<p:dataList value="#{infoDevice.values}" var="valuesInfo"
+							<p:dataList value="#{deviceInfo.values}" var="valuesInfo"
 								type="definition" emptyMessage="Nenhum registro encontrado">
 
 								<h:panelGrid columns="2"
@@ -199,7 +199,7 @@
 							minHeight="400">
 
 							<p:commandButton value="Buscar" widgetVar="buscarLanHosts"
-								action="#{lanHostsTable.getLanHostsTableAction(infoDevice.id)}"
+								action="#{lanHostsTable.getLanHostsTableAction(deviceInfo.id)}"
 								update="infoLanHosts formTemplate:msgs"
 								onclick="PF('buscarLanHosts').disable()"
 								oncomplete="PF('buscarLanHosts').enable()" />
@@ -248,32 +248,32 @@
 
 								<h:outputText value="EnableStatus" />
 								<h:outputText
-									value="#{devicesActions.wifiInfoHolder.enableStatus}" />
+									value="#{wiFiInfo.wifiInfoHolder.enableStatus}" />
 
 								<h:outputText value="Channel" />
-								<h:outputText value="#{devicesActions.wifiInfoHolder.channel}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.channel}" />
 
 								<h:outputText value="Encryption" />
 								<h:outputText
-									value="#{devicesActions.wifiInfoHolder.encryption}" />
+									value="#{wiFiInfo.wifiInfoHolder.encryption}" />
 
 								<h:outputText value="SSID" />
-								<h:outputText value="#{devicesActions.wifiInfoHolder.SSID}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.SSID}" />
 
 								<h:outputText value="macAddresses" />
 								<h:outputText
-									value="#{devicesActions.wifiInfoHolder.macAddresses}" />
+									value="#{wiFiInfo.wifiInfoHolder.macAddresses}" />
 
 								<h:outputText value="Authentication" />
 								<h:outputText
-									value="#{devicesActions.wifiInfoHolder.authentication}" />
+									value="#{wiFiInfo.wifiInfoHolder.authentication}" />
 
 								<h:outputText value="bytesSent" />
-								<h:outputText value="#{devicesActions.wifiInfoHolder.bytesSent}" />
+								<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesSent}" />
 
 								<h:outputText value="bytesReceived" />
 								<h:outputText
-									value="#{devicesActions.wifiInfoHolder.bytesReceived}" />
+									value="#{wiFiInfo.wifiInfoHolder.bytesReceived}" />
 
 							</h:panelGrid>
 
@@ -285,7 +285,7 @@
 
 							<p:commandButton value="Buscar"
 								widgetVar="buscarInterfaceStatics"
-								action="#{interfaceStatic.interfaceStatics(infoDevice.id)}"
+								action="#{interfaceStatic.interfaceStatics(deviceInfo.id)}"
 								update="interfaceStatistics formTemplate:msgs"
 								onclick="PF('buscarInterfaceStatics').disable()"
 								oncomplete="PF('buscarInterfaceStatics').enable()" />
@@ -356,7 +356,7 @@
 							minWidth="600" height="220" minHeight="220">
 
 							<p:commandButton value="Buscar" widgetVar="buscarDslConnect"
-								action="#{dSLConnectionInfo.DSLConnectionInfoAction(infoDevice.id)}"
+								action="#{dSLConnectionInfo.DSLConnectionInfoAction(deviceInfo.id)}"
 								update="dslConnectInfos formTemplate:msgs"
 								onclick="PF('buscarDslConnect').disable()"
 								oncomplete="PF('buscarDslConnect').enable()" />
@@ -431,7 +431,7 @@
 							minHeight="280">
 
 							<p:commandButton value="Buscar" widgetVar="buscarGateWay"
-								action="#{gatewayInfo.GatewayInfoAction(infoDevice.id)}"
+								action="#{gatewayInfo.GatewayInfoAction(deviceInfo.id)}"
 								update="gateWayInfos formTemplate:msgs"
 								onclick="PF('buscarGateWay').disable()"
 								oncomplete="PF('buscarGateWay').enable()" />
@@ -526,7 +526,7 @@
 
 							<p:commandButton value="Buscar"
 								widgetVar="buscarPortMappingTable"
-								action="#{portMappingTable.getPortMappingTableAction(infoDevice.id)}"
+								action="#{portMappingTable.getPortMappingTableAction(deviceInfo.id)}"
 								update="portMappingTables formTemplate:msgs"
 								onclick="PF('buscarPortMappingTable').disable()"
 								oncomplete="PF('buscarPortMappingTable').enable()" />
@@ -580,7 +580,7 @@
 							minWidth="600" height="280" minHeight="280">
 
 							<p:commandButton value="Buscar" widgetVar="buscarLanEthernetInfo"
-								action="#{lanEthernetInfo.getLanEthernetInfoAction(infoDevice.id)}"
+								action="#{lanEthernetInfo.getLanEthernetInfoAction(deviceInfo.id)}"
 								update="lanEthernetInfos formTemplate:msgs"
 								onclick="PF('buscarLanEthernetInfo').disable()"
 								oncomplete="PF('buscarLanEthernetInfo').enable()" />
@@ -640,7 +640,7 @@
 						<h:panelGrid columns="2">
 
 							<p:commandButton value="Sim" update="formTemplate:msgs"
-								action="#{reboot.RebootAction(infoDevice.id)}"
+								action="#{reboot.RebootAction(deviceInfo.id)}"
 								oncomplete="PF('resetDevice').hide();" />
 							<p:commandButton value="Não"
 								oncomplete="PF('resetDevice').hide();" />
@@ -658,7 +658,7 @@
 						<h:panelGrid columns="2">
 
 							<p:commandButton value="Sim" update="formTemplate:msgs"
-								action="#{factoryReset.factoryResetAction(infoDevice.id)}"
+								action="#{factoryReset.factoryResetAction(deviceInfo.id)}"
 								oncomplete="PF('factoryResetDevice').hide();" />
 							<p:commandButton value="Não"
 								oncomplete="PF('factoryResetDevice').hide();" />
@@ -717,7 +717,7 @@
 					</h:panelGrid>
 
 					<p:commandButton value="Eviar FXS"
-						action="#{accountProvisioning.sipAccountProvisioningAction(infoDevice.id)}"
+						action="#{accountProvisioning.sipAccountProvisioningAction(deviceInfo.id)}"
 						update="@all formTemplate:msgs" />
 
 				</p:dialog>
@@ -732,7 +732,7 @@
 						<p:inputText value="#{sipDiagnostics.phyReferenceList}" />
 
 						<p:commandButton value="Consultar"
-							action="#{sipDiagnostics.sipDiagnostics(infoDevice.id)}"
+							action="#{sipDiagnostics.sipDiagnostics(deviceInfo.id)}"
 							update="sipDiagnosticsValues" />
 
 					</h:panelGrid>

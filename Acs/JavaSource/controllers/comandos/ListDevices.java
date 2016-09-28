@@ -43,6 +43,10 @@ public class ListDevices {
 
 				this.criteria = "userKey3";
 
+			} else if (this.parameter.contains(".")) {
+				
+				this.criteria = "ip";
+				
 			} else {
 
 				this.criteria = "serialNumber";

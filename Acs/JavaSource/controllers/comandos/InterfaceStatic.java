@@ -48,8 +48,6 @@ public class InterfaceStatic {
 
 			} else {
 
-				System.out.println(e.getMessage());
-
 				JSFUtil.addErrorMessage(e.getMessage());
 				
 				this.cont = 0;

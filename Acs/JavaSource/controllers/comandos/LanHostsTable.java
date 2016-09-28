@@ -24,7 +24,7 @@ public class LanHostsTable {
 	public void getLanHostsTableAction(Integer deviceId) {
 
 		try {
-			
+						
 			this.lanHostHolders = this.lanHostsTableAction.getLanHostsTable(deviceId, JSFUtil.autenticacao());
 
 			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
