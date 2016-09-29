@@ -34,7 +34,12 @@ public class CapabilityNames {
 
 	private Boolean portMapping = false;
 	
-	private Boolean lanEthernetInfo = false;	
+	private Boolean lanEthernetInfo = false;
+	
+	private Boolean ping = false;
+	
+	private Boolean setWiFiConfig = false;
+	
 
 	private CapabilityNamesAction capabilityNamesAction;
 
@@ -97,6 +102,14 @@ public class CapabilityNames {
 					} else if (string.equalsIgnoreCase("getLanEthernetInfo")) {
 						
 						this.lanEthernetInfo = true;
+						
+					} else if (string.equalsIgnoreCase("Ping")) {
+						
+						this.ping = true;
+						
+					} else if (string.equalsIgnoreCase("setWiFiConfig")) {
+						
+						this.setWiFiConfig = false;
 						
 					}
 
@@ -208,6 +221,21 @@ public class CapabilityNames {
 	public void setLanEthernetInfo(Boolean lanEthernetInfo) {
 		this.lanEthernetInfo = lanEthernetInfo;
 	}
-	
 
+	public Boolean getPing() {
+		return ping;
+	}
+
+	public void setPing(Boolean ping) {
+		this.ping = ping;
+	}
+
+	public Boolean getSetWiFiConfig() {
+		return setWiFiConfig;
+	}
+
+	public void setSetWiFiConfig(Boolean setWiFiConfig) {
+		this.setWiFiConfig = setWiFiConfig;
+	}
+	
 }
