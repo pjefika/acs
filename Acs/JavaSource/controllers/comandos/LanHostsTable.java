@@ -10,29 +10,45 @@ import util.JSFUtil;
 @ManagedBean
 @RequestScoped
 public class LanHostsTable {
-	
+
 	private LanHostHolder[] lanHostHolders;
-	
+
 	private LanHostsTableAction lanHostsTableAction;
-	
+
+	private Integer cont = 0;
+
 	public LanHostsTable() {
 
 		this.lanHostsTableAction = new LanHostsTableAction();
-		
+
 	}
 
 	public void getLanHostsTableAction(Integer deviceId) {
 
 		try {
-						
+			
 			this.lanHostHolders = this.lanHostsTableAction.getLanHostsTable(deviceId, JSFUtil.autenticacao());
 
 			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
 
+			this.cont = 0;
+
 		} catch (Exception e) {
 
-			JSFUtil.addErrorMessage(e.getMessage());
-			JSFUtil.addErrorMessage("Erro ao consultar tabela de Hosts, Equipamento inativo.");
+			if (this.cont < 11) {
+
+				this.cont++;
+
+				this.getLanHostsTableAction(deviceId);
+
+			}else {
+
+				JSFUtil.addErrorMessage(e.getMessage());
+				JSFUtil.addErrorMessage("Erro ao consultar tabela de Hosts, Equipamento inativo.");
+
+				this.cont = 0;
+
+			}
 
 		}
 
@@ -45,5 +61,5 @@ public class LanHostsTable {
 	public void setLanHostHolders(LanHostHolder[] lanHostHolders) {
 		this.lanHostHolders = lanHostHolders;
 	}	
-	
+
 }

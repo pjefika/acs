@@ -3,13 +3,13 @@ package controllers.comandos;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import models.comandos.CapabilityNamesAction;
 import util.JSFUtil;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CapabilityNames {
 
 	private List<String> capabilitValues;	
@@ -109,14 +109,14 @@ public class CapabilityNames {
 						
 					} else if (string.equalsIgnoreCase("setWiFiConfig")) {
 						
-						this.setWiFiConfig = false;
+						this.setWiFiConfig = true;
 						
 					}
 
 				}
-
+				
 			}
-
+			
 		} catch (Exception e) {
 
 			JSFUtil.addErrorMessage(e.getMessage());

@@ -31,7 +31,7 @@
 
 	<ui:define name="conteudo">
 
-		<h:form id="form">
+		<h:form id="form" style="width: 100%;">
 
 			<p:panel header="Consulta de Devices">
 
@@ -101,65 +101,72 @@
 
 				</p:dataGrid>
 
-
 				<p:dialog header="Informações de Equipamento" widgetVar="infoEqp"
-					modal="true" height="500" width="800" minWidth="800"
+					modal="true" width="800" minWidth="800" height="500"
 					minHeight="500" resizable="false">
 
 					<h:panelGroup id="infoEqpShow">
 
-						<p:panel header="Ações">
+						<p:tabView>
 
-							<p:commandButton value="Reboot"
-								onclick="PF('resetDevice').show();"
-								rendered="#{capabilityNames.reboot}" />
+							<p:tab title="Informação">
 
-							<p:commandButton value="Reset de Fabrica"
-								onclick="PF('factoryResetDevice').show();"
-								rendered="#{capabilityNames.factoryReset}" />
+								<p:commandButton value="Hosts"
+									rendered="#{capabilityNames.lanHost}"
+									onclick="PF('infoLanHosts').show();" />
 
-							<p:commandButton value="Hosts"
-								rendered="#{capabilityNames.lanHost}"
-								onclick="PF('infoLanHosts').show();" />
+								<p:commandButton value="Interface Statistics"
+									rendered="#{capabilityNames.interfaceStatistics}"
+									onclick="PF('interfaceStatistic').show();" />
 
-							<p:commandButton value="Interface Statistics"
-								rendered="#{capabilityNames.interfaceStatistics}"
-								onclick="PF('interfaceStatistic').show();" />
+								<p:commandButton value="DSL Connection Info"
+									rendered="#{capabilityNames.infoDslConnection}"
+									onclick="PF('infoDslConnect').show()" />
 
-							<p:commandButton value="DSL Connection Info"
-								rendered="#{capabilityNames.infoDslConnection}"
-								onclick="PF('infoDslConnect').show()" />
+								<p:commandButton value="Info Gateway"
+									rendered="#{capabilityNames.gateWayInfo}"
+									onclick="PF('infoGateWay').show()" />
 
-							<p:commandButton value="Info Gateway"
-								rendered="#{capabilityNames.gateWayInfo}"
-								onclick="PF('infoGateWay').show()" />
+								<p:commandButton value="Wifi Info"
+									rendered="#{capabilityNames.wifiInfo}"
+									onclick="PF('infoWifi').show()" />
 
-							<p:commandButton value="Wifi Info"
-								rendered="#{capabilityNames.wifiInfo}"
-								onclick="PF('infoWifi').show()" />
+								<p:commandButton value="Consulta Sip"
+									rendered="#{capabilityNames.sipDiagnostic}"
+									onclick="PF('sipDiagnostic').show()" />
 
-							<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
-								onclick="PF('sipAccountPro').show();" />
+								<p:commandButton value="Port Mapping Table"
+									rendered="#{capabilityNames.portMapping}"
+									onclick="PF('infoPortMappingTable').show()" />
 
-							<p:commandButton value="Consulta Sip"
-								rendered="#{capabilityNames.sipDiagnostic}"
-								onclick="PF('sipDiagnostic').show()" />
+								<p:commandButton value="Lan Ethernet Info"
+									rendered="#{capabilityNames.lanEthernetInfo}"
+									onclick="PF('infoLanEthernetInfo').show()" />
 
-							<p:commandButton value="Port Mapping Table"
-								rendered="#{capabilityNames.portMapping}"
-								onclick="PF('infoPortMappingTable').show()" />
+							</p:tab>
 
-							<p:commandButton value="Lan Ethernet Info"
-								rendered="#{capabilityNames.lanEthernetInfo}"
-								onclick="PF('infoLanEthernetInfo').show()" />
+							<p:tab title="Ações">
 
-							<p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
-								onclick="PF('pingAction').show()" />
+								<p:commandButton value="Reboot"
+									onclick="PF('resetDevice').show();"
+									rendered="#{capabilityNames.reboot}" />
 
-							<p:commandButton value="Wifi Config"
-								rendered="#{capabilityNames.setWiFiConfig}" />
+								<p:commandButton value="Reset de Fabrica"
+									onclick="PF('factoryResetDevice').show();"
+									rendered="#{capabilityNames.factoryReset}" />
 
-						</p:panel>
+								<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
+									onclick="PF('sipAccountPro').show();" />
+
+								<p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
+									onclick="PF('pingAction').show()" />
+
+								<p:commandButton value="Wifi Config"
+									rendered="#{capabilityNames.setWiFiConfig}" />
+
+							</p:tab>
+
+						</p:tabView>
 
 						<br />
 						<br />
@@ -359,7 +366,7 @@
 
 					<p:dialog header="Informação DSL Connection"
 						widgetVar="infoDslConnect" resizable="false" width="600"
-						minWidth="600" height="220" minHeight="220">
+						minWidth="600" height="260" minHeight="260">
 
 						<p:commandButton value="Buscar" widgetVar="buscarDslConnect"
 							action="#{dSLConnectionInfo.DSLConnectionInfoAction(deviceInfo.id)}"
@@ -433,8 +440,8 @@
 					</p:dialog>
 
 					<p:dialog header="Informações de GateWay" widgetVar="infoGateWay"
-						resizable="false" width="600" minWidth="600" height="280"
-						minHeight="280">
+						resizable="false" width="600" minWidth="600" height="370"
+						minHeight="370">
 
 						<p:commandButton value="Buscar" widgetVar="buscarGateWay"
 							action="#{gatewayInfo.GatewayInfoAction(deviceInfo.id)}"
@@ -792,12 +799,13 @@
 				</p:dialog>
 
 				<p:dialog header="Ping" widgetVar="pingAction" resizable="false"
-					width="300" minWidth="300" height="200" minHeight="200"
+					width="300" minWidth="300" height="220" minHeight="220"
 					modal="true">
 
 					<h:panelGrid columns="2">
 
 						<h:outputText value="Host Adress" />
+						<br />
 						<p:inputText value="#{getPing.hostAdress}" />
 
 						<p:commandButton value="Consultar"
@@ -831,7 +839,8 @@
 
 				<p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
 					resizable="false" width="260" height="25" minWidth="260"
-					minHeight="25" showEffect="fade" hideEffect="fade" modal="true">
+					minHeight="25" showEffect="fade" hideEffect="fade" modal="true"
+					closable="false">
 
 					<img id="j_idt17:form:j_idt45"
 						src="/Acs/recursos/images/ajax-loader.gif" alt="" />

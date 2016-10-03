@@ -24,7 +24,7 @@ public class LanHostsTableAction {
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-
+		
 		if (clientResponse.getStatus() != 200) {
 
 			throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
@@ -32,7 +32,7 @@ public class LanHostsTableAction {
 		}
 
 		String output = clientResponse.getEntity(String.class);
-
+		
 		Gson gson = new Gson();
 
 		LanHostHolder[] lanHostHolders = gson.fromJson(output, LanHostHolder[].class);

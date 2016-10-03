@@ -16,11 +16,15 @@ public class DeviceInfo {
 
 	private Values[] values;
 	
+	private Values values2;
+		
 	private Boolean ativo = false;
 	
 	private Integer id;
 
 	private DeviceInfoAction deviceInfoAction;
+	
+	private String status = "Inativo"; 
 
 	public DeviceInfo() {
 
@@ -39,8 +43,8 @@ public class DeviceInfo {
 			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
 
 			this.values = this.infoHolder.getValues();
-			
-			this.ativo = true;			
+						
+			this.ativo = true;
 
 		} catch (Exception e) {
 
@@ -50,6 +54,60 @@ public class DeviceInfo {
 
 		}
 
+	}
+	
+	public void getDeviceInfoActionValue(Integer deviceId) {
+
+		try {
+			
+			this.values = null;
+			
+			this.id = deviceId;
+
+			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
+
+			int cont = 0;
+			
+			for (Values values2 : this.infoHolder.getValues()) {
+				
+				if (cont == 0) {
+					
+					this.values2 = values2;
+					
+					cont++;
+					
+				}				
+				
+			}
+						
+			this.ativo = true;
+			
+		} catch (Exception e) {
+
+			JSFUtil.addErrorMessage(e.getMessage());
+			JSFUtil.addErrorMessage("Equipamento inativo.");
+			this.ativo = false;
+
+		}
+
+	}
+	
+	public String getDeviceInfoActionStatus(Integer deviceId) {
+				
+		try {
+			
+			this.status = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao()).getStatus();
+			
+			return this.status;
+						
+		} catch (Exception e) {
+
+			JSFUtil.addErrorMessage(e.getMessage());
+			
+			return this.status;
+			
+		}
+				
 	}
 
 	public InfoHolder getInfoHolder() {
@@ -82,6 +140,22 @@ public class DeviceInfo {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}	
+	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Values getValues2() {
+		return values2;
+	}
+
+	public void setValues2(Values values2) {
+		this.values2 = values2;
+	}
+	
 }

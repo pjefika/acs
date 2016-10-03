@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.ping.PingHolder;
+import util.JSFUtil;
 
 public class PingAction {
 
@@ -15,7 +16,7 @@ public class PingAction {
 		
 		Client client = Client.create();
 
-		String url = "http://10.200.38.235/nbbs/api/capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":4}", "UTF-8");
+		String url = JSFUtil.acs() + "api/capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":4}", "UTF-8");
 
 		WebResource webResource = client.resource(url);
 
