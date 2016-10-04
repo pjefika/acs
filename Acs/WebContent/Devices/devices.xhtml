@@ -59,7 +59,7 @@
 					<p:panel header="#{results.vendor} #{results.model}"
 						style="height: 220px;">
 
-						<h:panelGroup style="float: left; width: 20%;">
+						<h:panelGroup style="float: left; width: 30%;">
 
 							<h:outputText value="Numero de Serie: " />
 							<h:outputText value="#{results.serialNumber}" />
@@ -113,7 +113,7 @@
 
 						</h:panelGroup>
 
-						<h:panelGroup style="float: right; width: 75%;">
+						<h:panelGroup style="float: right; width: 70%;">
 
 							<p:panel header="Informações">
 
@@ -158,8 +158,10 @@
 									oncomplete="PF('infoPortMappingTable').show()" />
 
 								<p:commandButton value="Lan Ethernet Info"
+									action="#{lanEthernetInfo.getLanEthernetInfoAction(deviceInfo.id)}"
+									update="@form:lanEthernetInfos formTemplate:msgs"
 									rendered="#{capabilityNames.lanEthernetInfo}"
-									onclick="PF('infoLanEthernetInfo').show()" />
+									oncomplete="PF('infoLanEthernetInfo').show()" />
 
 							</p:panel>
 
@@ -502,8 +504,8 @@
 				</p:dialog>
 
 				<p:dialog header="Sip Status" widgetVar="sipDiagnostic"
-					resizable="false" width="300" minWidth="300" height="400"
-					minHeight="400" modal="true">
+					resizable="false" width="300" minWidth="300" height="420"
+					minHeight="420" modal="true">
 
 					<h:panelGrid columns="2">
 
@@ -840,6 +842,54 @@
 					<p:commandButton value="Modificar"
 						action="#{setWiFiConfig.configWifi(deviceInfo.id)}"
 						update="formTemplate:msgs" oncomplete="PF('wifiConfig').hide();" />
+
+				</p:dialog>
+
+				<p:dialog header="Lan Ethernet Info" widgetVar="infoLanEthernetInfo"
+					resizable="false" width="600" minWidth="600" height="280"
+					minHeight="280">
+
+					<p:dataGrid id="lanEthernetInfos" value="#{lanEthernetInfo.values}"
+						var="lanEthernet" columns="2" layout="grid"
+						emptyMessage="Nenhum registro encontrado">
+
+						<p:panel>
+
+							<h:outputText value="EthernetStatus: " />
+							<h:outputText value="#{lanEthernet.ethernetStatus}" />
+							<br />
+
+							<h:outputText value="EthernetEnable: " />
+							<h:outputText value="#{lanEthernet.ethernetEnable}" />
+							<br />
+
+							<h:outputText value="EthernetErrorsSentRcvd: " />
+							<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}" />
+							<br />
+
+							<h:outputText value="EthernetDuplexMode: " />
+							<h:outputText value="#{lanEthernet.ethernetDuplexMode}" />
+							<br />
+
+							<h:outputText value="EthernetMACAddress: " />
+							<h:outputText value="#{lanEthernet.ethernetMACAddress}" />
+							<br />
+
+							<h:outputText value="EthernetBytesSentReceived: " />
+							<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}" />
+							<br />
+
+							<h:outputText value="EthernetMACCtrlEnabled: " />
+							<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}" />
+							<br />
+
+							<h:outputText value="EthernetMaxBitRate: " />
+							<h:outputText value="#{lanEthernet.ethernetMaxBitRate}" />
+							<br />
+
+						</p:panel>
+
+					</p:dataGrid>
 
 				</p:dialog>
 

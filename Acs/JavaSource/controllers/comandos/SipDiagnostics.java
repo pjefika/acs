@@ -31,7 +31,7 @@ public class SipDiagnostics {
 	public void sipDiagnostics(Integer deviceId) {
 
 		try {
-			
+									
 			this.sipDiagnosticsHolder = this.sipDiagnosticsAction.sipDiagnostics(deviceId, this.phyReferenceList, JSFUtil.autenticacao());
 			
 			int cont = 0;

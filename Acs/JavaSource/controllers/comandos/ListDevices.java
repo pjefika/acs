@@ -61,7 +61,7 @@ public class ListDevices {
 			
 			if (this.resultsHolder.getTotalLength() == 0) {
 				
-				JSFUtil.addErrorMessage("Não foram encontrados Devices ativos.");
+				JSFUtil.addErrorMessage("Não foram encontrados resultados para o Parametro: " + this.parameter);
 				
 			}
 						
