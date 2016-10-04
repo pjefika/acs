@@ -20,11 +20,11 @@ public class SipDiagnosticsAction {
 		Client client = Client.create();
 
 		String url = JSFUtil.acs() + "capability/diagnostic?diagnostic=" + URLEncoder.encode("\"sipDiagnostics\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"PhyReferenceList\":\"" + phyReferenceList + "\"}", "UTF-8");
-
+		
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-		
+				
 		if (clientResponse.getStatus() != 200) {
 
 			throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
@@ -32,11 +32,11 @@ public class SipDiagnosticsAction {
 		}
 
 		String output = clientResponse.getEntity(String.class);
-		
+				
 		Gson gson = new Gson();
 
 		SipDiagnosticsHolder sipDiagnosticsHolder = gson.fromJson(output, SipDiagnosticsHolder.class);
-		
+				
 		clientResponse.close();
 
 		return sipDiagnosticsHolder;

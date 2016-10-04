@@ -514,7 +514,7 @@
 
 						<p:commandButton value="Consultar"
 							action="#{sipDiagnostics.sipDiagnostics(deviceInfo.id)}"
-							update="sipDiagnosticsValues" />
+							update="sipDiagnosticsValues formTemplate:msgs" />
 
 					</h:panelGrid>
 
@@ -719,7 +719,7 @@
 
 						<p:commandButton value="Consultar"
 							action="#{getPing.PingAction(deviceInfo.id)}"
-							update="pingActions" />
+							update="pingActions formTemplate:msgs" />
 
 					</h:panelGrid>
 

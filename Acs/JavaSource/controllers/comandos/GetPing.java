@@ -19,6 +19,8 @@ public class GetPing {
 	
 	private PingAction pingAction;
 	
+	private Integer conterTime = 0;
+	
 	public GetPing() {
 		
 		this.pingAction = new PingAction();	
@@ -45,11 +47,27 @@ public class GetPing {
 				
 			}
 			
-			JSFUtil.addInfoMessage("Comando executado com sucesso.");			
+			JSFUtil.addInfoMessage("Comando executado com sucesso.");
+			
+			this.conterTime = 0;
 			
 		} catch (Exception e) {
 			
-			JSFUtil.addErrorMessage(e.getMessage());
+			if (this.conterTime < 11) {
+				
+				this.conterTime++;
+				
+				this.PingAction(deviceId);
+				
+			} else {
+				
+				JSFUtil.addErrorMessage(e.getMessage());
+				
+				this.conterTime = 0;
+				
+			}
+			
+			
 			
 		}
 		

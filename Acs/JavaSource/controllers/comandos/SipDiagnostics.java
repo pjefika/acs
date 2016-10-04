@@ -39,8 +39,18 @@ public class SipDiagnostics {
 			for (Values value : this.sipDiagnosticsHolder.getValues()) {
 
 				if (cont == 0) {
-
-					this.values = value;
+					
+					if (value.getStatus().equalsIgnoreCase("error")) {
+						
+						cont = 0;
+						
+						this.sipDiagnostics(deviceId);
+						
+					} else {
+						
+						this.values = value;
+						
+					}					
 
 				}
 
@@ -49,6 +59,8 @@ public class SipDiagnostics {
 			}
 			
 			this.contTentativas = 0;
+			
+			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
 
 		} catch (Exception e) {
 			
