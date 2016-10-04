@@ -57,7 +57,13 @@ public class ListDevices {
 
 			this.resultsHolder = this.listDevicesServico.listDevices(this.criteria, this.parameter, JSFUtil.autenticacao());
 			
-			this.listaResults = this.resultsHolder.getResults();			
+			this.listaResults = this.resultsHolder.getResults();
+			
+			if (this.resultsHolder.getTotalLength() == 0) {
+				
+				JSFUtil.addErrorMessage("Não foram encontrados Devices ativos.");
+				
+			}
 						
 		} catch (Exception e) {
 
