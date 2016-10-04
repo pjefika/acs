@@ -10,67 +10,81 @@ import util.JSFUtil;
 @ManagedBean
 @RequestScoped
 public class GetPing {
-	
+
 	private PingHolder[] ping;
-	
+
 	private PingHolder pingHolder;
-	
+
 	private String hostAdress = "www.google.com";
-	
+
 	private PingAction pingAction;
-	
+
 	private Integer conterTime = 0;
-	
+
 	public GetPing() {
-		
-		this.pingAction = new PingAction();	
-		
+
+		this.pingAction = new PingAction();
+
 	}
-	
+
+	public void clearVariables() {
+
+		this.pingHolder = null;
+
+		this.ping = null;
+
+	}
+
 	public void PingAction(Integer deviceId) {
-		
+
 		try {
-			
+
 			this.ping = this.pingAction.pingAction(deviceId, this.hostAdress, JSFUtil.autenticacao());
-			
+
 			int cont = 0;
-			
+
 			for (PingHolder pingHolder : ping) {
-				
+
 				if (cont == 0) {
-					
+
 					this.pingHolder = pingHolder;
-					
+
 					cont++;
-					
+
 				}				
-				
+
 			}
-			
-			JSFUtil.addInfoMessage("Comando executado com sucesso.");
-			
-			this.conterTime = 0;
-			
-		} catch (Exception e) {
-			
-			if (this.conterTime < 11) {
-				
-				this.conterTime++;
-				
-				this.PingAction(deviceId);
-				
-			} else {
-				
-				JSFUtil.addErrorMessage(e.getMessage());
-				
+
+			if (this.pingHolder != null) {
+
+				JSFUtil.addInfoMessage("Comando executado com sucesso.");
+
 				this.conterTime = 0;
-				
+
+			} else {
+
+				JSFUtil.addErrorMessage("Erro ao realizar comando ping");
+
 			}
-			
-			
-			
+
+		} catch (Exception e) {						
+
+			if (this.conterTime < 11) {
+
+				this.conterTime++;				
+
+				this.PingAction(deviceId);
+
+			} else {
+
+				JSFUtil.addErrorMessage(e.getMessage());
+
+				this.conterTime = 0;
+
+			}
+
 		}
-		
+
 	}
 
 	public PingHolder[] getPing() {
@@ -96,5 +110,5 @@ public class GetPing {
 	public void setPingHolder(PingHolder pingHolder) {
 		this.pingHolder = pingHolder;
 	}	
-	
+
 }

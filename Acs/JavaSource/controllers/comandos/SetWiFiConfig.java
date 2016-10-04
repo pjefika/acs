@@ -28,6 +28,12 @@ public class SetWiFiConfig {
 
 	}
 
+	public void clearVariables() {
+
+		this.wifiConf = new WifiConf();
+
+	}
+
 	public void configWifi(Integer deviceId) {
 
 		String confWifi;
@@ -135,24 +141,30 @@ public class SetWiFiConfig {
 			Thread.sleep(5000);
 
 			this.setWiFiConfigHolder = this.setWiFiConfigAction.setWiFiConfig(deviceId, JSFUtil.autenticacao(), confWifi);
-			
+
 			if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
-				
+
 				JSFUtil.addInfoMessage("Comando " + action + " executado com sucesso.");
 
 				this.cont = 0;
 
+				this.wifiConf = new WifiConf();
+
 			} else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("nok") && this.cont < 3) {
-								
+
 				this.cont++;
 
 				this.setWiFiConfig(deviceId, confWifi, action);
+				
+				this.wifiConf = new WifiConf();
 
 			} else {
-				
+
 				JSFUtil.addErrorMessage("Comando: " + this.setWiFiConfigHolder.getStatus() + " - Exception: " + this.setWiFiConfigHolder.getException());
 
-				this.cont = 0;	
+				this.cont = 0;
+				
+				this.wifiConf = new WifiConf();
 
 			}
 

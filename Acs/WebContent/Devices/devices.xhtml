@@ -149,7 +149,9 @@
 
 								<p:commandButton value="Consulta Sip"
 									rendered="#{capabilityNames.sipDiagnostic}"
-									onclick="PF('sipDiagnostic').show()" />
+									oncomplete="PF('sipDiagnostic').show()"
+									actionListener="#{sipDiagnostics.clearVariables()}"
+									update="@form:form:sipDiagnosticsValues" />
 
 								<p:commandButton value="Port Mapping Table"
 									action="#{portMappingTable.getPortMappingTableAction(deviceInfo.id)}"
@@ -181,7 +183,15 @@
 									onclick="PF('sipAccountPro').show();" />
 
 								<p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
-									onclick="PF('pingAction').show()" />
+									oncomplete="PF('pingAction').show()"
+									actionListener="#{getPing.clearVariables()}"
+									update="@form:form:pingActions" />
+
+								<p:commandButton value="Configurar Wifi"
+									rendered="#{capabilityNames.setWiFiConfig}"
+									oncomplete="PF('wifiConfig').show()"
+									actionListener="#{setWiFiConfig.clearVariables()}"
+									update="@form:form:formConfigWifi" />
 
 							</p:panel>
 
@@ -495,7 +505,9 @@
 
 							<p:commandButton value="Configurar Wifi"
 								rendered="#{capabilityNames.setWiFiConfig}"
-								onclick="PF('wifiConfig').show()" />
+								oncomplete="PF('wifiConfig').show()"
+								actionListener="#{setWiFiConfig.clearVariables()}"
+								update="@form:form:formConfigWifi" />
 
 						</f:facet>
 
@@ -514,7 +526,7 @@
 
 						<p:commandButton value="Consultar"
 							action="#{sipDiagnostics.sipDiagnostics(deviceInfo.id)}"
-							update="sipDiagnosticsValues formTemplate:msgs" />
+							update="@form:form:sipDiagnosticsValues formTemplate:msgs" />
 
 					</h:panelGrid>
 
@@ -719,7 +731,7 @@
 
 						<p:commandButton value="Consultar"
 							action="#{getPing.PingAction(deviceInfo.id)}"
-							update="pingActions formTemplate:msgs" />
+							update="@form:form:pingActions formTemplate:msgs" />
 
 					</h:panelGrid>
 
@@ -750,7 +762,7 @@
 					resizable="false" width="300" minWidth="300" height="320"
 					minHeight="320" modal="true">
 
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="2" id="formConfigWifi">
 
 						<h:outputText value="ssid" />
 						<p:inputText value="#{setWiFiConfig.wifiConf.ssid}" />

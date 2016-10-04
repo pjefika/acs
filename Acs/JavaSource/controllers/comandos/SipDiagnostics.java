@@ -28,6 +28,14 @@ public class SipDiagnostics {
 		
 	}
 	
+	public void clearVariables() {
+		
+		this.values = null;
+		
+		this.sipDiagnosticsHolder = null;
+		
+	}
+	
 	public void sipDiagnostics(Integer deviceId) {
 
 		try {

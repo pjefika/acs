@@ -53,6 +53,8 @@ public class CapabilityNames {
 
 		try {
 			
+			this.everyBodyFalse();
+			
 			if (ativo) {
 
 				List<String> values = this.capabilityNamesAction.listCapabilityNamesFor(deviceId, JSFUtil.autenticacao());
@@ -124,6 +126,41 @@ public class CapabilityNames {
 
 		}		
 
+	}
+	
+	public void everyBodyFalse() {
+		
+		/**
+		 * Every body wants a kung fu fighter =)
+		 * False em todo mundo
+		 **/
+		
+		this.reboot = false;
+
+		this.factoryReset = false;
+		
+		this.lanHost = false;
+		
+		this.interfaceStatistics = false;
+		
+		this.infoDslConnection = false;
+		
+		this.gateWayInfo = false;
+
+		this.wifiInfo = false;
+
+		this.fxs = false;
+
+		this.sipDiagnostic = false;	
+
+		this.portMapping = false;
+		
+		this.lanEthernetInfo = false;
+		
+		this.ping = false;
+		
+		this.setWiFiConfig = false;
+		
 	}
 
 	public List<String> getCapabilitValues() {

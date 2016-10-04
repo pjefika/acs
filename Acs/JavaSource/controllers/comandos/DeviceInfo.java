@@ -60,7 +60,7 @@ public class DeviceInfo {
 
 		try {
 			
-			this.values = null;
+			this.values2 = null;
 			
 			this.id = deviceId;
 
