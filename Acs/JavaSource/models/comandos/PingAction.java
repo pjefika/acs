@@ -16,8 +16,8 @@ public class PingAction {
 		
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "api/capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":4}", "UTF-8");
-
+		String url = JSFUtil.acs() + "capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":4}", "UTF-8");
+				
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
@@ -29,7 +29,7 @@ public class PingAction {
 		}
 
 		String output = clientResponse.getEntity(String.class);
-				
+		
 		Gson gson = new Gson();
 
 		PingHolder[] ping = gson.fromJson(output, PingHolder[].class);
