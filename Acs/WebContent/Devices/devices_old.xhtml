@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/recursos/template/template.xhtml">
+
+	<ui:define name="tituloPagina">
+		 Devices
+	</ui:define>
+	<ui:define name="tituloPrincipal">
+		<i class="fa fa-cogs"> </i> Devices</ui:define>
+	<ui:define name="tituloSecundario"></ui:define>
+
+	<ui:define name="botoesAcao"></ui:define>
+
+	<ui:insert name="eventos">
+
+		<f:metadata>
+
+			<f:event listener="#{loginBean.validaPagina('')}"
+				type="preRenderView" />
+
+			<f:event listener="#{loginBean.validarLogin()}" type="preRenderView" />
+
+		</f:metadata>
+
+	</ui:insert>
+
+	<ui:define name="conteudo">
+
+		<h:form id="form" style="width: 100%;">
+
+			<p:panel header="Consulta de Devices">
+
+				<h:panelGrid columns="3">
+
+					<h:outputText value="Parametro" />
+					<p:inputText value="#{listDevices.parameter}" />
+
+					<p:commandButton action="#{listDevices.listDevices()}"
+						update="dataGridResults" value="Buscar">
+
+						<p:ajaxStatus onstart="PF('loadingDialogInfo').show();"
+							onsuccess="PF('loadingDialogInfo').hide();" />
+
+					</p:commandButton>
+
+				</h:panelGrid>
+
+				<br />
+
+				<p:dataGrid value="#{listDevices.listaResults}" var="results"
+					columns="3" layout="grid" id="dataGridResults"
+					emptyMessage="Nenhum registro encontrado">
+
+					<p:panel header="#{results.vendor} #{results.model}">
+
+						<h:outputText value="Numero de Serie: " />
+						<h:outputText value="#{results.serialNumber}" />
+						<br />
+
+						<h:outputText value="Mac: " />
+						<h:outputText value="#{results.mac}" />
+						<br />
+
+						<h:outputText value="Designador: " />
+						<h:outputText value="#{results.userKey3}" />
+						<br />
+
+						<h:outputText value="Firmware: " />
+						<h:outputText value="#{results.softwareVersion}" />
+						<br />
+
+						<h:outputText value="Ip: " />
+						<h:outputText value="#{results.ip}" />
+						<br />
+
+						<h:outputText value="Primeiro contato: " />
+						<h:outputText value="#{results.firstContactTimeFormat}" />
+						<br />
+
+						<h:outputText value="Class: " />
+						<h:outputText value="Modem"
+							rendered="#{results.classification=='IAD'}" />
+						<h:outputText value="Decoder"
+							rendered="#{results.classification=='STB'}" />
+
+						<br />
+						<br />
+
+						<p:commandButton value="Abrir" id="buscarEqpShow"
+							update="@form:infoEqpShow formTemplate:msgs"
+							oncomplete="PF('infoEqp').show();"
+							actionListener="#{deviceInfo.getDeviceInfoAction(results.id)}"
+							action="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
+
+					</p:panel>
+
+				</p:dataGrid>
+
+				<p:dialog header="Informações de Equipamento" widgetVar="infoEqp"
+					modal="true" width="800" minWidth="800" height="500"
+					minHeight="500" resizable="false">
+
+					<h:panelGroup id="infoEqpShow">
+
+						<p:tabView>
+
+							<p:tab title="Informação">
+
+								<p:commandButton value="Hosts"
+									rendered="#{capabilityNames.lanHost}"
+									onclick="PF('infoLanHosts').show();" />
+
+								<p:commandButton value="Interface Statistics"
+									rendered="#{capabilityNames.interfaceStatistics}"
+									onclick="PF('interfaceStatistic').show();" />
+
+								<p:commandButton value="DSL Connection Info"
+									rendered="#{capabilityNames.infoDslConnection}"
+									onclick="PF('infoDslConnect').show()" />
+
+								<p:commandButton value="Info Gateway"
+									rendered="#{capabilityNames.gateWayInfo}"
+									onclick="PF('infoGateWay').show()" />
+
+								<p:commandButton value="Wifi Info"
+									rendered="#{capabilityNames.wifiInfo}"
+									onclick="PF('infoWifi').show()" />
+
+								<p:commandButton value="Consulta Sip"
+									rendered="#{capabilityNames.sipDiagnostic}"
+									onclick="PF('sipDiagnostic').show()" />
+
+								<p:commandButton value="Port Mapping Table"
+									rendered="#{capabilityNames.portMapping}"
+									onclick="PF('infoPortMappingTable').show()" />
+
+								<p:commandButton value="Lan Ethernet Info"
+									rendered="#{capabilityNames.lanEthernetInfo}"
+									onclick="PF('infoLanEthernetInfo').show()" />
+
+							</p:tab>
+
+							<p:tab title="Ações">
+
+								<p:commandButton value="Reboot"
+									onclick="PF('resetDevice').show();"
+									rendered="#{capabilityNames.reboot}" />
+
+								<p:commandButton value="Reset de Fabrica"
+									onclick="PF('factoryResetDevice').show();"
+									rendered="#{capabilityNames.factoryReset}" />
+
+								<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
+									onclick="PF('sipAccountPro').show();" />
+
+								<p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
+									onclick="PF('pingAction').show()" />
+
+								<p:commandButton value="Wifi Config"
+									rendered="#{capabilityNames.setWiFiConfig}" />
+
+							</p:tab>
+
+						</p:tabView>
+
+						<br />
+						<br />
+
+						<p:panel header="Informações de Equipamento">
+
+							<p:dataList value="#{deviceInfo.values}" var="valuesInfo"
+								type="definition" emptyMessage="Nenhum registro encontrado">
+
+								<h:panelGrid columns="2"
+									style="width: 100%; text-align: center;">
+
+									<h:outputText value="Serial Number: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.sn}" />
+
+									<h:outputText value="Modelo: " style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.model}" />
+
+									<h:outputText value="Versão do Firmware: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.firmver}" />
+
+									<h:outputText value="Ip Address WAN: "
+										style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.wanIpAddress}" />
+
+									<h:outputText value="Device Type: " style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.devicetype}" />
+
+									<h:outputText value="Uptime" style="font-weight: bold;" />
+									<h:outputText value="#{valuesInfo.uptime}" />
+
+								</h:panelGrid>
+
+							</p:dataList>
+
+						</p:panel>
+
+					</h:panelGroup>
+
+					<p:dialog header="Informações de Host" widgetVar="infoLanHosts"
+						resizable="false" width="600" minWidth="600" height="400"
+						minHeight="400">
+
+						<p:commandButton value="Buscar" widgetVar="buscarLanHosts"
+							action="#{lanHostsTable.getLanHostsTableAction(deviceInfo.id)}"
+							update="infoLanHosts formTemplate:msgs"
+							onclick="PF('buscarLanHosts').disable()"
+							oncomplete="PF('buscarLanHosts').enable()" />
+
+						<p:dataGrid id="infoLanHosts"
+							value="#{lanHostsTable.lanHostHolders}" var="lanHost" columns="3"
+							layout="grid" emptyMessage="Nenhum registro encontrado">
+
+							<p:panel header="#{lanHost.hostinst}">
+
+								<h:outputText value="Host Name: " style="font-weight: bold;" />
+								<h:outputText value="#{lanHost.hostname}" />
+								<br />
+
+								<h:outputText value="Status: " style="font-weight: bold;" />
+								<h:outputText value="Ativo" rendered="#{lanHost.status}" />
+								<h:outputText value="Inativo" rendered="#{!lanHost.status}" />
+								<br />
+
+								<h:outputText value="Tipo conexão: " style="font-weight: bold;" />
+								<h:outputText value="#{lanHost.iftype}" />
+								<br />
+
+								<h:outputText value="Mac: " style="font-weight: bold;" />
+								<h:outputText value="#{lanHost.hostmac}" />
+								<br />
+
+								<h:outputText value="Tempo de Conexão: "
+									style="font-weight: bold;" />
+								<h:outputText value="#{lanHost.ltremain}" />
+								<br />
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Informações do Wifi" widgetVar="infoWifi"
+						resizable="false" minHeight="200" minWidth="300" height="200"
+						width="300">
+
+						<p:commandButton value="Buscar" widgetVar="buscarWifi"
+							action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
+							update="infoWifiGets formTemplate:msgs"
+							onclick="PF('buscarWifi').disable()"
+							oncomplete="PF('buscarWifi').enable()" />
+
+						<h:panelGrid columns="2" style="width: 100%; text-align: center;"
+							id="infoWifiGets">
+
+							<h:outputText value="EnableStatus" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.enableStatus}" />
+
+							<h:outputText value="Channel" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.channel}" />
+
+							<h:outputText value="Encryption" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.encryption}" />
+
+							<h:outputText value="SSID" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.SSID}" />
+
+							<h:outputText value="macAddresses" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.macAddresses}" />
+
+							<h:outputText value="Authentication" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.authentication}" />
+
+							<h:outputText value="bytesSent" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesSent}" />
+
+							<h:outputText value="bytesReceived" />
+							<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesReceived}" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Interface Statistics"
+						widgetVar="interfaceStatistic" resizable="false" width="600"
+						minWidth="600" height="400" minHeight="400">
+
+						<p:commandButton value="Buscar" widgetVar="buscarInterfaceStatics"
+							action="#{interfaceStatic.interfaceStatics(deviceInfo.id)}"
+							update="interfaceStatistics formTemplate:msgs"
+							onclick="PF('buscarInterfaceStatics').disable()"
+							oncomplete="PF('buscarInterfaceStatics').enable()" />
+
+						<p:dataGrid id="interfaceStatistics"
+							value="#{interfaceStatic.interfaceStaticsHolder.values}"
+							var="interfaceStatistics" columns="3" layout="grid"
+							emptyMessage="Nenhum registro encontrado">
+
+							<p:panel header="#{interfaceStatistics.name}">
+
+								<h:outputText value="Type:" />
+								<h:outputText value="#{interfaceStatistics.type}" />
+								<br />
+
+								<h:outputText value="Status:" />
+								<h:outputText value="#{interfaceStatistics.status}" />
+								<br />
+
+								<h:outputText value="Enabled:" />
+								<h:outputText value="#{interfaceStatistics.enabled}" />
+								<br />
+
+								<h:outputText value="Name:" />
+								<h:outputText value="#{interfaceStatistics.name}" />
+								<br />
+
+								<h:outputText value="Ip:" />
+								<h:outputText value="#{interfaceStatistics.ip}" />
+								<br />
+
+								<h:outputText value="Mac:" />
+								<h:outputText value="#{interfaceStatistics.mac}" />
+								<br />
+
+								<h:outputText value="Bytes Send:" />
+								<h:outputText value="#{interfaceStatistics.bytesSent}" />
+								<br />
+
+								<h:outputText value="Bytes Received:" />
+								<h:outputText value="#{interfaceStatistics.bytesReceived}" />
+								<br />
+
+								<h:outputText value="Errors Send:" />
+								<h:outputText value="#{interfaceStatistics.errorsSent}" />
+								<br />
+
+								<h:outputText value="Errors Received:" />
+								<h:outputText value="#{interfaceStatistics.errorsReceived}" />
+								<br />
+
+								<h:outputText value="Packet Send:" />
+								<h:outputText value="#{interfaceStatistics.packetsSent}" />
+								<br />
+
+								<h:outputText value="Packet Received:" />
+								<h:outputText value="#{interfaceStatistics.packetsReceived}" />
+								<br />
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Informação DSL Connection"
+						widgetVar="infoDslConnect" resizable="false" width="600"
+						minWidth="600" height="260" minHeight="260">
+
+						<p:commandButton value="Buscar" widgetVar="buscarDslConnect"
+							action="#{dSLConnectionInfo.DSLConnectionInfoAction(deviceInfo.id)}"
+							update="dslConnectInfos formTemplate:msgs"
+							onclick="PF('buscarDslConnect').disable()"
+							oncomplete="PF('buscarDslConnect').enable()" />
+
+						<p:dataGrid id="dslConnectInfos"
+							value="#{dSLConnectionInfo.valuesDslConnection}"
+							var="dslConnectInfo" columns="2" layout="grid"
+							emptyMessage="Nenhum registro encontrado">
+
+							<p:panel header="#{dslConnectInfo.direction}">
+
+								<h:outputText value="Modulação: " />
+								<h:outputText value="#{dslConnectInfo.modulationType}" />
+								<br />
+
+								<h:outputText value="Error Seconds: " />
+								<h:outputText value="#{dslConnectInfo.errorSeconds}" />
+								<br />
+
+								<h:outputText value="FEC Errors: " />
+								<h:outputText value="#{dslConnectInfo.FECErrors}" />
+								<br />
+
+								<h:outputText value="CRC Errors: " />
+								<h:outputText value="#{dslConnectInfo.CRCErrors}" />
+								<br />
+
+								<h:outputText value="HEC Errors: " />
+								<h:outputText value="#{dslConnectInfo.HECErrors}" />
+								<br />
+
+								<h:outputText value="Loss of Framing: " />
+								<h:outputText value="#{dslConnectInfo.lossOfFraming}" />
+								<br />
+
+								<h:outputText value="Loss of Link: " />
+								<h:outputText value="#{dslConnectInfo.lossOfLink}" />
+								<br />
+
+								<h:outputText value="Noise Margin: " />
+								<h:outputText value="#{dslConnectInfo.noiseMargin}" />
+								<br />
+
+								<h:outputText value="Max Rate: " />
+								<h:outputText value="#{dslConnectInfo.maxRate}" />
+								<br />
+
+								<h:outputText value="DSL Show Time Start: " />
+								<h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}" />
+								<br />
+
+								<h:outputText value="Attenuation : " />
+								<h:outputText value="#{dslConnectInfo.attenuation}" />
+								<br />
+
+								<h:outputText value="Power Level: " />
+								<h:outputText value="#{dslConnectInfo.powerLevel}" />
+								<br />
+
+								<h:outputText value="Synch Rate: " />
+								<h:outputText value="#{dslConnectInfo.synchRate}" />
+								<br />
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Informações de GateWay" widgetVar="infoGateWay"
+						resizable="false" width="600" minWidth="600" height="370"
+						minHeight="370">
+
+						<p:commandButton value="Buscar" widgetVar="buscarGateWay"
+							action="#{gatewayInfo.GatewayInfoAction(deviceInfo.id)}"
+							update="gateWayInfos formTemplate:msgs"
+							onclick="PF('buscarGateWay').disable()"
+							oncomplete="PF('buscarGateWay').enable()" />
+
+						<p:dataGrid id="gateWayInfos" value="#{gatewayInfo.valuesgatway}"
+							var="gateWayInfo" columns="2" layout="grid"
+							emptyMessage="Nenhum registro encontrado">
+
+							<p:panel header="Info">
+
+								<h:outputText value="primaryDNS: " />
+								<h:outputText value="#{gateWayInfo.primaryDNS}" />
+								<br />
+
+								<h:outputText value="DHCPLeaseTime: " />
+								<h:outputText value="#{gateWayInfo.DHCPLeaseTime}" />
+								<br />
+
+								<h:outputText value="hostname: " />
+								<h:outputText value="#{gateWayInfo.hostname}" />
+								<br />
+
+								<h:outputText value="uptime: " />
+								<h:outputText value="#{gateWayInfo.uptime}" />
+								<br />
+
+								<h:outputText value="alternateDNS: " />
+								<h:outputText value="#{gateWayInfo.alternateDNS}" />
+								<br />
+
+								<h:outputText value="daylightSavingsTime: " />
+								<h:outputText value="#{gateWayInfo.daylightSavingsTime}" />
+								<br />
+
+								<h:outputText value="DHCPServerStatus: " />
+								<h:outputText value="#{gateWayInfo.DHCPServerStatus}" />
+								<br />
+
+								<h:outputText value="UPnP:  " />
+								<h:outputText value="#{gateWayInfo.UPnP}" />
+								<br />
+
+								<h:outputText value="timeZone Name: " />
+								<h:outputText value="#{gateWayInfo.timeZone.name}" />
+								<br />
+
+								<h:outputText value="timeZone Offset " />
+								<h:outputText value="#{gateWayInfo.timeZone.offset}" />
+								<br />
+
+								<h:outputText value="domainName: " />
+								<h:outputText value="#{gateWayInfo.domainName}" />
+								<br />
+
+								<h:outputText value="DHCPRelayAgent: " />
+								<h:outputText value="#{gateWayInfo.DHCPRelayAgent}" />
+								<br />
+
+								<h:outputText value="alternateNTPServer:  " />
+								<h:outputText value="#{gateWayInfo.alternateNTPServer}" />
+								<br />
+
+								<h:outputText value="DHCPEndingAddress: " />
+								<h:outputText value="#{gateWayInfo.DHCPEndingAddress}" />
+								<br />
+
+								<h:outputText value="NTPClientStatus: " />
+								<h:outputText value="#{gateWayInfo.NTPClientStatus}" />
+								<br />
+
+								<h:outputText value="wanIpAddress: " />
+								<h:outputText value="#{gateWayInfo.wanIpAddress}" />
+								<br />
+
+								<h:outputText value="primaryNTPServer: " />
+								<h:outputText value="#{gateWayInfo.primaryNTPServer}" />
+								<br />
+
+								<h:outputText value="DHCPStartingAddress: " />
+								<h:outputText value="#{gateWayInfo.DHCPStartingAddress}" />
+								<br />
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Port Mapping Table"
+						widgetVar="infoPortMappingTable" resizable="false" width="600"
+						minWidth="600" height="280" minHeight="280">
+
+						<p:commandButton value="Buscar" widgetVar="buscarPortMappingTable"
+							action="#{portMappingTable.getPortMappingTableAction(deviceInfo.id)}"
+							update="portMappingTables formTemplate:msgs"
+							onclick="PF('buscarPortMappingTable').disable()"
+							oncomplete="PF('buscarPortMappingTable').enable()" />
+
+						<p:dataGrid id="portMappingTables"
+							value="#{portMappingTable.values}" var="portMapping" columns="2"
+							layout="grid" emptyMessage="Nenhum registro encontrado">
+
+							<p:panel header="Info">
+
+								<h:outputText value="protocol: " />
+								<h:outputText value="#{portMapping.protocol}" />
+								<br />
+
+								<h:outputText value="intport: " />
+								<h:outputText value="#{portMapping.intport}" />
+								<br />
+
+								<h:outputText value="status: " />
+								<h:outputText value="#{portMapping.status}" />
+								<br />
+
+								<h:outputText value="LeaseDuration: " />
+								<h:outputText value="#{portMapping.leaseDuration}" />
+								<br />
+
+								<h:outputText value="intip: " />
+								<h:outputText value="#{portMapping.intip}" />
+								<br />
+
+								<h:outputText value="portMapName: " />
+								<h:outputText value="#{portMapping.portMapName}" />
+								<br />
+
+								<h:outputText value="RemoteAddress: " />
+								<h:outputText value="#{portMapping.remoteAddress}" />
+								<br />
+
+								<h:outputText value="extport: " />
+								<h:outputText value="#{portMapping.extport}" />
+								<br />
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Lan Ethernet Info"
+						widgetVar="infoLanEthernetInfo" resizable="false" width="600"
+						minWidth="600" height="280" minHeight="280">
+
+						<p:commandButton value="Buscar" widgetVar="buscarLanEthernetInfo"
+							action="#{lanEthernetInfo.getLanEthernetInfoAction(deviceInfo.id)}"
+							update="lanEthernetInfos formTemplate:msgs"
+							onclick="PF('buscarLanEthernetInfo').disable()"
+							oncomplete="PF('buscarLanEthernetInfo').enable()" />
+
+						<p:dataGrid id="lanEthernetInfos"
+							value="#{lanEthernetInfo.values}" var="lanEthernet" columns="2"
+							layout="grid" emptyMessage="Nenhum registro encontrado">
+
+							<p:panel header="Info">
+
+								<h:outputText value="EthernetStatus: " />
+								<h:outputText value="#{lanEthernet.ethernetStatus}" />
+								<br />
+
+								<h:outputText value="EthernetEnable: " />
+								<h:outputText value="#{lanEthernet.ethernetEnable}" />
+								<br />
+
+								<h:outputText value="EthernetErrorsSentRcvd: " />
+								<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}" />
+								<br />
+
+								<h:outputText value="EthernetDuplexMode: " />
+								<h:outputText value="#{lanEthernet.ethernetDuplexMode}" />
+								<br />
+
+								<h:outputText value="EthernetMACAddress: " />
+								<h:outputText value="#{lanEthernet.ethernetMACAddress}" />
+								<br />
+
+								<h:outputText value="EthernetBytesSentReceived: " />
+								<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}" />
+								<br />
+
+								<h:outputText value="EthernetMACCtrlEnabled: " />
+								<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}" />
+								<br />
+
+								<h:outputText value="EthernetMaxBitRate: " />
+								<h:outputText value="#{lanEthernet.ethernetMaxBitRate}" />
+								<br />
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Reset de Modem" widgetVar="resetDevice"
+						resizable="false" height="60" width="145" minHeight="60"
+						minWidth="145">
+
+						<h:outputText value="Você tem certeza?" />
+
+						<h:panelGrid columns="2">
+
+							<p:commandButton value="Sim" update="formTemplate:msgs"
+								action="#{reboot.RebootAction(deviceInfo.id)}"
+								oncomplete="PF('resetDevice').hide();" />
+							<p:commandButton value="Não"
+								oncomplete="PF('resetDevice').hide();" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+
+					<p:dialog header="Reset de Fabrica" widgetVar="factoryResetDevice"
+						resizable="false" height="60" width="145" minHeight="60"
+						minWidth="145">
+
+						<h:outputText value="Você tem certeza?" />
+
+						<h:panelGrid columns="2">
+
+							<p:commandButton value="Sim" update="formTemplate:msgs"
+								action="#{factoryReset.factoryResetAction(deviceInfo.id)}"
+								oncomplete="PF('factoryResetDevice').hide();" />
+							<p:commandButton value="Não"
+								oncomplete="PF('factoryResetDevice').hide();" />
+
+						</h:panelGrid>
+
+					</p:dialog>
+
+				</p:dialog>
+
+				<p:dialog header="FXS" widgetVar="sipAccountPro" resizable="false"
+					width="300" minWidth="300" height="250" minHeight="250">
+
+					<h:panelGrid columns="2">
+
+						<h:outputText value="DirectoryNumber" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.directoryNumber}"
+							placeholder="+55 Instância" />
+
+						<h:outputText value="AuthUserName" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.authUserName}"
+							placeholder="Instância" />
+
+						<h:outputText value="AuthPassword" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.authPassword}"
+							placeholder="Senha" />
+
+						<h:outputText value="ProxyServer" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.proxyServer}"
+							placeholder="Proxy" />
+
+						<h:outputText value="RegistrarServer" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.registrarServer}"
+							placeholder="Domain IMS" />
+
+						<h:outputText value="UserAgentDomain" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.userAgentDomain}"
+							placeholder="Domain IMS" />
+
+						<h:outputText value="OutboundProxy" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.outboundProxy}"
+							placeholder="Proxy" />
+
+						<h:outputText value="PhyReferenceList" />
+						<p:inputText
+							value="#{accountProvisioning.sipAccountProvisioning.directoryNumber}"
+							placeholder="1" />
+
+					</h:panelGrid>
+
+					<p:commandButton value="Eviar FXS"
+						action="#{accountProvisioning.sipAccountProvisioningAction(deviceInfo.id)}"
+						update="@all formTemplate:msgs" />
+
+				</p:dialog>
+
+				<p:dialog header="Sip Status" widgetVar="sipDiagnostic"
+					resizable="false" width="300" minWidth="300" height="400"
+					minHeight="400">
+
+					<h:panelGrid columns="2">
+
+						<h:outputText value="PhyReferenceList" />
+						<p:inputText value="#{sipDiagnostics.phyReferenceList}" />
+
+						<p:commandButton value="Consultar"
+							action="#{sipDiagnostics.sipDiagnostics(deviceInfo.id)}"
+							update="sipDiagnosticsValues" />
+
+					</h:panelGrid>
+
+					<br />
+
+					<p:panelGrid columns="2" id="sipDiagnosticsValues"
+						style="width: 100%;">
+
+						<h:outputText value="UserAgentDomain" />
+						<h:outputText value="#{sipDiagnostics.values.userAgentDomain}" />
+
+						<h:outputText value="DirectoryNumber" />
+						<h:outputText value="#{sipDiagnostics.values.directoryNumber}" />
+
+						<h:outputText value="T38Enabled" />
+						<h:outputText value="#{sipDiagnostics.values.t38Enabled}" />
+
+						<h:outputText value="DTMFMethod" />
+						<h:outputText value="#{sipDiagnostics.values.DTMFMethod}" />
+
+						<h:outputText value="VoiceCodec" />
+						<h:outputText value="#{sipDiagnostics.values.voiceCodec}" />
+
+						<h:outputText value="Enable" />
+						<h:outputText value="#{sipDiagnostics.values.enable}" />
+
+						<h:outputText value="Status" />
+						<h:outputText value="#{sipDiagnostics.values.status}" />
+
+						<h:outputText value="AuthUserName" />
+						<h:outputText value="#{sipDiagnostics.values.authUserName}" />
+
+						<h:outputText value="IPAddress" />
+						<h:outputText value="#{sipDiagnostics.values.IPAddress}" />
+
+						<h:outputText value="ProxyServer" />
+						<h:outputText value="#{sipDiagnostics.values.proxyServer}" />
+
+						<h:outputText value="CallState" />
+						<h:outputText value="#{sipDiagnostics.values.callState}" />
+
+						<h:outputText value="LostPackets" />
+						<h:outputText value="#{sipDiagnostics.values.lostPackets}" />
+
+						<h:outputText value="OutboundProxy" />
+						<h:outputText value="#{sipDiagnostics.values.outboundProxy}" />
+
+						<h:outputText value="ConferenceCallURI" />
+						<h:outputText value="#{sipDiagnostics.values.conferenceCallURI}" />
+
+					</p:panelGrid>
+
+				</p:dialog>
+
+				<p:dialog header="Ping" widgetVar="pingAction" resizable="false"
+					width="300" minWidth="300" height="220" minHeight="220"
+					modal="true">
+
+					<h:panelGrid columns="2">
+
+						<h:outputText value="Host Adress" />
+						<br />
+						<p:inputText value="#{getPing.hostAdress}" />
+
+						<p:commandButton value="Consultar"
+							action="#{getPing.PingAction(deviceInfo.id)}"
+							update="pingActions" />
+
+					</h:panelGrid>
+
+					<br />
+
+					<p:panelGrid columns="2" id="pingActions" style="width: 100%;">
+
+						<h:outputText value="Status" />
+						<h:outputText value="#{getPing.pingHolder.pingStatus}" />
+
+						<h:outputText value="Response Time" />
+						<h:outputText value="#{getPing.pingHolder.responseTime}" />
+
+						<h:outputText value="Success Count" />
+						<h:outputText value="#{getPing.pingHolder.successCount}" />
+
+						<h:outputText value="Repetitions" />
+						<h:outputText value="#{getPing.pingHolder.repetitions}" />
+
+						<h:outputText value="Host Adress" />
+						<h:outputText value="#{getPing.pingHolder.hostAddress}" />
+
+					</p:panelGrid>
+
+				</p:dialog>
+
+				<p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
+					resizable="false" width="260" height="25" minWidth="260"
+					minHeight="25" showEffect="fade" hideEffect="fade" modal="true"
+					closable="false">
+
+					<img id="j_idt17:form:j_idt45"
+						src="/Acs/recursos/images/ajax-loader.gif" alt="" />
+
+				</p:dialog>
+
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
