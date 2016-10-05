@@ -501,16 +501,6 @@
 						<h:outputText value="bytesReceived" />
 						<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesReceived}" />
 
-						<f:facet name="footer">
-
-							<p:commandButton value="Configurar Wifi"
-								rendered="#{capabilityNames.setWiFiConfig}"
-								oncomplete="PF('wifiConfig').show()"
-								actionListener="#{setWiFiConfig.clearVariables()}"
-								update="@form:form:formConfigWifi" />
-
-						</f:facet>
-
 					</h:panelGrid>
 
 				</p:dialog>

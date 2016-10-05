@@ -34,24 +34,42 @@ public class ListDevices {
 	public void listDevices() {
 
 		try {
-
-			if (this.parameter.contains(":")) {
-
-				this.criteria = "mac";
-
-			} else if (this.parameter.contains("-")) {
-
-				this.criteria = "userKey3";
-
-			} else if (this.parameter.contains(".")) {
+			
+			this.listaResults = null;
+			
+			Thread.sleep(1000);
+			
+			if (this.parameter.contains("*")) {
 				
-				this.criteria = "ip";
+				this.criteria = "";
+				
+				if (this.parameter.contains(":")) {
+					
+					this.criteria = "mac";
+					
+				}
 				
 			} else {
+				
+				if (this.parameter.contains(":")) {
 
-				this.criteria = "serialNumber";
+					this.criteria = "mac";
 
-			}
+				} else if (this.parameter.contains("-")) {
+
+					this.criteria = "userKey3";
+
+				} else if (this.parameter.contains(".")) {
+					
+					this.criteria = "ip";
+					
+				} else {
+
+					this.criteria = "serialNumber";
+
+				}
+				
+			}			
 			
 			this.parameter = this.parameter.trim();
 
