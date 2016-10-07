@@ -13,6 +13,8 @@ public class FactoryReset {
 	
 	private FactoryResetHolder factoryResetHolder;
 	
+	private String retornoRf;
+	
 	private FactoryResetAction factoryResetAction;
 	
 	public FactoryReset() {
@@ -25,17 +27,9 @@ public class FactoryReset {
 
 		try {
 
-			this.factoryResetHolder = this.factoryResetAction.factoryReset(deviceId, JSFUtil.autenticacao());
+			this.retornoRf = this.factoryResetAction.factoryReset(deviceId, JSFUtil.autenticacao());
 
-			if (this.factoryResetHolder.getStatus().equalsIgnoreCase("OK")) {
-
-				JSFUtil.addInfoMessage("Reset de Fabrica realizado com sucesso.");
-
-			} else {
-
-				JSFUtil.addInfoMessage("Reset de Fabrica não realizado.");
-
-			}			
+			JSFUtil.addInfoMessage(this.retornoRf);			
 
 		} catch (Exception e) {
 
@@ -53,7 +47,13 @@ public class FactoryReset {
 	public void setFactoryResetHolder(FactoryResetHolder factoryResetHolder) {
 		this.factoryResetHolder = factoryResetHolder;
 	}
-	
-	
+
+	public String getRetornoRf() {
+		return retornoRf;
+	}
+
+	public void setRetornoRf(String retornoRf) {
+		this.retornoRf = retornoRf;
+	}	
 
 }

@@ -17,15 +17,11 @@ public class SetWiFiConfigAction {
 		Client client = Client.create();
 		
 		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"setWiFiConfig\"", "UTF-8") + "&deviceId=" + deviceId + "&input="  + URLEncoder.encode(wifiConfig, "UTF-8");
-		
-		System.out.println(url);
-		
+				
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-		
-		System.out.println(clientResponse);
-				
+						
 		if (clientResponse.getStatus() != 200) {
 
 			throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());

@@ -15,8 +15,8 @@ public class DeviceStatusAction {
 	public DeviceStatusHolder getDeviceStatus(Integer deviceId, String autenticacao) throws Exception {
 		
 		Client client = Client.create();
-		
-		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"getDSLConnectionInfo\"", "UTF-8") + "&deviceId=" + deviceId;
+				
+		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"DeviceStatus\"", "UTF-8") + "&deviceId=" + deviceId;
 
 		WebResource webResource = client.resource(url);
 
