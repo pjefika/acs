@@ -92,7 +92,7 @@ public class SetWiFiConfig {
 
 		if (this.wifiConf.getChannel() != null) {
 
-			confWifi = "{\"frequency\":\"2.4GHz\",\"channel\":\"" + this.wifiConf.getChannel() + "\"}";
+			confWifi = "{\"frequency\":\"2.4GHz\",\"channel\":" + this.wifiConf.getChannel() + "}";
 
 			action = "Channel";
 
@@ -139,14 +139,16 @@ public class SetWiFiConfig {
 		try {
 
 			Thread.sleep(5000);
+			
+			System.out.println(deviceId);
 
 			this.setWiFiConfigHolder = this.setWiFiConfigAction.setWiFiConfig(deviceId, JSFUtil.autenticacao(), confWifi);
 
 			if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
+				
+				this.cont = 0;
 
 				JSFUtil.addInfoMessage("Comando " + action + " executado com sucesso.");
-
-				this.cont = 0;
 
 				this.wifiConf = new WifiConf();
 
@@ -159,20 +161,20 @@ public class SetWiFiConfig {
 				this.wifiConf = new WifiConf();
 
 			} else {
+				
+				this.cont = 0;
 
 				JSFUtil.addErrorMessage("Comando: " + this.setWiFiConfigHolder.getStatus() + " - Exception: " + this.setWiFiConfigHolder.getException());
-
-				this.cont = 0;
 				
 				this.wifiConf = new WifiConf();
 
 			}
 
 		} catch (Exception e) {
+			
+			this.cont = 0;
 
 			JSFUtil.addErrorMessage(e.getMessage());
-
-			this.cont = 0;
 
 		}
 

@@ -468,9 +468,11 @@
 					
 						Informações do Wifi
 
-						<p:commandButton icon="fa fa-refresh"
+						<p:commandButton icon="fa fa-refresh" widgetVar="refreshInfoWifi"
 							action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
-							update="@form:infoWifiGets formTemplate:msgs" />
+							update="@form:infoWifiGets formTemplate:msgs"
+							onclick="PF('refreshInfoWifi').disable()"
+							oncomplete="PF('refreshInfoWifi').enable()" />
 
 					</f:facet>
 
