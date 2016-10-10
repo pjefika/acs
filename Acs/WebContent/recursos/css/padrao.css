@@ -210,9 +210,9 @@ ul#menu li a.selected {
 }
 
 .colorSeAtivo>.ui-panel-titlebar {
-	background-color: #00b300;
+	background-color: #00b300!important;
 }
 
 .colorSeFalse>.ui-panel-titlebar {
-	background-color: #ff704d;
+	background-color: #ff704d!important;
 }
