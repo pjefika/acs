@@ -136,8 +136,6 @@ public class SetWiFiConfig {
 
 				this.setWiFiConfig(deviceId, confWifi);
 				
-				this.wifiConf = new WifiConf();
-
 			} else {
 				
 				this.cont = 0;

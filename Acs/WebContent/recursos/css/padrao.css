@@ -206,7 +206,13 @@ ul#menu li a.selected {
 }
 
 .jqplot-data-label {
-	
 	color: #FFF;
-	
+}
+
+.colorSeAtivo>.ui-panel-titlebar {
+	background-color: #00b300;
+}
+
+.colorSeFalse>.ui-panel-titlebar {
+	background-color: #ff704d;
 }

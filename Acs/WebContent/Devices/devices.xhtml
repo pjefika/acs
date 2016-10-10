@@ -56,8 +56,12 @@
 					columns="1" layout="grid" id="dataGridResults"
 					emptyMessage="Nenhum registro encontrado">
 
+					<h:outputText
+						value="#{deviceInfo.getDeviceInfoActionValue(results.id)}" />
+
 					<p:panel header="#{results.vendor} #{results.model}"
-						style="height: 220px;">
+						style="height: 220px;"
+						styleClass="#{deviceInfo.ativo == true ? 'colorSeAtivo' : 'colorSeFalse'}">
 
 						<h:panelGroup style="float: left; width: 30%;">
 
@@ -92,9 +96,6 @@
 								rendered="#{results.classification=='STB'}" />
 
 							<br />
-
-							<h:outputText
-								value="#{deviceInfo.getDeviceInfoActionValue(results.id)}" />
 
 							<h:outputText
 								value="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
@@ -164,6 +165,12 @@
 									update="@form:lanEthernetInfos formTemplate:msgs"
 									rendered="#{capabilityNames.lanEthernetInfo}"
 									oncomplete="PF('infoLanEthernetInfo').show()" />
+									
+								<p:commandButton value="Get PPPoE Credentials"
+									action="#{getPPPoECredentials.getPPPoECredentialAction(deviceInfo.id)}"
+									update="@form:infoGetPPPoECreds formTemplate:msgs"
+									rendered="#{capabilityNames.getPPPoECredentials}"
+									oncomplete="PF('infoGetPPPoECred').show()" />
 
 							</p:panel>
 
@@ -192,6 +199,12 @@
 									oncomplete="PF('wifiConfig').show()"
 									actionListener="#{setWiFiConfig.clearVariables()}"
 									update="@form:form:formConfigWifi" />
+
+								<p:commandButton value="PPPoE Credentials"
+									rendered="#{capabilityNames.pppoeCredentials}"
+									oncomplete="PF('ppoeCredentials').show()"
+									actionListener="#{pPPoECredentials.clearVariables()}"
+									update="@form:form:ppoeCred" />
 
 							</p:panel>
 
@@ -894,6 +907,43 @@
 						</p:panel>
 
 					</p:dataGrid>
+
+				</p:dialog>
+
+				<p:dialog header="PPPoE Credentials" widgetVar="ppoeCredentials"
+					resizable="false" width="300" minWidth="300" height="150"
+					minHeight="150" modal="true">
+
+					<h:panelGrid columns="2" id="ppoeCred" style="width: 100%;">
+
+						<h:outputText value="Username: " />
+						<p:inputText value="#{pPPoECredentials.username}" />
+
+						<h:outputText value="Password" />
+						<p:inputText value="#{pPPoECredentials.password}" />
+
+						<p:commandButton value="Consultar"
+							action="#{pPPoECredentials.configPPPoECredentials(deviceInfo.id)}"
+							update="@form:form:ppoeCred formTemplate:msgs"
+							oncomplete="PF('ppoeCredentials').hide()" />
+
+					</h:panelGrid>
+
+				</p:dialog>
+				
+				<p:dialog widgetVar="infoGetPPPoECred" resizable="false" minHeight="100"
+					minWidth="300" height="100" width="300" modal="true" header="PPPoE Credentials">
+
+					<h:panelGrid columns="2" style="width: 100%; text-align: center;"
+						id="infoGetPPPoECreds">
+
+						<h:outputText value="Status" />
+						<h:outputText value="#{getPPPoECredentials.getPPPoECredentialsHolder.status}" />
+
+						<h:outputText value="Username" />
+						<h:outputText value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}" />
+
+					</h:panelGrid>
 
 				</p:dialog>
 

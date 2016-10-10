@@ -40,6 +40,10 @@ public class CapabilityNames {
 	
 	private Boolean setWiFiConfig = false;
 	
+	private Boolean pppoeCredentials = false;
+	
+	private Boolean getPPPoECredentials = false;
+	
 
 	private CapabilityNamesAction capabilityNamesAction;
 
@@ -113,6 +117,14 @@ public class CapabilityNames {
 						
 						this.setWiFiConfig = true;
 						
+					} else if (string.equalsIgnoreCase("setPPPoECredentials")) {
+						
+						this.pppoeCredentials = true;
+						
+					} else if (string.equalsIgnoreCase("getPPPoECredentials")) {
+						
+						this.getPPPoECredentials = true;
+						
 					}
 
 				}
@@ -160,6 +172,10 @@ public class CapabilityNames {
 		this.ping = false;
 		
 		this.setWiFiConfig = false;
+		
+		this.pppoeCredentials = false;
+		
+		this.getPPPoECredentials = false;
 		
 	}
 
@@ -274,5 +290,21 @@ public class CapabilityNames {
 	public void setSetWiFiConfig(Boolean setWiFiConfig) {
 		this.setWiFiConfig = setWiFiConfig;
 	}
+
+	public Boolean getPppoeCredentials() {
+		return pppoeCredentials;
+	}
+
+	public void setPppoeCredentials(Boolean pppoeCredentials) {
+		this.pppoeCredentials = pppoeCredentials;
+	}
+
+	public Boolean getGetPPPoECredentials() {
+		return getPPPoECredentials;
+	}
+
+	public void setGetPPPoECredentials(Boolean getPPPoECredentials) {
+		this.getPPPoECredentials = getPPPoECredentials;
+	}	
 	
 }
