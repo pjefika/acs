@@ -23,7 +23,7 @@ public class LogsServico {
 			this.entityManager.persist(logs);
 			
 		} catch (Exception e) {
-
+			
 			throw new Exception("Erro ao cadastrar Log");
 			
 		}

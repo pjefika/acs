@@ -14,24 +14,31 @@ public class Logs {
 	
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	
 	@ManyToOne
 	private UsuarioEfika usuarioEfika;
 	
-	private Date dataHora;
+	private Date dataHora;	
 	
-	private String comando;
+	/**
+	 * Nome do comando
+	 * Ex: Reboot, Factory Reset, SetWifi...
+	 **/
+	private String comando;	
 	
-	private String valor;
-	
+	/**
+	 * Designador, Numero de serie, Mac...
+	 **/
 	private String parametro;
+	
+	private String valor;	
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

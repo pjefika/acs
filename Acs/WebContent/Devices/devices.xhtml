@@ -93,7 +93,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Class: " />
+							<h:outputText value="Classe: " />
 							<h:outputText value="Modem"
 								rendered="#{results.classification=='IAD'}"
 								style="font-weight: bolder;" />
@@ -116,7 +116,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Uptime: " />
+							<h:outputText value="Tempo Online: " />
 							<h:outputText value="#{deviceInfo.values2.uptime}"
 								style="font-weight: bolder;" />
 							<br />
@@ -127,32 +127,32 @@
 
 							<p:panel header="Informações">
 
-								<p:commandButton value="Hosts"
+								<p:commandButton value="Tabela de Hosts"
 									update="@form:infoLanHosts formTemplate:msgs"
 									oncomplete="PF('infoLanHosts').show();"
 									actionListener="#{lanHostsTable.getLanHostsTableAction(results.id)}"
 									rendered="#{capabilityNames.lanHost}" />
 
-								<p:commandButton value="Interface Statistics"
-									action="#{interfaceStatic.interfaceStatics(deviceInfo.id)}"
+								<p:commandButton value="Estatisticas de Interface"
+									action="#{interfaceStatic.interfaceStatics(results.id)}"
 									update="@form:interfaceStatistics formTemplate:msgs"
 									rendered="#{capabilityNames.interfaceStatistics}"
 									oncomplete="PF('interfaceStatistic').show();" />
 
-								<p:commandButton value="DSL Connection Info"
-									action="#{dSLConnectionInfo.DSLConnectionInfoAction(deviceInfo.id)}"
+								<p:commandButton value="Conexão DSL"
+									action="#{dSLConnectionInfo.DSLConnectionInfoAction(results.id)}"
 									rendered="#{capabilityNames.infoDslConnection}"
 									oncomplete="PF('infoDslConnect').show()"
 									update="@form:dslConnectInfos formTemplate:msgs" />
 
-								<p:commandButton value="Info Gateway"
-									action="#{gatewayInfo.GatewayInfoAction(deviceInfo.id)}"
+								<p:commandButton value="Informação de Gateway"
+									action="#{gatewayInfo.GatewayInfoAction(results.id)}"
 									update="@form:gateWayInfos formTemplate:msgs"
 									rendered="#{capabilityNames.gateWayInfo}"
 									oncomplete="PF('infoGateWay').show()" />
 
-								<p:commandButton value="Wifi Info"
-									action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
+								<p:commandButton value="Informação de Wifi"
+									action="#{wiFiInfo.WiFiInfoAction(results.id)}"
 									update="@form:infoWifiGets formTemplate:msgs"
 									rendered="#{capabilityNames.wifiInfo}"
 									oncomplete="PF('infoWifi').show()" />
@@ -160,23 +160,24 @@
 								<p:commandButton value="Consulta Sip"
 									rendered="#{capabilityNames.sipDiagnostic}"
 									oncomplete="PF('sipDiagnostic').show()"
+									action="#{deviceInfo.colocarDeviceId(results.id)}"
 									actionListener="#{sipDiagnostics.clearVariables()}"
 									update="@form:form:sipDiagnosticsValues" />
 
-								<p:commandButton value="Port Mapping Table"
-									action="#{portMappingTable.getPortMappingTableAction(deviceInfo.id)}"
+								<p:commandButton value="Tabela de Porta"
+									action="#{portMappingTable.getPortMappingTableAction(results.id)}"
 									update="@form:portMappingTables formTemplate:msgs"
 									rendered="#{capabilityNames.portMapping}"
 									oncomplete="PF('infoPortMappingTable').show()" />
 
-								<p:commandButton value="Lan Ethernet Info"
-									action="#{lanEthernetInfo.getLanEthernetInfoAction(deviceInfo.id)}"
+								<p:commandButton value="Informações Lan Ethernet"
+									action="#{lanEthernetInfo.getLanEthernetInfoAction(results.id)}"
 									update="@form:lanEthernetInfos formTemplate:msgs"
 									rendered="#{capabilityNames.lanEthernetInfo}"
 									oncomplete="PF('infoLanEthernetInfo').show()" />
 
-								<p:commandButton value="Get PPPoE Credentials"
-									action="#{getPPPoECredentials.getPPPoECredentialAction(deviceInfo.id)}"
+								<p:commandButton value="Informações Credenciais PPPoE"
+									action="#{getPPPoECredentials.getPPPoECredentialAction(results.id)}"
 									update="@form:infoGetPPPoECreds formTemplate:msgs"
 									rendered="#{capabilityNames.getPPPoECredentials}"
 									oncomplete="PF('infoGetPPPoECred').show()" />
@@ -188,14 +189,23 @@
 							<p:panel header="Ações">
 
 								<p:commandButton value="Reboot"
-									onclick="PF('resetDevice').show();"
-									actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
-									rendered="#{capabilityNames.reboot}" />
+									actionListener="#{reboot.RebootAction(results.id, listDevices.parameter)}"
+									rendered="#{capabilityNames.reboot}" update="formTemplate:msgs">
+
+									<p:confirm header="Resetar modem?" message="Você tem certeza?"
+										icon="ui-icon-alert" />
+
+								</p:commandButton>
 
 								<p:commandButton value="Reset de Fabrica"
-									onclick="PF('factoryResetDevice').show();"
-									actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
-									rendered="#{capabilityNames.factoryReset}" />
+									actionListener="#{factoryReset.factoryResetAction(results.id, listDevices.parameter)}"
+									rendered="#{capabilityNames.factoryReset}"
+									update="formTemplate:msgs">
+
+									<p:confirm header="Reset de Fabrica?"
+										message="Você tem certeza?" icon="ui-icon-alert" />
+
+								</p:commandButton>
 
 								<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
 									actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
@@ -203,22 +213,22 @@
 
 								<p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
 									oncomplete="PF('pingAction').show()"
-									action="{deviceInfo.colocarDeviceId(results.id)}"
+									action="#{deviceInfo.colocarDeviceId(results.id)}"
 									actionListener="#{getPing.clearVariables()}"
 									update="@form:form:pingActions" />
 
 								<p:commandButton value="Configurar Wifi"
 									rendered="#{capabilityNames.setWiFiConfig}"
 									oncomplete="PF('wifiConfig').show()"
+									action="#{deviceInfo.colocarDeviceId(results.id)}"
 									actionListener="#{setWiFiConfig.clearVariables()}"
-									action="{deviceInfo.colocarDeviceId(results.id)}"
 									update="@form:form:formConfigWifi" />
 
-								<p:commandButton value="PPPoE Credentials"
+								<p:commandButton value="Credenciais PPPoE"
 									rendered="#{capabilityNames.pppoeCredentials}"
 									oncomplete="PF('ppoeCredentials').show()"
+									action="#{deviceInfo.colocarDeviceId(results.id)}"
 									actionListener="#{pPPoECredentials.clearVariables()}"
-									action="{deviceInfo.colocarDeviceId(results.id)}"
 									update="@form:form:ppoeCred" />
 
 							</p:panel>
@@ -774,42 +784,6 @@
 
 				</p:dialog>
 
-				<p:dialog header="Reset de Modem" widgetVar="resetDevice"
-					resizable="false" height="60" width="145" minHeight="60"
-					minWidth="145" modal="true">
-
-					<h:outputText value="Você tem certeza?" />
-
-					<h:panelGrid columns="2">
-
-						<p:commandButton value="Sim" update="formTemplate:msgs"
-							action="#{reboot.RebootAction(deviceInfo.id)}"
-							oncomplete="PF('resetDevice').hide();" />
-						<p:commandButton value="Não"
-							oncomplete="PF('resetDevice').hide();" />
-
-					</h:panelGrid>
-
-				</p:dialog>
-
-				<p:dialog header="Reset de Fabrica" widgetVar="factoryResetDevice"
-					resizable="false" height="60" width="145" minHeight="60"
-					minWidth="145" modal="true">
-
-					<h:outputText value="Você tem certeza?" />
-
-					<h:panelGrid columns="2">
-
-						<p:commandButton value="Sim" update="formTemplate:msgs"
-							action="#{factoryReset.factoryResetAction(deviceInfo.id)}"
-							oncomplete="PF('factoryResetDevice').hide();" />
-						<p:commandButton value="Não"
-							oncomplete="PF('factoryResetDevice').hide();" />
-
-					</h:panelGrid>
-
-				</p:dialog>
-
 				<p:dialog header="FXS" widgetVar="sipAccountPro" resizable="false"
 					width="300" minWidth="300" height="250" minHeight="250"
 					modal="true">
@@ -1031,7 +1005,7 @@
 					<br />
 
 					<p:commandButton value="Modificar"
-						action="#{setWiFiConfig.configWifiNew(deviceInfo.id)}"
+						action="#{setWiFiConfig.configWifiNew(deviceInfo.id, listDevices.parameter)}"
 						update="formTemplate:msgs" oncomplete="PF('wifiConfig').hide();" />
 
 				</p:dialog>
@@ -1133,6 +1107,15 @@
 						src="/Acs/recursos/images/ajax-loader.gif" alt="" />
 
 				</p:dialog>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+					<p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+						icon="ui-icon-check" />
+					<p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+						icon="ui-icon-close" />
+
+				</p:confirmDialog>
 
 			</p:panel>
 

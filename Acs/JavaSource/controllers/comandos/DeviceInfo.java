@@ -36,7 +36,7 @@ public class DeviceInfo {
 	public void colocarDeviceId(Integer deviceId) {
 		
 		this.id = deviceId;
-		
+						
 	}
 
 	public void getDeviceInfoAction(Integer deviceId) {
