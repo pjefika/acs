@@ -111,7 +111,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Device Type: " />
+							<h:outputText value="Tipo de dispositivo: " />
 							<h:outputText value="#{deviceInfo.values2.devicetype}"
 								style="font-weight: bolder;" />
 							<br />
@@ -249,7 +249,7 @@
 
 						<p:panel header="#{lanHost.hostinst}">
 
-							<h:outputText value="Host Name: " />
+							<h:outputText value="Nome do Host " />
 							<h:outputText value="#{lanHost.hostname}"
 								style="font-weight: bolder;" />
 							<br />
@@ -293,7 +293,7 @@
 
 						<p:panel header="#{interfaceStatistics.name}">
 
-							<h:outputText value="Type:" />
+							<h:outputText value="Tipo:" />
 							<h:outputText value="#{interfaceStatistics.type}"
 								style="font-weight: bolder;" />
 							<br />
@@ -303,7 +303,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Enabled:" />
+							<h:outputText value="Ativo:" />
 							<h:outputText value="#{interfaceStatistics.enabled}"
 								style="font-weight: bolder;" />
 							<br />
@@ -323,32 +323,32 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Bytes Send:" />
+							<h:outputText value="Bytes enviados:" />
 							<h:outputText value="#{interfaceStatistics.bytesSent}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Bytes Received:" />
+							<h:outputText value="Bytes recebidos:" />
 							<h:outputText value="#{interfaceStatistics.bytesReceived}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Errors Send:" />
+							<h:outputText value="Errors enviados:" />
 							<h:outputText value="#{interfaceStatistics.errorsSent}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Errors Received:" />
+							<h:outputText value="Errors recebidos:" />
 							<h:outputText value="#{interfaceStatistics.errorsReceived}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Packet Send:" />
+							<h:outputText value="Packet enviados:" />
 							<h:outputText value="#{interfaceStatistics.packetsSent}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Packet Received:" />
+							<h:outputText value="Packet recebidos:" />
 							<h:outputText value="#{interfaceStatistics.packetsReceived}"
 								style="font-weight: bolder;" />
 							<br />
@@ -375,22 +375,22 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Error Seconds: " />
+							<h:outputText value="Erros por segundo: " />
 							<h:outputText value="#{dslConnectInfo.errorSeconds}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="FEC Errors: " />
+							<h:outputText value="Erros de FEC: " />
 							<h:outputText value="#{dslConnectInfo.FECErrors}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="CRC Errors: " />
+							<h:outputText value="Erros de CRC: " />
 							<h:outputText value="#{dslConnectInfo.CRCErrors}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="HEC Errors: " />
+							<h:outputText value="Erros de HEC: " />
 							<h:outputText value="#{dslConnectInfo.HECErrors}"
 								style="font-weight: bolder;" />
 							<br />
@@ -400,12 +400,12 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Loss of Link: " />
+							<h:outputText value="Perda de link: " />
 							<h:outputText value="#{dslConnectInfo.lossOfLink}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Noise Margin: " />
+							<h:outputText value="Margen de ruido: " />
 							<h:outputText value="#{dslConnectInfo.noiseMargin}"
 								style="font-weight: bolder;" />
 							<br />
@@ -415,12 +415,12 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="DSL Show Time Start: " />
+							<h:outputText value="Tempo de iniciado: " />
 							<h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="Attenuation : " />
+							<h:outputText value="Atenuação: " />
 							<h:outputText value="#{dslConnectInfo.attenuation}"
 								style="font-weight: bolder;" />
 							<br />
@@ -451,7 +451,7 @@
 
 						<p:panel header="Info">
 
-							<h:outputText value="primaryDNS: " />
+							<h:outputText value="DNS primario: " />
 							<h:outputText value="#{gateWayInfo.primaryDNS}"
 								style="font-weight: bolder;" />
 							<br />
@@ -461,17 +461,17 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="hostname: " />
+							<h:outputText value="Nome do host: " />
 							<h:outputText value="#{gateWayInfo.hostname}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="uptime: " />
+							<h:outputText value="Tempo ativo: " />
 							<h:outputText value="#{gateWayInfo.uptime}"
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="alternateDNS: " />
+							<h:outputText value="DNS alternativo: " />
 							<h:outputText value="#{gateWayInfo.alternateDNS}"
 								style="font-weight: bolder;" />
 							<br />
@@ -481,7 +481,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="DHCPServerStatus: " />
+							<h:outputText value="Status do server DHCP: " />
 							<h:outputText value="#{gateWayInfo.DHCPServerStatus}"
 								style="font-weight: bolder;" />
 							<br />
@@ -501,7 +501,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="domainName: " />
+							<h:outputText value="Nome do dominio: " />
 							<h:outputText value="#{gateWayInfo.domainName}"
 								style="font-weight: bolder;" />
 							<br />
@@ -569,19 +569,19 @@
 
 							<f:facet name="header">Rede 2.4Ghz</f:facet>
 
-							<h:outputText value="EnableStatus" />
+							<h:outputText value="Status" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.enableStatus}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="Channel" />
+							<h:outputText value="Canal" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.channel}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="Encryption" />
+							<h:outputText value="Criptografia" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.encryption}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="SSID" />
+							<h:outputText value="Nome da rede" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.SSID}"
 								style="font-weight: bolder;" />
 
@@ -589,15 +589,15 @@
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.macAddresses}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="Authentication" />
+							<h:outputText value="Autenticação" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.authentication}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="bytesSent" />
+							<h:outputText value="Bytes enviados" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesSent}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="bytesReceived" />
+							<h:outputText value="Bytes recebidos" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesReceived}"
 								style="font-weight: bolder;" />
 
@@ -608,19 +608,19 @@
 
 							<f:facet name="header">Rede 5Ghz</f:facet>
 
-							<h:outputText value="EnableStatus" />
+							<h:outputText value="Status" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.enableStatus}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="Channel" />
+							<h:outputText value="Canal" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.channel}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="Encryption" />
+							<h:outputText value="Criptografia" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.encryption}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="SSID" />
+							<h:outputText value="Nome da rede" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.SSID}"
 								style="font-weight: bolder;" />
 
@@ -628,16 +628,16 @@
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.macAddresses}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="Authentication" />
+							<h:outputText value="Autenticação" />
 							<h:outputText
 								value="#{wiFiInfo.wifiInfoHolder5ghz.authentication}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="bytesSent" />
+							<h:outputText value="Bytes enviados" />
 							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.bytesSent}"
 								style="font-weight: bolder;" />
 
-							<h:outputText value="bytesReceived" />
+							<h:outputText value="Bytes recebidos" />
 							<h:outputText
 								value="#{wiFiInfo.wifiInfoHolder5ghz.bytesReceived}"
 								style="font-weight: bolder;" />
@@ -897,10 +897,10 @@
 
 								</p:selectOneMenu>
 
-								<h:outputText value="ssid" />
+								<h:outputText value="Nome da rede" />
 								<p:inputText value="#{setWiFiConfig.wifiConf.ssid}" />
 
-								<h:outputText value="ssidPassword" />
+								<h:outputText value="Senha" />
 								<p:inputText value="#{setWiFiConfig.wifiConf.ssidPassword}" />
 
 								<h:outputText value="standard" />
@@ -916,7 +916,7 @@
 
 								</p:selectOneMenu>
 
-								<h:outputText value="channel" />
+								<h:outputText value="Canal" />
 								<p:selectOneMenu value="#{setWiFiConfig.wifiConf.channel}">
 
 									<f:selectItem itemLabel="" />
@@ -960,7 +960,7 @@
 
 							<h:panelGrid>
 
-								<h:outputText value="enableStatus" />
+								<h:outputText value="Status" />
 								<p:selectOneMenu value="#{setWiFiConfig.wifiConf.enableStatus}">
 
 									<f:selectItem itemLabel="true" itemValue="true" />
@@ -968,7 +968,7 @@
 
 								</p:selectOneMenu>
 
-								<h:outputText value="broadcastEnabled" />
+								<h:outputText value="Status Broadcast" />
 								<p:selectOneMenu
 									value="#{setWiFiConfig.wifiConf.broadcastEnabled}">
 
@@ -977,7 +977,7 @@
 
 								</p:selectOneMenu>
 
-								<h:outputText value="radioEnable" />
+								<h:outputText value="Status Radio" />
 								<p:selectOneMenu value="#{setWiFiConfig.wifiConf.radioEnable}">
 
 									<f:selectItem itemLabel="true" itemValue="true" />
@@ -985,7 +985,7 @@
 
 								</p:selectOneMenu>
 
-								<h:outputText value="encryption" />
+								<h:outputText value="Criptografia" />
 								<p:selectOneMenu value="#{setWiFiConfig.wifiConf.encryption}">
 
 									<f:selectItem itemLabel="" />
