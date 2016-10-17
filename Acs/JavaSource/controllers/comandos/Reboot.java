@@ -1,8 +1,10 @@
 package controllers.comandos;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import controllers.sys.LoginBean;
 import entidades.reboot.RebootHolder;
 import models.comandos.RebootAction;
 import util.JSFUtil;
@@ -10,6 +12,9 @@ import util.JSFUtil;
 @ManagedBean
 @RequestScoped
 public class Reboot {
+	
+	@ManagedProperty(value="#{loginBean}")
+	private LoginBean sessao;
 	
 	private RebootHolder rebootHolder;
 	
@@ -21,11 +26,11 @@ public class Reboot {
 		
 	}
 	
-	public void RebootAction(Integer deviceId) {
+	public void RebootAction(Integer deviceId, String parametro) {
 
 		try {
 
-			this.rebootHolder = this.rebootAction.Reboot(deviceId, JSFUtil.autenticacao());
+			this.rebootHolder = this.rebootAction.Reboot(deviceId, JSFUtil.autenticacao(), this.sessao.getUsuario(), parametro);
 
 			if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
 

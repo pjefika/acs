@@ -11,16 +11,18 @@ import entidades.pppoECredentials.PPPoECredentialsHolder;
 import util.JSFUtil;
 
 public class PPPoECredentialsAction {
-	
-	public PPPoECredentialsHolder getPPPoECredentials(Integer deviceId, String autenticacao, String ppoeConf) throws Exception {
-		
+
+	public PPPoECredentialsHolder setPPPoECredentials(Integer deviceId, String autenticacao, String ppoeConf) throws Exception {
+
 		Client client = Client.create();
-		
+
 		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"setPPPoECredentials\"", "UTF-8") + "&deviceId=" + deviceId + "&input="  + URLEncoder.encode(ppoeConf, "UTF-8");
-		
+
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+
+		System.out.println(clientResponse);
 
 		if (clientResponse.getStatus() != 200) {
 
@@ -31,13 +33,13 @@ public class PPPoECredentialsAction {
 		String output = clientResponse.getEntity(String.class);
 
 		Gson gson = new Gson();
-		
+
 		PPPoECredentialsHolder pPPoECredentialsHolder = gson.fromJson(output, PPPoECredentialsHolder.class);
-		
+
 		clientResponse.close();
-		
+
 		return pPPoECredentialsHolder;
-		
+
 	}
 
 }

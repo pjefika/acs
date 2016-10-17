@@ -13,7 +13,11 @@ public class WiFiInfo {
 
 	private WifiInfoHolder[] wifiInfoHolders;
 
+	private WifiInfoHolder[] wifiInfoHolders5ghz;
+
 	private WifiInfoHolder wifiInfoHolder;
+
+	private WifiInfoHolder wifiInfoHolder5ghz;
 
 	private Integer contTentativas = 0;
 
@@ -28,8 +32,24 @@ public class WiFiInfo {
 	public void WiFiInfoAction(Integer deviceId) {
 
 		try {
+									
+			this.wifiinfo5ghz(deviceId);
+									
+			this.wifiinfo24ghz(deviceId);
+						
+		} catch (Exception e) {
 
-			this.wifiInfoHolders = this.wiFiInfoAction.getWiFiInfo(deviceId, JSFUtil.autenticacao());
+			JSFUtil.addErrorMessage(e.getMessage());
+			
+		}
+
+	}
+	
+	public void wifiinfo24ghz(Integer deviceId) {
+
+		try {			
+
+			this.wifiInfoHolders = this.wiFiInfoAction.getWiFiInfo(deviceId, JSFUtil.autenticacao(), "{\"frequency\":\"2.4GHz\"}");
 
 			int cont = 0;
 
@@ -43,7 +63,7 @@ public class WiFiInfo {
 
 				cont++;
 
-			}
+			}			
 
 			this.contTentativas = 0;
 
@@ -53,16 +73,59 @@ public class WiFiInfo {
 
 				this.contTentativas++;
 
-				this.WiFiInfoAction(deviceId);
+				this.wifiinfo24ghz(deviceId);
 
 			} else {
 
 				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao consultar informações do Wifi.");
+				JSFUtil.addErrorMessage("Erro ao consultar informações do Wifi 2.4GHz.");
 				this.contTentativas = 0;
-				
+
 			}
+
+		}
+
+	}
+
+
+	public void wifiinfo5ghz(Integer deviceId) {
+
+		try {
 			
+			this.wifiInfoHolders5ghz = this.wiFiInfoAction.getWiFiInfo(deviceId, JSFUtil.autenticacao(), "{\"frequency\":\"5GHz\"}");
+
+			int cont = 0;
+
+			for (WifiInfoHolder wifiHolder : wifiInfoHolders5ghz) {
+
+				if (cont == 0) {
+
+					this.wifiInfoHolder5ghz = wifiHolder;
+
+				}
+
+				cont++;
+
+			}			
+
+			this.contTentativas = 0;
+
+		} catch (Exception e) {
+
+			if (this.contTentativas < 11) {
+
+				this.contTentativas++;
+
+				this.wifiinfo5ghz(deviceId);
+
+			} else {
+
+				JSFUtil.addErrorMessage(e.getMessage());
+				JSFUtil.addErrorMessage("Erro ao consultar informações do Wifi 5GHz.");
+				this.contTentativas = 0;
+
+			}
+
 		}
 
 	}
@@ -90,5 +153,21 @@ public class WiFiInfo {
 	public void setContTentativas(Integer contTentativas) {
 		this.contTentativas = contTentativas;
 	}
+
+	public WifiInfoHolder[] getWifiInfoHolders5ghz() {
+		return wifiInfoHolders5ghz;
+	}
+
+	public void setWifiInfoHolders5ghz(WifiInfoHolder[] wifiInfoHolders5ghz) {
+		this.wifiInfoHolders5ghz = wifiInfoHolders5ghz;
+	}
+
+	public WifiInfoHolder getWifiInfoHolder5ghz() {
+		return wifiInfoHolder5ghz;
+	}
+
+	public void setWifiInfoHolder5ghz(WifiInfoHolder wifiInfoHolder5ghz) {
+		this.wifiInfoHolder5ghz = wifiInfoHolder5ghz;
+	}	
 
 }

@@ -31,6 +31,13 @@ public class DeviceInfo {
 		this.deviceInfoAction = new DeviceInfoAction();
 
 	}
+	
+	
+	public void colocarDeviceId(Integer deviceId) {
+		
+		this.id = deviceId;
+		
+	}
 
 	public void getDeviceInfoAction(Integer deviceId) {
 
@@ -38,8 +45,6 @@ public class DeviceInfo {
 			
 			this.values = null;
 			
-			this.id = deviceId;
-
 			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
 
 			this.values = this.infoHolder.getValues();
@@ -62,8 +67,6 @@ public class DeviceInfo {
 			
 			this.values2 = null;
 			
-			this.id = deviceId;
-
 			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
 
 			int cont = 0;

@@ -100,11 +100,11 @@ public class JSFUtil {
 	
 	public static String autenticacao() {
 		
-		/*String username = "efika_system";
-		String password = "Efika@viv0Gvt";*/
+		String username = "efika_system";
+		String password = "Efika@v1v0Gvt";
 		
-		String username = "co_g0047217";
-		String password = "chk123";
+		/*String username = "co_g0047217";
+		String password = "chk123";*/
 		
 		String userPassword = username + ":" + password;
 		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
@@ -117,10 +117,10 @@ public class JSFUtil {
 	public static String acs() {
 		
 		//Produção
-		//String link = "http://10.200.6.150/nbbs/api/";
+		String link = "http://10.200.6.150/nbbs/api/";
 		
 		//Teste
-		String link = "http://10.200.38.235/nbbs/api/";		
+		//String link = "http://10.200.38.235/nbbs/api/";		
 		
 		return link;
 		

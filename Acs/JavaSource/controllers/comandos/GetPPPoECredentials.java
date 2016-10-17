@@ -27,11 +27,11 @@ public class GetPPPoECredentials {
 
 		try {
 
-			this.getPPPoECredentialsHolder = this.getPPPoECredentialsAction.getPPPoECredentials(deviceId, JSFUtil.autenticacao());
-
-			this.contador = 0;
+			this.getPPPoECredentialsHolder = this.getPPPoECredentialsAction.getPPPoECredentials(deviceId, JSFUtil.autenticacao());			
 
 			JSFUtil.addInfoMessage("Comando executado com sucesso.");
+			
+			this.contador = 0;
 
 		} catch (Exception e) {
 
@@ -48,9 +48,7 @@ public class GetPPPoECredentials {
 				JSFUtil.addErrorMessage(e.getMessage());
 
 			}
-
-
-
+			
 		}
 
 	}

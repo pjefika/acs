@@ -38,7 +38,7 @@ public class SetWiFiConfig {
 		
 		StringBuffer confWifi = new StringBuffer();
 		
-		confWifi.append("{\"frequency\":\"2.4GHz\"");
+		confWifi.append("{\"frequency\":\""+ this.wifiConf.getFrequency() +"\"");
 		
 		/*
 		 * Regra no meio.

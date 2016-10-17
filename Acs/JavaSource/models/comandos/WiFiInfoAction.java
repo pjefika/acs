@@ -12,7 +12,7 @@ import util.JSFUtil;
 
 public class WiFiInfoAction {
 
-	public WifiInfoHolder[] getWiFiInfo(Integer deviceId, String autenticacao) throws Exception {
+	public WifiInfoHolder[] getWiFiInfo(Integer deviceId, String autenticacao, String frequency) throws Exception {
 
 		/**
 		 * Busca informações do wifi no modem.
@@ -20,7 +20,7 @@ public class WiFiInfoAction {
 
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"frequency\":\"2.4GHz\"}", "UTF-8");
+		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode(frequency, "UTF-8");
 		
 		WebResource webResource = client.resource(url);
 

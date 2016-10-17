@@ -8,6 +8,14 @@
 	box-sizing: border-box;
 }
 
+.colorSeAtivo>.ui-panel-titlebar {
+	background-color: #00b300!important;
+}
+
+.colorSeFalse>.ui-panel-titlebar {
+	background-color: #ff704d!important;
+}
+
 .gradienteTelefonica {
 	font-family: Telefonica_Header;
 	background: rgba(0, 51, 69, 1);
@@ -207,12 +215,4 @@ ul#menu li a.selected {
 
 .jqplot-data-label {
 	color: #FFF;
-}
-
-.colorSeAtivo>.ui-panel-titlebar {
-	background-color: #00b300!important;
-}
-
-.colorSeFalse>.ui-panel-titlebar {
-	background-color: #ff704d!important;
 }

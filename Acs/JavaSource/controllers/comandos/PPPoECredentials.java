@@ -64,20 +64,18 @@ public class PPPoECredentials {
 		confPppoeBuff.append("}");
 		
 		String confPppoe = confPppoeBuff.toString();
-		
-		System.out.println(confPppoe);
-		
-		//this.getPPPoECredentials(deviceId, confPppoe);
+						
+		this.setPPPoECredentials(deviceId, confPppoe);
 		
 	}
 	
-	public void getPPPoECredentials(Integer deviceId, String confPppoe) {
+	public void setPPPoECredentials(Integer deviceId, String confPppoe) {
 		
 		try {
 			
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 			
-			this.ppPoECredentialsHolder = this.ppPoECredentialsAction.getPPPoECredentials(deviceId, JSFUtil.autenticacao(), confPppoe);
+			this.ppPoECredentialsHolder = this.ppPoECredentialsAction.setPPPoECredentials(deviceId, JSFUtil.autenticacao(), confPppoe);
 			
 			if (this.ppPoECredentialsHolder.getStatus().equalsIgnoreCase("ok")) {
 				
@@ -92,7 +90,7 @@ public class PPPoECredentials {
 				
 				this.contador++;
 				
-				this.getPPPoECredentials(deviceId, confPppoe);
+				this.setPPPoECredentials(deviceId, confPppoe);
 				
 			} else {
 				

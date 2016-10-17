@@ -2,22 +2,28 @@ package models.comandos;
 
 import java.net.URLEncoder;
 
+import javax.ejb.EJB;
+
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.reboot.RebootHolder;
+import entidades.sys.UsuarioEfika;
+import models.sys.LogsServico;
 import util.JSFUtil;
 
 public class RebootAction {
 	
-	public RebootHolder Reboot(Integer deviceId, String autenticacao) throws Exception {
+	@EJB
+	private LogsServico logsServico;
+	
+	public RebootHolder Reboot(Integer deviceId, String autenticacao, UsuarioEfika usuarioEfika, String parametro) throws Exception {
 
 		/**
 		 * Realiza o reset padrão no Equipamento. 
 		 **/
-
 
 		Client client = Client.create();
 
@@ -44,5 +50,5 @@ public class RebootAction {
 		return rebootHolder;
 
 	}
-
+	
 }
