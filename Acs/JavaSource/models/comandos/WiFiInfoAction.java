@@ -21,7 +21,7 @@ public class WiFiInfoAction {
 		Client client = Client.create();
 
 		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode(frequency, "UTF-8");
-		
+				
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);

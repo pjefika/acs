@@ -12,16 +12,16 @@ import util.JSFUtil;
 
 public class PingAction {
 
-	public PingHolder[] pingAction(Integer deviceId, String hostAdress, String autenticacao) throws Exception {
-		
+	public PingHolder[] pingAction(Integer deviceId, String hostAdress, String autenticacao, Integer numberOfRepetitions) throws Exception {
+
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":4}", "UTF-8");
-				
+		String url = JSFUtil.acs() + "capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":" + numberOfRepetitions + "}", "UTF-8");
+
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-						
+
 		if (clientResponse.getStatus() != 200) {
 
 			throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
@@ -29,11 +29,11 @@ public class PingAction {
 		}
 
 		String output = clientResponse.getEntity(String.class);
-						
+
 		Gson gson = new Gson();
 
 		PingHolder[] ping = gson.fromJson(output, PingHolder[].class);
-				
+
 		clientResponse.close();
 
 		return ping;

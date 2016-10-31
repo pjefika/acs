@@ -31,16 +31,16 @@ public class LanEthernetInfo {
 		try {
 
 			this.lanEthernetInfoHolder = this.lanEthernetInfoAction.getLanEthernetInfo(deviceId, JSFUtil.autenticacao());
-
+			
 			this.values = this.lanEthernetInfoHolder.getValues();
-
+			
 			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
 
 			this.cont = 0;
 
 		} catch (Exception e) {
 
-			if (cont < 11) {
+			if (cont < 2) {
 
 				cont++;
 

@@ -21,19 +21,19 @@ public class LanEthernetInfoAction {
 		WebResource webResource = client.resource(url);
 
 		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-		
+				
 		if (clientResponse.getStatus() != 200) {
 
 			throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
 
 		}
 
-		String output = clientResponse.getEntity(String.class);
+		String output = clientResponse.getEntity(String.class);		
 
 		Gson gson = new Gson();
 
 		LanEthernetInfoHolder lanEthernetInfoHolder = gson.fromJson(output, LanEthernetInfoHolder.class);
-
+		
 		clientResponse.close();
 
 		return lanEthernetInfoHolder;

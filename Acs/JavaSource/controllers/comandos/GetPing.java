@@ -17,6 +17,8 @@ public class GetPing {
 
 	private String hostAdress = "www.google.com";
 
+	private Integer numberRepetitions = 4;
+
 	private PingAction pingAction;
 
 	private Integer conterTime = 0;
@@ -39,7 +41,7 @@ public class GetPing {
 
 		try {
 
-			this.ping = this.pingAction.pingAction(deviceId, this.hostAdress, JSFUtil.autenticacao());
+			this.ping = this.pingAction.pingAction(deviceId, this.hostAdress, JSFUtil.autenticacao(), this.numberRepetitions);
 
 			int cont = 0;
 
@@ -109,6 +111,14 @@ public class GetPing {
 
 	public void setPingHolder(PingHolder pingHolder) {
 		this.pingHolder = pingHolder;
+	}
+
+	public Integer getNumberRepetitions() {
+		return numberRepetitions;
+	}
+
+	public void setNumberRepetitions(Integer numberRepetitions) {
+		this.numberRepetitions = numberRepetitions;
 	}	
 
 }

@@ -4,12 +4,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.wifiInfo.WifiInfoHolder;
-import util.JSFUtil;
 import models.comandos.WiFiInfoAction;
+import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
-public class WiFiInfo {
+public class getWifiInfo {
 
 	private WifiInfoHolder[] wifiInfoHolders;
 
@@ -19,29 +19,15 @@ public class WiFiInfo {
 
 	private WiFiInfoAction wiFiInfoAction;
 
-	public WiFiInfo() {
+	public getWifiInfo() {
 
 		this.wiFiInfoAction = new WiFiInfoAction();
 
 	}
 
-	public void WiFiInfoAction(Integer deviceId) {
+	public void buscaInformacoesWifi(Integer deviceId) {
 
 		try {
-																		
-			this.wifiinfo(deviceId);
-						
-		} catch (Exception e) {
-
-			JSFUtil.addErrorMessage(e.getMessage());
-			
-		}
-
-	}
-	
-	public void wifiinfo(Integer deviceId) {
-
-		try {			
 
 			this.wifiInfoHolders = this.wiFiInfoAction.getWiFiInfo(deviceId, JSFUtil.autenticacao(), "{\"frequency\":\"2.4GHz\"}");
 
@@ -53,7 +39,7 @@ public class WiFiInfo {
 
 				this.contTentativas++;
 
-				this.wifiinfo(deviceId);
+				this.buscaInformacoesWifi(deviceId);
 
 			} else {
 
@@ -89,5 +75,6 @@ public class WiFiInfo {
 
 	public void setContTentativas(Integer contTentativas) {
 		this.contTentativas = contTentativas;
-	}
+	}	
+
 }

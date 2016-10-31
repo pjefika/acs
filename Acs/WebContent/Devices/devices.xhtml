@@ -66,7 +66,7 @@
 						styleClass="#{deviceInfo.ativo == true ? 'colorSeAtivo' : 'colorSeFalse'}"
 						style="height: 100%;">
 
-						<h:panelGrid columns="2" style="float: left; width: 25%;">
+						<p:panelGrid columns="2" style="float: left; width: 38%; margin-bottom: 5px;">
 
 							<h:outputText value="Numero de Serie: " />
 							<h:outputText value="#{results.serialNumber}"
@@ -110,9 +110,9 @@
 							<h:outputText value="#{deviceInfo.values2.uptime}"
 								style="font-weight: bolder;" />
 
-						</h:panelGrid>
+						</p:panelGrid>
 
-						<h:panelGroup style="float: right; width: 75%;">
+						<h:panelGroup style="float: right; width: 60%;">
 
 							<p:panel header="Informações">
 
@@ -141,7 +141,7 @@
 									oncomplete="PF('infoGateWay').show()" />
 
 								<p:commandButton value="Informação de Wifi"
-									action="#{wiFiInfo.WiFiInfoAction(results.id)}"
+									actionListener="#{getWifiInfo.buscaInformacoesWifi(results.id)}"
 									update="@form:infoWifiGets formTemplate:msgs"
 									rendered="#{capabilityNames.wifiInfo}"
 									oncomplete="PF('infoWifi').show()" />
@@ -272,20 +272,20 @@
 
 				<p:dialog header="Interface Statistics"
 					widgetVar="interfaceStatistic" resizable="false" width="850"
-					minWidth="850" height="400" minHeight="400" modal="true"
+					minWidth="850" height="320" minHeight="320" modal="true"
 					style="overflow-y: auto;">
 
 					<p:scrollPanel mode="native" style="width: 100%; height: 100%;">
 
 						<p:dataGrid id="interfaceStatistics"
 							value="#{interfaceStatic.interfaceStaticsHolder.values}"
-							var="interfaceStatistics" columns="6" layout="grid"
-							emptyMessage="Nenhum registro encontrado" style="width: 1200px;">
+							var="interfaceStatistics" columns="20" layout="grid"
+							emptyMessage="Nenhum registro encontrado">
 
 							<p:panel header="#{interfaceStatistics.name}"
 								style="height: 100%;">
 
-								<p:panelGrid columns="2">
+								<p:panelGrid columns="2" style="width: 200px;">
 
 									<h:outputText value="Tipo:" />
 									<h:outputText value="#{interfaceStatistics.type}"
@@ -347,7 +347,7 @@
 
 				<p:dialog header="Informação DSL Connection"
 					widgetVar="infoDslConnect" resizable="false" width="600"
-					minWidth="600" height="260" minHeight="260" modal="true">
+					minWidth="600" height="350" minHeight="350" modal="true">
 
 					<p:dataGrid id="dslConnectInfos"
 						value="#{dSLConnectionInfo.valuesDslConnection}"
@@ -356,70 +356,61 @@
 
 						<p:panel header="#{dslConnectInfo.direction}">
 
-							<h:outputText value="Modulação: " />
-							<h:outputText value="#{dslConnectInfo.modulationType}"
-								style="font-weight: bolder;" />
-							<br />
+							<p:panelGrid columns="2" style="width:100%;">
 
-							<h:outputText value="Erros por segundo: " />
-							<h:outputText value="#{dslConnectInfo.errorSeconds}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Modulação: " />
+								<h:outputText value="#{dslConnectInfo.modulationType}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Erros de FEC: " />
-							<h:outputText value="#{dslConnectInfo.FECErrors}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Erros por segundo: " />
+								<h:outputText value="#{dslConnectInfo.errorSeconds}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Erros de CRC: " />
-							<h:outputText value="#{dslConnectInfo.CRCErrors}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Erros de FEC: " />
+								<h:outputText value="#{dslConnectInfo.FECErrors}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Erros de HEC: " />
-							<h:outputText value="#{dslConnectInfo.HECErrors}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Erros de CRC: " />
+								<h:outputText value="#{dslConnectInfo.CRCErrors}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Loss of Framing: " />
-							<h:outputText value="#{dslConnectInfo.lossOfFraming}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Erros de HEC: " />
+								<h:outputText value="#{dslConnectInfo.HECErrors}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Perda de link: " />
-							<h:outputText value="#{dslConnectInfo.lossOfLink}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Loss of Framing: " />
+								<h:outputText value="#{dslConnectInfo.lossOfFraming}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Margen de ruido: " />
-							<h:outputText value="#{dslConnectInfo.noiseMargin}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Perda de link: " />
+								<h:outputText value="#{dslConnectInfo.lossOfLink}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Max Rate: " />
-							<h:outputText value="#{dslConnectInfo.maxRate}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Margen de ruido: " />
+								<h:outputText value="#{dslConnectInfo.noiseMargin}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Tempo de iniciado: " />
-							<h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Max Rate: " />
+								<h:outputText value="#{dslConnectInfo.maxRate}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Atenuação: " />
-							<h:outputText value="#{dslConnectInfo.attenuation}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Tempo de iniciado: " />
+								<h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Power Level: " />
-							<h:outputText value="#{dslConnectInfo.powerLevel}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Atenuação: " />
+								<h:outputText value="#{dslConnectInfo.attenuation}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Synch Rate: " />
-							<h:outputText value="#{dslConnectInfo.synchRate}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Power Level: " />
+								<h:outputText value="#{dslConnectInfo.powerLevel}"
+									style="font-weight: bolder;" />
+
+								<h:outputText value="Synch Rate: " />
+								<h:outputText value="#{dslConnectInfo.synchRate}"
+									style="font-weight: bolder;" />
+
+							</p:panelGrid>
 
 						</p:panel>
 
@@ -432,100 +423,88 @@
 					minHeight="370" modal="true">
 
 					<p:dataGrid id="gateWayInfos" value="#{gatewayInfo.valuesgatway}"
-						var="gateWayInfo" columns="2" layout="grid"
+						var="gateWayInfo" layout="grid" columns="1"
 						emptyMessage="Nenhum registro encontrado">
 
 						<p:panel header="Info">
 
-							<h:outputText value="DNS primario: " />
-							<h:outputText value="#{gateWayInfo.primaryDNS}"
-								style="font-weight: bolder;" />
-							<br />
+							<p:panelGrid columns="2" style="width:100%;">
 
-							<h:outputText value="DHCPLeaseTime: " />
-							<h:outputText value="#{gateWayInfo.DHCPLeaseTime}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Nome do host: " />
+								<h:outputText value="#{gateWayInfo.hostname}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Nome do host: " />
-							<h:outputText value="#{gateWayInfo.hostname}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="DNS primario: " />
+								<h:outputText value="#{gateWayInfo.primaryDNS}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Tempo ativo: " />
-							<h:outputText value="#{gateWayInfo.uptime}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="DNS alternativo: " />
+								<h:outputText value="#{gateWayInfo.alternateDNS}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="DNS alternativo: " />
-							<h:outputText value="#{gateWayInfo.alternateDNS}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Status do server DHCP: " />
+								<h:outputText value="#{gateWayInfo.DHCPServerStatus}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="daylightSavingsTime: " />
-							<h:outputText value="#{gateWayInfo.daylightSavingsTime}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="DHCPRelayAgent: " />
+								<h:outputText value="#{gateWayInfo.DHCPRelayAgent}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Status do server DHCP: " />
-							<h:outputText value="#{gateWayInfo.DHCPServerStatus}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="DHCPLeaseTime: " />
+								<h:outputText value="#{gateWayInfo.DHCPLeaseTime}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="UPnP:  " />
-							<h:outputText value="#{gateWayInfo.UPnP}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="DHCPStartingAddress: " />
+								<h:outputText value="#{gateWayInfo.DHCPStartingAddress}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="timeZone Name: " />
-							<h:outputText value="#{gateWayInfo.timeZone.name}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="DHCPEndingAddress: " />
+								<h:outputText value="#{gateWayInfo.DHCPEndingAddress}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="timeZone Offset " />
-							<h:outputText value="#{gateWayInfo.timeZone.offset}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Tempo ativo: " />
+								<h:outputText value="#{gateWayInfo.uptime}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Nome do dominio: " />
-							<h:outputText value="#{gateWayInfo.domainName}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="daylightSavingsTime: " />
+								<h:outputText value="#{gateWayInfo.daylightSavingsTime}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="DHCPRelayAgent: " />
-							<h:outputText value="#{gateWayInfo.DHCPRelayAgent}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="UPnP:  " />
+								<h:outputText value="#{gateWayInfo.UPnP}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="alternateNTPServer:  " />
-							<h:outputText value="#{gateWayInfo.alternateNTPServer}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="timeZone Name: " />
+								<h:outputText value="#{gateWayInfo.timeZone.name}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="DHCPEndingAddress: " />
-							<h:outputText value="#{gateWayInfo.DHCPEndingAddress}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="timeZone Offset " />
+								<h:outputText value="#{gateWayInfo.timeZone.offset}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="NTPClientStatus: " />
-							<h:outputText value="#{gateWayInfo.NTPClientStatus}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Nome do dominio: " />
+								<h:outputText value="#{gateWayInfo.domainName}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="wanIpAddress: " />
-							<h:outputText value="#{gateWayInfo.wanIpAddress}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="alternateNTPServer:  " />
+								<h:outputText value="#{gateWayInfo.alternateNTPServer}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="primaryNTPServer: " />
-							<h:outputText value="#{gateWayInfo.primaryNTPServer}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="NTPClientStatus: " />
+								<h:outputText value="#{gateWayInfo.NTPClientStatus}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="DHCPStartingAddress: " />
-							<h:outputText value="#{gateWayInfo.DHCPStartingAddress}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="primaryNTPServer: " />
+								<h:outputText value="#{gateWayInfo.primaryNTPServer}"
+									style="font-weight: bolder;" />
+
+								<h:outputText value="wanIpAddress: " />
+								<h:outputText value="#{gateWayInfo.wanIpAddress}"
+									style="font-weight: bolder;" />
+
+
+
+							</p:panelGrid>
 
 						</p:panel>
 
@@ -533,73 +512,84 @@
 
 				</p:dialog>
 
-				<p:dialog widgetVar="infoWifi" resizable="false" minHeight="230"
-					height="230" width="800" minWidth="800" modal="true"
-					closeOnEscape="true" responsive="true">
+				<p:dialog widgetVar="infoWifi" resizable="false" minHeight="300"
+					height="300" width="800" minWidth="800" modal="true"
+					closeOnEscape="true" responsive="true" header="Informações do Wifi">
 
-					<f:facet name="header">
+					<!-- <f:facet name="header">
 					
 						Informações do Wifi
 
 						<p:commandButton icon="fa fa-refresh" widgetVar="refreshInfoWifi"
-							action="#{wiFiInfo.WiFiInfoAction(deviceInfo.id)}"
+							action="#{wiFiInfo.buscaInformacoesWifi(deviceInfo.id)}"
 							update="@form:infoWifiGets formTemplate:msgs"
 							onclick="PF('refreshInfoWifi').disable()"
 							oncomplete="PF('refreshInfoWifi').enable()" />
 
-					</f:facet>
+					</f:facet> -->
 
-					<p:dataGrid value="#{wiFiInfo.wifiInfoHolders}" var="wifiConf"
-						columns="3" layout="grid" id="infoWifiGets">
+					<p:scrollPanel style="width: 100%; height: 100%;" mode="native">
 
-						<p:panel header="#{wifiConf.SSID}">
+						<p:dataGrid value="#{getWifiInfo.wifiInfoHolders}" var="wifiConf"
+							columns="10" layout="grid" id="infoWifiGets">
 
-							<p:panelGrid columns="2" style="text-align: center; width:100%;">
+							<p:panel header="#{wifiConf.SSID}">
 
-								<h:outputText value="Status" />
-								<h:outputText value="#{wifiConf.enableStatus}"
-									style="font-weight: bolder;" />
+								<p:panelGrid columns="2" style="text-align: center;">
 
-								<h:outputText value="Canal" />
-								<h:outputText value="#{wifiConf.channel}"
-									style="font-weight: bolder;" />
+									<h:outputText value="Status" />
+									<h:outputText value="#{wifiConf.enableStatus}"
+										style="font-weight: bolder;" />
+										
+									<h:outputText value="Status Broadcast" />
+									<h:outputText value="#{wifiConf.broadcastEnabled}"
+										style="font-weight: bolder;" />
+										
+									<h:outputText value="Status da interface " />
+									<h:outputText value="#{wifiConf.interfaceStatus}"
+										style="font-weight: bolder;" />
 
-								<h:outputText value="Criptografia" />
-								<h:outputText value="#{wifiConf.encryption}"
-									style="font-weight: bolder;" />
+									<h:outputText value="Canal" />
+									<h:outputText value="#{wifiConf.channel}"
+										style="font-weight: bolder;" />
 
-								<h:outputText value="Nome da rede" />
-								<h:outputText value="#{wifiConf.SSID}"
-									style="font-weight: bolder;" />
+									<h:outputText value="Criptografia" />
+									<h:outputText value="#{wifiConf.encryption}"
+										style="font-weight: bolder;" />
 
-								<h:outputText value="macAddresses" />
-								<h:outputText value="#{wifiConf.macAddresses}"
-									style="font-weight: bolder;" />
+									<h:outputText value="Nome da rede" />
+									<h:outputText value="#{wifiConf.SSID}"
+										style="font-weight: bolder;" />
 
-								<h:outputText value="Autenticação" />
-								<h:outputText value="#{wifiConf.authentication}"
-									style="font-weight: bolder;" />
+									<h:outputText value="MAC" />
+									<h:outputText value="#{wifiConf.macAddresses}"
+										style="font-weight: bolder;" />
 
-								<h:outputText value="Bytes enviados" />
-								<h:outputText value="#{wifiConf.bytesSent}"
-									style="font-weight: bolder;" />
+									<h:outputText value="Autenticação" />
+									<h:outputText value="#{wifiConf.authentication}"
+										style="font-weight: bolder;" />
 
-								<h:outputText value="Bytes recebidos" />
-								<h:outputText value="#{wifiConf.bytesReceived}"
-									style="font-weight: bolder;" />
+									<h:outputText value="Bytes enviados" />
+									<h:outputText value="#{wifiConf.bytesSent}"
+										style="font-weight: bolder;" />
 
-							</p:panelGrid>
+									<h:outputText value="Standard" />
+									<h:outputText value="#{wifiConf.standard}"
+										style="font-weight: bolder;" />
 
-						</p:panel>
-
-
-
-
-
-
+									<h:outputText value="Bytes recebidos" />
+									<h:outputText value="#{wifiConf.bytesReceived}"
+										style="font-weight: bolder;" />
 
 
-					</p:dataGrid>
+
+								</p:panelGrid>
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:scrollPanel>
 
 				</p:dialog>
 
@@ -691,49 +681,46 @@
 
 					<p:dataGrid id="portMappingTables"
 						value="#{portMappingTable.values}" var="portMapping" columns="2"
-						layout="grid" emptyMessage="Nenhum registro encontrado">
+						layout="grid" emptyMessage="Nenhum registro encontrado"
+						style="width: 100%;">
 
 						<p:panel header="Info">
 
-							<h:outputText value="protocol: " />
-							<h:outputText value="#{portMapping.protocol}"
-								style="font-weight: bolder;" />
-							<br />
+							<p:panelGrid columns="2" style="width: 100%;">
 
-							<h:outputText value="import: " />
-							<h:outputText value="#{portMapping.intport}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="protocol: " />
+								<h:outputText value="#{portMapping.protocol}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="status: " />
-							<h:outputText value="#{portMapping.status}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="import: " />
+								<h:outputText value="#{portMapping.intport}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="LeaseDuration: " />
-							<h:outputText value="#{portMapping.leaseDuration}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="status: " />
+								<h:outputText value="#{portMapping.status}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="intip: " />
-							<h:outputText value="#{portMapping.intip}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="LeaseDuration: " />
+								<h:outputText value="#{portMapping.leaseDuration}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="portMapName: " />
-							<h:outputText value="#{portMapping.portMapName}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="intip: " />
+								<h:outputText value="#{portMapping.intip}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="RemoteAddress: " />
-							<h:outputText value="#{portMapping.remoteAddress}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="portMapName: " />
+								<h:outputText value="#{portMapping.portMapName}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="extport: " />
-							<h:outputText value="#{portMapping.extport}"
-								style="font-weight: bold;" />
-							<br />
+								<h:outputText value="RemoteAddress: " />
+								<h:outputText value="#{portMapping.remoteAddress}"
+									style="font-weight: bolder;" />
+
+								<h:outputText value="extport: " />
+								<h:outputText value="#{portMapping.extport}"
+									style="font-weight: bold;" />
+
+							</p:panelGrid>
 
 						</p:panel>
 
@@ -796,14 +783,16 @@
 				</p:dialog>
 
 				<p:dialog header="Ping" widgetVar="pingAction" resizable="false"
-					width="300" minWidth="300" height="220" minHeight="220"
+					width="300" minWidth="320" height="320" minHeight="350"
 					modal="true">
 
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="1">
 
-						<h:outputText value="Host Adress" />
-						<br />
+						<h:outputText value="Endereço" />
 						<p:inputText value="#{getPing.hostAdress}" />
+
+						<h:outputText value="Numero de repetição" />
+						<p:inputText value="#{getPing.numberRepetitions}" />
 
 						<p:commandButton value="Consultar"
 							action="#{getPing.PingAction(deviceInfo.id)}"
@@ -920,6 +909,7 @@
 								<h:outputText value="Status" />
 								<p:selectOneMenu value="#{setWiFiConfig.wifiConf.enableStatus}">
 
+									<f:selectItem itemLabel="" />
 									<f:selectItem itemLabel="true" itemValue="true" />
 									<f:selectItem itemLabel="false" itemValue="false" />
 
@@ -929,6 +919,7 @@
 								<p:selectOneMenu
 									value="#{setWiFiConfig.wifiConf.broadcastEnabled}">
 
+									<f:selectItem itemLabel="" />
 									<f:selectItem itemLabel="true" itemValue="true" />
 									<f:selectItem itemLabel="false" itemValue="false" />
 
@@ -937,6 +928,7 @@
 								<h:outputText value="Status Radio" />
 								<p:selectOneMenu value="#{setWiFiConfig.wifiConf.radioEnable}">
 
+									<f:selectItem itemLabel="" />
 									<f:selectItem itemLabel="true" itemValue="true" />
 									<f:selectItem itemLabel="false" itemValue="false" />
 
@@ -977,37 +969,35 @@
 
 						<p:panel>
 
-							<h:outputText value="EthernetStatus: " />
-							<h:outputText value="#{lanEthernet.ethernetStatus}" />
-							<br />
+							<p:panelGrid columns="2">
 
-							<h:outputText value="EthernetEnable: " />
-							<h:outputText value="#{lanEthernet.ethernetEnable}" />
-							<br />
+								<h:outputText value="EthernetStatus: " />
+								<h:outputText value="#{lanEthernet.ethernetStatus}"
+									styleClass="#{lanEthernet.ethernetStatus == 'Up' ? 'colorGreen' : 'colorRed'}" />
 
-							<h:outputText value="EthernetErrorsSentRcvd: " />
-							<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}" />
-							<br />
+								<h:outputText value="EthernetEnable: " />
+								<h:outputText value="#{lanEthernet.ethernetEnable}"
+									styleClass="#{lanEthernet.ethernetEnable == 'On' ? 'colorGreen' : 'colorRed'}" />
 
-							<h:outputText value="EthernetDuplexMode: " />
-							<h:outputText value="#{lanEthernet.ethernetDuplexMode}" />
-							<br />
+								<h:outputText value="EthernetErrorsSentRcvd: " />
+								<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}" />
 
-							<h:outputText value="EthernetMACAddress: " />
-							<h:outputText value="#{lanEthernet.ethernetMACAddress}" />
-							<br />
+								<h:outputText value="EthernetDuplexMode: " />
+								<h:outputText value="#{lanEthernet.ethernetDuplexMode}" />
 
-							<h:outputText value="EthernetBytesSentReceived: " />
-							<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}" />
-							<br />
+								<h:outputText value="EthernetMACAddress: " />
+								<h:outputText value="#{lanEthernet.ethernetMACAddress}" />
 
-							<h:outputText value="EthernetMACCtrlEnabled: " />
-							<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}" />
-							<br />
+								<h:outputText value="EthernetBytesSentReceived: " />
+								<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}" />
 
-							<h:outputText value="EthernetMaxBitRate: " />
-							<h:outputText value="#{lanEthernet.ethernetMaxBitRate}" />
-							<br />
+								<h:outputText value="EthernetMACCtrlEnabled: " />
+								<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}" />
+
+								<h:outputText value="EthernetMaxBitRate: " />
+								<h:outputText value="#{lanEthernet.ethernetMaxBitRate}" />
+
+							</p:panelGrid>
 
 						</p:panel>
 
@@ -1040,18 +1030,19 @@
 					minHeight="100" minWidth="300" height="100" width="300"
 					modal="true" header="PPPoE Credentials">
 
-					<h:panelGrid columns="2" style="width: 100%; text-align: center;"
+					<p:panelGrid columns="2" style="width: 100%; text-align: center;"
 						id="infoGetPPPoECreds">
 
 						<h:outputText value="Status" />
 						<h:outputText
-							value="#{getPPPoECredentials.getPPPoECredentialsHolder.status}" />
+							value="#{getPPPoECredentials.getPPPoECredentialsHolder.status}"
+							styleClass="#{getPPPoECredentials.getPPPoECredentialsHolder.status == 'Connected' ? 'colorGreen' : 'colorRed'}" />
 
 						<h:outputText value="Username" />
 						<h:outputText
 							value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}" />
 
-					</h:panelGrid>
+					</p:panelGrid>
 
 				</p:dialog>
 

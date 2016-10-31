@@ -16,7 +16,7 @@ public class Values {
 	
 	private String EthernetMACCtrlEnabled;
 	
-	private Integer EthernetMaxBitRate;
+	private String EthernetMaxBitRate;
 
 	public String getEthernetStatus() {
 		return EthernetStatus;
@@ -74,11 +74,11 @@ public class Values {
 		EthernetMACCtrlEnabled = ethernetMACCtrlEnabled;
 	}
 
-	public Integer getEthernetMaxBitRate() {
+	public String getEthernetMaxBitRate() {
 		return EthernetMaxBitRate;
 	}
 
-	public void setEthernetMaxBitRate(Integer ethernetMaxBitRate) {
+	public void setEthernetMaxBitRate(String ethernetMaxBitRate) {
 		EthernetMaxBitRate = ethernetMaxBitRate;
 	}	
 
