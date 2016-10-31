@@ -67,7 +67,7 @@ public class LoginBean implements Serializable{
 			this.servicoLogin.autenticaLogin(this.usuarioWS, this.senha);
 
 			this.logado = true;			
-			return "index.jsf"; 
+			return "Devices/devices.jsf"; 
 
 		} catch (Exception e) {
 

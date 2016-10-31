@@ -16,6 +16,7 @@
 	background-color: #ff704d!important;
 }
 
+
 .gradienteTelefonica {
 	font-family: Telefonica_Header;
 	background: rgba(0, 51, 69, 1);
@@ -124,7 +125,7 @@ div#corpo {
 .conteudo {
 	width: auto;
 	height: auto;
-	font-size: 18px;
+	font-size: 19px;
 	margin-left: 250px;
 	padding-top: 5px;
 	padding-left: 15px;
@@ -215,4 +216,24 @@ ul#menu li a.selected {
 
 .jqplot-data-label {
 	color: #FFF;
+}
+
+.colorGreen {
+	
+	color: #32f920;
+	font-weight: bold;
+	
+}
+
+.colorRed {
+	
+	color: #f71e1b;
+	font-weight: bold;
+	
+}
+
+.fontBlack {
+	
+	color: #000000;
+	
 }

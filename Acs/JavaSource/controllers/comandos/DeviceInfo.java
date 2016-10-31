@@ -15,40 +15,42 @@ public class DeviceInfo {
 	private InfoHolder infoHolder;
 
 	private Values[] values;
-	
+
 	private Values values2;
-		
+
 	private Boolean ativo = false;
-	
+
 	private Integer id;
 
 	private DeviceInfoAction deviceInfoAction;
-	
+
 	private String status = "Inativo"; 
+
+	private Integer contador = 0;
 
 	public DeviceInfo() {
 
 		this.deviceInfoAction = new DeviceInfoAction();
 
 	}
-	
-	
+
+
 	public void colocarDeviceId(Integer deviceId) {
-		
+
 		this.id = deviceId;
-						
+
 	}
 
 	public void getDeviceInfoAction(Integer deviceId) {
 
 		try {
-			
+
 			this.values = null;
-			
+
 			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
 
 			this.values = this.infoHolder.getValues();
-						
+
 			this.ativo = true;
 
 		} catch (Exception e) {
@@ -60,57 +62,69 @@ public class DeviceInfo {
 		}
 
 	}
-	
+
 	public void getDeviceInfoActionValue(Integer deviceId) {
 
 		try {
-			
+
 			this.values2 = null;
-			
+
 			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
 
 			int cont = 0;
-			
+
 			for (Values values2 : this.infoHolder.getValues()) {
-				
+
 				if (cont == 0) {
-					
+
 					this.values2 = values2;
-					
+
 					cont++;
-					
+
 				}				
-				
+
 			}
-						
+
 			this.ativo = true;
-			
+
 		} catch (Exception e) {
 
-			JSFUtil.addErrorMessage(e.getMessage());
-			JSFUtil.addErrorMessage("Equipamento inativo.");
-			this.ativo = false;
+			if (this.contador < 8) {
+
+				this.contador++;
+
+				this.getDeviceInfoActionValue(deviceId);
+
+			} else {
+
+				this.contador = 0;
+
+				JSFUtil.addErrorMessage(e.getMessage());
+				JSFUtil.addErrorMessage("Equipamento inativo.");
+				this.ativo = false;
+
+			}			
 
 		}
 
 	}
-	
+
 	public String getDeviceInfoActionStatus(Integer deviceId) {
-				
+
 		try {
-			
+
 			this.status = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao()).getStatus();
-			
+
 			return this.status;
-						
+
 		} catch (Exception e) {
 
 			JSFUtil.addErrorMessage(e.getMessage());
-			
+
 			return this.status;
-			
+
 		}
-				
+
 	}
 
 	public InfoHolder getInfoHolder() {
@@ -160,5 +174,5 @@ public class DeviceInfo {
 	public void setValues2(Values values2) {
 		this.values2 = values2;
 	}
-	
+
 }

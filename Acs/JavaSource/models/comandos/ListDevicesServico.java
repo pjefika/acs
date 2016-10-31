@@ -11,22 +11,30 @@ import entidades.dados.ResultsHolder;
 import util.JSFUtil;
 
 public class ListDevicesServico {
-	
+
 	public ResultsHolder listDevices(String criteria, String parameter, String autenticacao) throws Exception {
 
 		try {
-			
+
 			Client client = Client.create();
 
 			String url = JSFUtil.acs() + "core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
-			
+
 			WebResource webResource = client.resource(url);
 
 			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-
+			
 			if (clientResponse.getStatus() != 200) {
 
-				throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
+				if (clientResponse.getStatus() == 401) {
+					
+					throw new Exception("Erro de autorização, consulte o administrador do sistema.");
+					
+				} else {
+					
+					throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
+					
+				}				
 
 			}
 
@@ -35,9 +43,9 @@ public class ListDevicesServico {
 			Gson gson = new Gson();
 
 			ResultsHolder resultsHolder = gson.fromJson(output, ResultsHolder.class);
-			
+
 			clientResponse.close();
-			
+
 			return resultsHolder;
 
 		} catch (Exception e) {

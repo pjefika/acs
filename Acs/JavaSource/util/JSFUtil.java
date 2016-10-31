@@ -104,7 +104,7 @@ public class JSFUtil {
 		String password = "Efika@v1v0Gvt";*/
 		
 		String username = "co_g0047217";
-		String password = "chk123";
+		String password = "chk1234";
 		
 		String userPassword = username + ":" + password;
 		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());

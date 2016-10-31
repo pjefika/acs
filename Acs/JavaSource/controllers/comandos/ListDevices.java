@@ -51,7 +51,7 @@ public class ListDevices {
 				
 			} else {
 				
-				if (this.parameter.contains(":")) {
+				if (this.parameter.contains(":") && this.parameter.length() < 20) {
 
 					this.criteria = "mac";
 
@@ -59,7 +59,7 @@ public class ListDevices {
 
 					this.criteria = "userKey3";
 
-				} else if (this.parameter.contains(".")) {
+				} else if (this.parameter.contains(".") || this.parameter.contains(":") && this.parameter.length() > 20) {
 					
 					this.criteria = "ip";
 					

@@ -59,39 +59,36 @@
 					<h:outputText
 						value="#{deviceInfo.getDeviceInfoActionValue(results.id)}" />
 
-					<p:panel header="#{results.vendor} #{results.model}"
-						style="height: 220px;"
-						styleClass="#{deviceInfo.ativo == true ? 'colorSeAtivo' : 'colorSeFalse'}">
+					<h:outputText
+						value="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
 
-						<h:panelGroup style="float: left; width: 30%;">
+					<p:panel header="#{results.vendor} #{results.model}"
+						styleClass="#{deviceInfo.ativo == true ? 'colorSeAtivo' : 'colorSeFalse'}"
+						style="height: 100%;">
+
+						<h:panelGrid columns="2" style="float: left; width: 25%;">
 
 							<h:outputText value="Numero de Serie: " />
 							<h:outputText value="#{results.serialNumber}"
 								style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Mac: " />
 							<h:outputText value="#{results.mac}" style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Designador: " />
 							<h:outputText value="#{results.userKey3}"
 								style="font-weight: boldbolder" />
-							<br />
 
 							<h:outputText value="Firmware: " />
 							<h:outputText value="#{results.softwareVersion}"
 								style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Ip: " />
 							<h:outputText value="#{results.ip}" style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Primeiro contato: " />
 							<h:outputText value="#{results.firstContactTimeFormat}"
 								style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Classe: " />
 							<h:outputText value="Modem"
@@ -101,29 +98,21 @@
 								rendered="#{results.classification=='STB'}"
 								style="font-weight: bolder;" />
 
-							<br />
-
-							<h:outputText
-								value="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
-
 							<h:outputText value="Modelo: " />
 							<h:outputText value="#{deviceInfo.values2.model}"
 								style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Tipo de dispositivo: " />
 							<h:outputText value="#{deviceInfo.values2.devicetype}"
 								style="font-weight: bolder;" />
-							<br />
 
 							<h:outputText value="Tempo Online: " />
 							<h:outputText value="#{deviceInfo.values2.uptime}"
 								style="font-weight: bolder;" />
-							<br />
 
-						</h:panelGroup>
+						</h:panelGrid>
 
-						<h:panelGroup style="float: right; width: 70%;">
+						<h:panelGroup style="float: right; width: 75%;">
 
 							<p:panel header="Informações">
 
@@ -240,41 +229,40 @@
 				</p:dataGrid>
 
 				<p:dialog header="Informações de Host" widgetVar="infoLanHosts"
-					resizable="false" width="600" minWidth="600" height="400"
+					resizable="false" width="750" minWidth="750" height="400"
 					minHeight="400" modal="true">
 
 					<p:dataGrid id="infoLanHosts"
 						value="#{lanHostsTable.lanHostHolders}" var="lanHost" columns="3"
 						layout="grid" emptyMessage="Nenhum registro encontrado">
 
-						<p:panel header="#{lanHost.hostinst}">
+						<p:panel header="#{lanHost.hostinst}" style="height:100%;">
 
-							<h:outputText value="Nome do Host " />
-							<h:outputText value="#{lanHost.hostname}"
-								style="font-weight: bolder;" />
-							<br />
+							<p:panelGrid columns="2">
 
-							<h:outputText value="Status: " />
-							<h:outputText value="Ativo" rendered="#{lanHost.status}"
-								style="font-weight: bolder;" />
-							<h:outputText value="Inativo" rendered="#{!lanHost.status}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Nome do Host " />
+								<h:outputText value="#{lanHost.hostname}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Tipo conexão: " />
-							<h:outputText value="#{lanHost.iftype}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Status: " />
+								<h:outputText value="Ativo" rendered="#{lanHost.status}"
+									style="font-weight: bolder;" />
+								<h:outputText value="Inativo" rendered="#{!lanHost.status}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Mac: " />
-							<h:outputText value="#{lanHost.hostmac}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Tipo conexão: " />
+								<h:outputText value="#{lanHost.iftype}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Tempo de Conexão: " />
-							<h:outputText value="#{lanHost.ltremain}"
-								style="font-weight: bolder;" />
-							<br />
+								<h:outputText value="Mac: " />
+								<h:outputText value="#{lanHost.hostmac}"
+									style="font-weight: bolder;" />
+
+								<h:outputText value="Tempo de Conexão: " />
+								<h:outputText value="#{lanHost.ltremain}"
+									style="font-weight: bolder;" />
+
+							</p:panelGrid>
 
 						</p:panel>
 
@@ -283,79 +271,77 @@
 				</p:dialog>
 
 				<p:dialog header="Interface Statistics"
-					widgetVar="interfaceStatistic" resizable="false" width="600"
-					minWidth="600" height="400" minHeight="400" modal="true">
+					widgetVar="interfaceStatistic" resizable="false" width="850"
+					minWidth="850" height="400" minHeight="400" modal="true"
+					style="overflow-y: auto;">
 
-					<p:dataGrid id="interfaceStatistics"
-						value="#{interfaceStatic.interfaceStaticsHolder.values}"
-						var="interfaceStatistics" columns="3" layout="grid"
-						emptyMessage="Nenhum registro encontrado">
+					<p:scrollPanel mode="native" style="width: 100%; height: 100%;">
 
-						<p:panel header="#{interfaceStatistics.name}">
+						<p:dataGrid id="interfaceStatistics"
+							value="#{interfaceStatic.interfaceStaticsHolder.values}"
+							var="interfaceStatistics" columns="6" layout="grid"
+							emptyMessage="Nenhum registro encontrado" style="width: 1200px;">
 
-							<h:outputText value="Tipo:" />
-							<h:outputText value="#{interfaceStatistics.type}"
-								style="font-weight: bolder;" />
-							<br />
+							<p:panel header="#{interfaceStatistics.name}"
+								style="height: 100%;">
 
-							<h:outputText value="Status:" />
-							<h:outputText value="#{interfaceStatistics.status}"
-								style="font-weight: bolder;" />
-							<br />
+								<p:panelGrid columns="2">
 
-							<h:outputText value="Ativo:" />
-							<h:outputText value="#{interfaceStatistics.enabled}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Tipo:" />
+									<h:outputText value="#{interfaceStatistics.type}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Name:" />
-							<h:outputText value="#{interfaceStatistics.name}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Status:" />
+									<h:outputText value="#{interfaceStatistics.status}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Ip:" />
-							<h:outputText value="#{interfaceStatistics.ip}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Ativo:" />
+									<h:outputText value="#{interfaceStatistics.enabled}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Mac:" />
-							<h:outputText value="#{interfaceStatistics.mac}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Name:" />
+									<h:outputText value="#{interfaceStatistics.name}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Bytes enviados:" />
-							<h:outputText value="#{interfaceStatistics.bytesSent}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Ip:" />
+									<h:outputText value="#{interfaceStatistics.ip}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Bytes recebidos:" />
-							<h:outputText value="#{interfaceStatistics.bytesReceived}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Mac:" />
+									<h:outputText value="#{interfaceStatistics.mac}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Errors enviados:" />
-							<h:outputText value="#{interfaceStatistics.errorsSent}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Bytes enviados:" />
+									<h:outputText value="#{interfaceStatistics.bytesSent}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Errors recebidos:" />
-							<h:outputText value="#{interfaceStatistics.errorsReceived}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Bytes recebidos:" />
+									<h:outputText value="#{interfaceStatistics.bytesReceived}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Packet enviados:" />
-							<h:outputText value="#{interfaceStatistics.packetsSent}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Errors enviados:" />
+									<h:outputText value="#{interfaceStatistics.errorsSent}"
+										style="font-weight: bolder;" />
 
-							<h:outputText value="Packet recebidos:" />
-							<h:outputText value="#{interfaceStatistics.packetsReceived}"
-								style="font-weight: bolder;" />
-							<br />
+									<h:outputText value="Errors recebidos:" />
+									<h:outputText value="#{interfaceStatistics.errorsReceived}"
+										style="font-weight: bolder;" />
 
-						</p:panel>
+									<h:outputText value="Packet enviados:" />
+									<h:outputText value="#{interfaceStatistics.packetsSent}"
+										style="font-weight: bolder;" />
 
-					</p:dataGrid>
+									<h:outputText value="Packet recebidos:" />
+									<h:outputText value="#{interfaceStatistics.packetsReceived}"
+										style="font-weight: bolder;" />
+
+								</p:panelGrid>
+
+							</p:panel>
+
+						</p:dataGrid>
+
+					</p:scrollPanel>
 
 				</p:dialog>
 
@@ -548,7 +534,8 @@
 				</p:dialog>
 
 				<p:dialog widgetVar="infoWifi" resizable="false" minHeight="230"
-					height="230" width="600" minWidth="600" modal="true">
+					height="230" width="800" minWidth="800" modal="true"
+					closeOnEscape="true" responsive="true">
 
 					<f:facet name="header">
 					
@@ -562,89 +549,57 @@
 
 					</f:facet>
 
-					<h:panelGroup id="infoWifiGets">
+					<p:dataGrid value="#{wiFiInfo.wifiInfoHolders}" var="wifiConf"
+						columns="3" layout="grid" id="infoWifiGets">
 
-						<p:panelGrid columns="2"
-							style="width: 48%; text-align: center; float: left;">
+						<p:panel header="#{wifiConf.SSID}">
 
-							<f:facet name="header">Rede 2.4Ghz</f:facet>
+							<p:panelGrid columns="2" style="text-align: center; width:100%;">
 
-							<h:outputText value="Status" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.enableStatus}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Status" />
+								<h:outputText value="#{wifiConf.enableStatus}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Canal" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.channel}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Canal" />
+								<h:outputText value="#{wifiConf.channel}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Criptografia" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.encryption}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Criptografia" />
+								<h:outputText value="#{wifiConf.encryption}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Nome da rede" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.SSID}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Nome da rede" />
+								<h:outputText value="#{wifiConf.SSID}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="macAddresses" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.macAddresses}"
-								style="font-weight: bolder;" />
+								<h:outputText value="macAddresses" />
+								<h:outputText value="#{wifiConf.macAddresses}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Autenticação" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.authentication}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Autenticação" />
+								<h:outputText value="#{wifiConf.authentication}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Bytes enviados" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesSent}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Bytes enviados" />
+								<h:outputText value="#{wifiConf.bytesSent}"
+									style="font-weight: bolder;" />
 
-							<h:outputText value="Bytes recebidos" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder.bytesReceived}"
-								style="font-weight: bolder;" />
+								<h:outputText value="Bytes recebidos" />
+								<h:outputText value="#{wifiConf.bytesReceived}"
+									style="font-weight: bolder;" />
 
-						</p:panelGrid>
+							</p:panelGrid>
 
-						<p:panelGrid columns="2"
-							style="width: 48%; text-align: center; float: right;">
+						</p:panel>
 
-							<f:facet name="header">Rede 5Ghz</f:facet>
 
-							<h:outputText value="Status" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.enableStatus}"
-								style="font-weight: bolder;" />
 
-							<h:outputText value="Canal" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.channel}"
-								style="font-weight: bolder;" />
 
-							<h:outputText value="Criptografia" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.encryption}"
-								style="font-weight: bolder;" />
 
-							<h:outputText value="Nome da rede" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.SSID}"
-								style="font-weight: bolder;" />
 
-							<h:outputText value="macAddresses" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.macAddresses}"
-								style="font-weight: bolder;" />
 
-							<h:outputText value="Autenticação" />
-							<h:outputText
-								value="#{wiFiInfo.wifiInfoHolder5ghz.authentication}"
-								style="font-weight: bolder;" />
 
-							<h:outputText value="Bytes enviados" />
-							<h:outputText value="#{wiFiInfo.wifiInfoHolder5ghz.bytesSent}"
-								style="font-weight: bolder;" />
-
-							<h:outputText value="Bytes recebidos" />
-							<h:outputText
-								value="#{wiFiInfo.wifiInfoHolder5ghz.bytesReceived}"
-								style="font-weight: bolder;" />
-
-						</p:panelGrid>
-
-					</h:panelGroup>
+					</p:dataGrid>
 
 				</p:dialog>
 
@@ -694,7 +649,8 @@
 
 						<h:outputText value="Status" />
 						<h:outputText value="#{sipDiagnostics.values.status}"
-							style="font-weight: bolder;" />
+							style="font-weight: bolder;"
+							styleClass="#{sipDiagnostics.values.status == 'OK' ? 'colorGreen' : 'colorRed'}" />
 
 						<h:outputText value="AuthUserName" />
 						<h:outputText value="#{sipDiagnostics.values.authUserName}"
@@ -702,7 +658,8 @@
 
 						<h:outputText value="IPAddress" />
 						<h:outputText value="#{sipDiagnostics.values.IPAddress}"
-							style="font-weight: bolder;" />
+							style="font-weight: bolder;"
+							styleClass="#{sipDiagnostics.values.IPAddress == '0.0.0.0' ? 'colorRed' : 'colorGreen'}" />
 
 						<h:outputText value="ProxyServer" />
 						<h:outputText value="#{sipDiagnostics.values.proxyServer}"
@@ -743,7 +700,7 @@
 								style="font-weight: bolder;" />
 							<br />
 
-							<h:outputText value="intport: " />
+							<h:outputText value="import: " />
 							<h:outputText value="#{portMapping.intport}"
 								style="font-weight: bolder;" />
 							<br />
@@ -798,7 +755,7 @@
 						<h:outputText value="AuthUserName" />
 						<p:inputText
 							value="#{accountProvisioning.sipAccountProvisioning.authUserName}"
-							placeholder="Instância" />
+							placeholder="+55 Instância" />
 
 						<h:outputText value="AuthPassword" />
 						<p:inputText
@@ -827,7 +784,7 @@
 
 						<h:outputText value="PhyReferenceList" />
 						<p:inputText
-							value="#{accountProvisioning.sipAccountProvisioning.directoryNumber}"
+							value="#{accountProvisioning.sipAccountProvisioning.phyReferenceList}"
 							placeholder="1" />
 
 					</h:panelGrid>

@@ -36,7 +36,7 @@ public class SipDiagnostics {
 		
 	}
 	
-	public void sipDiagnostics(Integer deviceId) {
+	public void sipDiagnostics(Integer deviceId) throws Exception {
 
 		try {
 									
@@ -72,9 +72,11 @@ public class SipDiagnostics {
 
 		} catch (Exception e) {
 			
-			if (contTentativas < 11) {
+			if (this.contTentativas < 11) {
 				
-				contTentativas++;
+				Thread.sleep(1000);
+				
+				this.contTentativas++;
 				
 				this.sipDiagnostics(deviceId);
 				
