@@ -66,53 +66,53 @@
 						styleClass="#{deviceInfo.ativo == true ? 'colorSeAtivo' : 'colorSeFalse'}"
 						style="height: 100%;">
 
-						<p:panelGrid columns="2" style="float: left; width: 38%; margin-bottom: 5px;">
+						<p:panelGrid columns="2" style="float: left; width: 38%; margin-bottom: 5px; margin-right: 2%;">
 
 							<h:outputText value="Numero de Serie: " />
 							<h:outputText value="#{results.serialNumber}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Mac: " />
-							<h:outputText value="#{results.mac}" style="font-weight: bolder;" />
+							<h:outputText value="#{results.mac}" styleClass="fontBlack" />
 
 							<h:outputText value="Designador: " />
 							<h:outputText value="#{results.userKey3}"
-								style="font-weight: boldbolder" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Firmware: " />
 							<h:outputText value="#{results.softwareVersion}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Ip: " />
-							<h:outputText value="#{results.ip}" style="font-weight: bolder;" />
+							<h:outputText value="#{results.ip}" styleClass="fontBlack" />
 
 							<h:outputText value="Primeiro contato: " />
 							<h:outputText value="#{results.firstContactTimeFormat}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Classe: " />
 							<h:outputText value="Modem"
 								rendered="#{results.classification=='IAD'}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 							<h:outputText value="Decoder"
 								rendered="#{results.classification=='STB'}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Modelo: " />
 							<h:outputText value="#{deviceInfo.values2.model}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Tipo de dispositivo: " />
 							<h:outputText value="#{deviceInfo.values2.devicetype}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 							<h:outputText value="Tempo Online: " />
 							<h:outputText value="#{deviceInfo.values2.uptime}"
-								style="font-weight: bolder;" />
+								styleClass="fontBlack" />
 
 						</p:panelGrid>
 
-						<h:panelGroup style="float: right; width: 60%;">
+						<h:panelGroup style="float: left; width: 60%;">
 
 							<p:panel header="Informações">
 
@@ -242,25 +242,25 @@
 
 								<h:outputText value="Nome do Host " />
 								<h:outputText value="#{lanHost.hostname}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Status: " />
 								<h:outputText value="Ativo" rendered="#{lanHost.status}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 								<h:outputText value="Inativo" rendered="#{!lanHost.status}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Tipo conexão: " />
 								<h:outputText value="#{lanHost.iftype}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Mac: " />
 								<h:outputText value="#{lanHost.hostmac}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Tempo de Conexão: " />
 								<h:outputText value="#{lanHost.ltremain}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 							</p:panelGrid>
 
@@ -289,51 +289,51 @@
 
 									<h:outputText value="Tipo:" />
 									<h:outputText value="#{interfaceStatistics.type}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Status:" />
 									<h:outputText value="#{interfaceStatistics.status}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Ativo:" />
 									<h:outputText value="#{interfaceStatistics.enabled}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Name:" />
 									<h:outputText value="#{interfaceStatistics.name}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Ip:" />
 									<h:outputText value="#{interfaceStatistics.ip}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Mac:" />
 									<h:outputText value="#{interfaceStatistics.mac}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Bytes enviados:" />
 									<h:outputText value="#{interfaceStatistics.bytesSent}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Bytes recebidos:" />
 									<h:outputText value="#{interfaceStatistics.bytesReceived}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Errors enviados:" />
 									<h:outputText value="#{interfaceStatistics.errorsSent}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Errors recebidos:" />
 									<h:outputText value="#{interfaceStatistics.errorsReceived}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Packet enviados:" />
 									<h:outputText value="#{interfaceStatistics.packetsSent}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Packet recebidos:" />
 									<h:outputText value="#{interfaceStatistics.packetsReceived}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 								</p:panelGrid>
 
@@ -360,55 +360,55 @@
 
 								<h:outputText value="Modulação: " />
 								<h:outputText value="#{dslConnectInfo.modulationType}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Erros por segundo: " />
 								<h:outputText value="#{dslConnectInfo.errorSeconds}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Erros de FEC: " />
 								<h:outputText value="#{dslConnectInfo.FECErrors}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Erros de CRC: " />
 								<h:outputText value="#{dslConnectInfo.CRCErrors}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Erros de HEC: " />
 								<h:outputText value="#{dslConnectInfo.HECErrors}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Loss of Framing: " />
 								<h:outputText value="#{dslConnectInfo.lossOfFraming}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Perda de link: " />
 								<h:outputText value="#{dslConnectInfo.lossOfLink}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Margen de ruido: " />
 								<h:outputText value="#{dslConnectInfo.noiseMargin}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Max Rate: " />
 								<h:outputText value="#{dslConnectInfo.maxRate}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Tempo de iniciado: " />
 								<h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Atenuação: " />
 								<h:outputText value="#{dslConnectInfo.attenuation}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Power Level: " />
 								<h:outputText value="#{dslConnectInfo.powerLevel}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Synch Rate: " />
 								<h:outputText value="#{dslConnectInfo.synchRate}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 							</p:panelGrid>
 
@@ -419,8 +419,8 @@
 				</p:dialog>
 
 				<p:dialog header="Informações de GateWay" widgetVar="infoGateWay"
-					resizable="false" width="600" minWidth="600" height="370"
-					minHeight="370" modal="true">
+					resizable="false" width="600" minWidth="600" height="460"
+					minHeight="460" modal="true">
 
 					<p:dataGrid id="gateWayInfos" value="#{gatewayInfo.valuesgatway}"
 						var="gateWayInfo" layout="grid" columns="1"
@@ -431,76 +431,74 @@
 							<p:panelGrid columns="2" style="width:100%;">
 
 								<h:outputText value="Nome do host: " />
-								<h:outputText value="#{gateWayInfo.hostname}"
-									style="font-weight: bolder;" />
+								<h:outputText value="#{gateWayInfo.hostname}" styleClass="fontBlack" />
 
 								<h:outputText value="DNS primario: " />
-								<h:outputText value="#{gateWayInfo.primaryDNS}"
-									style="font-weight: bolder;" />
+								<h:outputText value="#{gateWayInfo.primaryDNS}" styleClass="fontBlack" />
 
 								<h:outputText value="DNS alternativo: " />
 								<h:outputText value="#{gateWayInfo.alternateDNS}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Status do server DHCP: " />
 								<h:outputText value="#{gateWayInfo.DHCPServerStatus}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="DHCPRelayAgent: " />
 								<h:outputText value="#{gateWayInfo.DHCPRelayAgent}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="DHCPLeaseTime: " />
 								<h:outputText value="#{gateWayInfo.DHCPLeaseTime}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="DHCPStartingAddress: " />
 								<h:outputText value="#{gateWayInfo.DHCPStartingAddress}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="DHCPEndingAddress: " />
 								<h:outputText value="#{gateWayInfo.DHCPEndingAddress}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Tempo ativo: " />
 								<h:outputText value="#{gateWayInfo.uptime}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="daylightSavingsTime: " />
 								<h:outputText value="#{gateWayInfo.daylightSavingsTime}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="UPnP:  " />
 								<h:outputText value="#{gateWayInfo.UPnP}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="timeZone Name: " />
 								<h:outputText value="#{gateWayInfo.timeZone.name}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="timeZone Offset " />
 								<h:outputText value="#{gateWayInfo.timeZone.offset}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="Nome do dominio: " />
 								<h:outputText value="#{gateWayInfo.domainName}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="alternateNTPServer:  " />
 								<h:outputText value="#{gateWayInfo.alternateNTPServer}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="NTPClientStatus: " />
 								<h:outputText value="#{gateWayInfo.NTPClientStatus}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="primaryNTPServer: " />
 								<h:outputText value="#{gateWayInfo.primaryNTPServer}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="wanIpAddress: " />
 								<h:outputText value="#{gateWayInfo.wanIpAddress}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 
 
@@ -539,47 +537,47 @@
 
 									<h:outputText value="Status" />
 									<h:outputText value="#{wifiConf.enableStatus}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 										
 									<h:outputText value="Status Broadcast" />
 									<h:outputText value="#{wifiConf.broadcastEnabled}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 										
 									<h:outputText value="Status da interface " />
 									<h:outputText value="#{wifiConf.interfaceStatus}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Canal" />
 									<h:outputText value="#{wifiConf.channel}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Criptografia" />
 									<h:outputText value="#{wifiConf.encryption}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Nome da rede" />
 									<h:outputText value="#{wifiConf.SSID}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="MAC" />
 									<h:outputText value="#{wifiConf.macAddresses}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Autenticação" />
 									<h:outputText value="#{wifiConf.authentication}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Bytes enviados" />
 									<h:outputText value="#{wifiConf.bytesSent}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Standard" />
 									<h:outputText value="#{wifiConf.standard}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 									<h:outputText value="Bytes recebidos" />
 									<h:outputText value="#{wifiConf.bytesReceived}"
-										style="font-weight: bolder;" />
+										styleClass="fontBlack" />
 
 
 
@@ -615,61 +613,59 @@
 
 						<h:outputText value="UserAgentDomain" />
 						<h:outputText value="#{sipDiagnostics.values.userAgentDomain}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="DirectoryNumber" />
 						<h:outputText value="#{sipDiagnostics.values.directoryNumber}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="T38Enabled" />
 						<h:outputText value="#{sipDiagnostics.values.t38Enabled}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="DTMFMethod" />
 						<h:outputText value="#{sipDiagnostics.values.DTMFMethod}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="VoiceCodec" />
 						<h:outputText value="#{sipDiagnostics.values.voiceCodec}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="Enable" />
 						<h:outputText value="#{sipDiagnostics.values.enable}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="Status" />
 						<h:outputText value="#{sipDiagnostics.values.status}"
-							style="font-weight: bolder;"
-							styleClass="#{sipDiagnostics.values.status == 'OK' ? 'colorGreen' : 'colorRed'}" />
+							styleClass="#{sipDiagnostics.values.status == 'OK' ? 'colorGreen' : 'colorRed'} 'fontBlack'"/>
 
 						<h:outputText value="AuthUserName" />
 						<h:outputText value="#{sipDiagnostics.values.authUserName}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="IPAddress" />
 						<h:outputText value="#{sipDiagnostics.values.IPAddress}"
-							style="font-weight: bolder;"
-							styleClass="#{sipDiagnostics.values.IPAddress == '0.0.0.0' ? 'colorRed' : 'colorGreen'}" />
+							styleClass="#{sipDiagnostics.values.IPAddress == '0.0.0.0' ? 'colorRed' : 'colorGreen'} 'fontBlack'" />
 
 						<h:outputText value="ProxyServer" />
 						<h:outputText value="#{sipDiagnostics.values.proxyServer}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="CallState" />
 						<h:outputText value="#{sipDiagnostics.values.callState}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="LostPackets" />
 						<h:outputText value="#{sipDiagnostics.values.lostPackets}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="OutboundProxy" />
 						<h:outputText value="#{sipDiagnostics.values.outboundProxy}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 						<h:outputText value="ConferenceCallURI" />
 						<h:outputText value="#{sipDiagnostics.values.conferenceCallURI}"
-							style="font-weight: bolder;" />
+							styleClass="fontBlack" />
 
 					</p:panelGrid>
 
@@ -690,31 +686,31 @@
 
 								<h:outputText value="protocol: " />
 								<h:outputText value="#{portMapping.protocol}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="import: " />
 								<h:outputText value="#{portMapping.intport}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="status: " />
 								<h:outputText value="#{portMapping.status}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="LeaseDuration: " />
 								<h:outputText value="#{portMapping.leaseDuration}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="intip: " />
 								<h:outputText value="#{portMapping.intip}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="portMapName: " />
 								<h:outputText value="#{portMapping.portMapName}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="RemoteAddress: " />
 								<h:outputText value="#{portMapping.remoteAddress}"
-									style="font-weight: bolder;" />
+									styleClass="fontBlack" />
 
 								<h:outputText value="extport: " />
 								<h:outputText value="#{portMapping.extport}"

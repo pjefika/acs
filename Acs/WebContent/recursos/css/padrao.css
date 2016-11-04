@@ -235,5 +235,6 @@ ul#menu li a.selected {
 .fontBlack {
 	
 	color: #000000;
+	font-weight: bolder;
 	
 }
