@@ -6,20 +6,21 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import entidades.sys.Autenticacao;
 import util.JSFUtil;
 
 public class CapabilityNamesAction {
 	
 	@SuppressWarnings("unchecked")
-	public List<String> listCapabilityNamesFor(Integer deviceId, String autenticacao) throws Exception {
+	public List<String> listCapabilityNamesFor(Integer deviceId, Autenticacao autenticacao) throws Exception {
 		
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "capability/listCapabilityNamesFor?deviceId=" + deviceId;
-
+		String url = autenticacao.getLink() + "capability/listCapabilityNamesFor?deviceId=" + deviceId;
+		
 		WebResource webResource = client.resource(url);
 
-		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
 
 		if (clientResponse.getStatus() != 200) {
 

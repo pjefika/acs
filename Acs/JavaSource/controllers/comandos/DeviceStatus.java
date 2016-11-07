@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.deviceStatus.DeviceStatusHolder;
 import models.comandos.DeviceStatusAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -14,6 +16,9 @@ public class DeviceStatus {
 	private DeviceStatusHolder deviceStatusHolder;
 	
 	private DeviceStatusAction deviceStatusAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public DeviceStatus() {
 
@@ -25,7 +30,7 @@ public class DeviceStatus {
 		
 		try {
 			
-			this.deviceStatusHolder = this.deviceStatusAction.getDeviceStatus(deviceId, JSFUtil.autenticacao());
+			this.deviceStatusHolder = this.deviceStatusAction.getDeviceStatus(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 						
 		} catch (Exception e) {
 

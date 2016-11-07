@@ -6,10 +6,12 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/co</jta-data-source>
 		<class>entidades.sys.UsuarioEfika</class>
-		<class>entidades.sys.Logs</class>		
+		<class>entidades.sys.Logs</class>
+		<class>entidades.sys.Autenticacao</class>		
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.id.new_generator_mappings" value="update" />
 		</properties>
 	</persistence-unit>
 </persistence>

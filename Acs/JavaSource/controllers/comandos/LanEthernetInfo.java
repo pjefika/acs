@@ -1,11 +1,13 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.LanEthernetInfo.LanEthernetInfoHolder;
 import entidades.LanEthernetInfo.Values;
 import models.comandos.LanEthernetInfoAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -19,6 +21,9 @@ public class LanEthernetInfo {
 	private Integer cont = 0;
 
 	private LanEthernetInfoAction lanEthernetInfoAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public LanEthernetInfo() {
 
@@ -30,7 +35,7 @@ public class LanEthernetInfo {
 
 		try {
 
-			this.lanEthernetInfoHolder = this.lanEthernetInfoAction.getLanEthernetInfo(deviceId, JSFUtil.autenticacao());
+			this.lanEthernetInfoHolder = this.lanEthernetInfoAction.getLanEthernetInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 			
 			this.values = this.lanEthernetInfoHolder.getValues();
 			

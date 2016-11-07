@@ -8,19 +8,20 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.pppoECredentials.PPPoECredentialsHolder;
+import entidades.sys.Autenticacao;
 import util.JSFUtil;
 
 public class PPPoECredentialsAction {
 
-	public PPPoECredentialsHolder setPPPoECredentials(Integer deviceId, String autenticacao, String ppoeConf) throws Exception {
+	public PPPoECredentialsHolder setPPPoECredentials(Integer deviceId, Autenticacao autenticacao, String ppoeConf) throws Exception {
 
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"setPPPoECredentials\"", "UTF-8") + "&deviceId=" + deviceId + "&input="  + URLEncoder.encode(ppoeConf, "UTF-8");
+		String url = autenticacao.getLink() + "capability/execute?capability=" + URLEncoder.encode("\"setPPPoECredentials\"", "UTF-8") + "&deviceId=" + deviceId + "&input="  + URLEncoder.encode(ppoeConf, "UTF-8");
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
 
 		System.out.println(clientResponse);
 

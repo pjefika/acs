@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.ping.PingHolder;
 import models.comandos.PingAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -22,6 +24,9 @@ public class GetPing {
 	private PingAction pingAction;
 
 	private Integer conterTime = 0;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public GetPing() {
 
@@ -41,7 +46,7 @@ public class GetPing {
 
 		try {
 
-			this.ping = this.pingAction.pingAction(deviceId, this.hostAdress, JSFUtil.autenticacao(), this.numberRepetitions);
+			this.ping = this.pingAction.pingAction(deviceId, this.hostAdress, this.autenticacaoServico.listarAutenticacaoAtiva(), this.numberRepetitions);
 
 			int cont = 0;
 

@@ -7,11 +7,12 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.sip.SipDiagnosticsHolder;
+import entidades.sys.Autenticacao;
 import util.JSFUtil;
 
 public class SipDiagnosticsAction {
 	
-	public SipDiagnosticsHolder sipDiagnostics(Integer deviceId, String phyReferenceList, String autenticacao) throws Exception {
+	public SipDiagnosticsHolder sipDiagnostics(Integer deviceId, String phyReferenceList, Autenticacao autenticacao) throws Exception {
 
 		/**
 		 * Status do Sip
@@ -19,11 +20,11 @@ public class SipDiagnosticsAction {
 
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "capability/diagnostic?diagnostic=" + URLEncoder.encode("\"sipDiagnostics\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"PhyReferenceList\":\"" + phyReferenceList + "\"}", "UTF-8");
+		String url = autenticacao.getLink() + "capability/diagnostic?diagnostic=" + URLEncoder.encode("\"sipDiagnostics\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"PhyReferenceList\":\"" + phyReferenceList + "\"}", "UTF-8");
 		
 		WebResource webResource = client.resource(url);
 
-		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
 				
 		if (clientResponse.getStatus() != 200) {
 

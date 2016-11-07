@@ -1,11 +1,13 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.portMapping.PortMappingTableHolder;
 import entidades.portMapping.Values;
 import models.comandos.PortMappingTableAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -20,6 +22,9 @@ public class PortMappingTable {
 	
 	private PortMappingTableAction portMappingTableAction;
 	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
+	
 	public PortMappingTable() {
 
 		this.portMappingTableAction = new PortMappingTableAction();
@@ -30,7 +35,7 @@ public class PortMappingTable {
 		
 		try {
 			
-			this.portMappingTableHolder = this.portMappingTableAction.getPortMappingTable(deviceId, JSFUtil.autenticacao());
+			this.portMappingTableHolder = this.portMappingTableAction.getPortMappingTable(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 			
 			this.values = this.portMappingTableHolder.getValues();
 			

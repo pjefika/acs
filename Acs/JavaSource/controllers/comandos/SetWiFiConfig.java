@@ -12,6 +12,7 @@ import entidades.sys.Logs;
 import entidades.wifiInfo.SetWiFiConfigHolder;
 import entidades.wifiInfo.WifiConf;
 import models.comandos.SetWiFiConfigAction;
+import models.sys.AutenticacaoServico;
 import models.sys.LogsServico;
 import util.JSFUtil;
 
@@ -32,6 +33,9 @@ public class SetWiFiConfig {
 
 	@EJB
 	private LogsServico logsServico;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public SetWiFiConfig() {
 
@@ -133,7 +137,7 @@ public class SetWiFiConfig {
 
 			Thread.sleep(5000);
 
-			this.setWiFiConfigHolder = this.setWiFiConfigAction.setWiFiConfig(deviceId, JSFUtil.autenticacao(), confWifi);
+			this.setWiFiConfigHolder = this.setWiFiConfigAction.setWiFiConfig(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva(), confWifi);
 
 			if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
 

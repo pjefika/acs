@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.wifiInfo.WifiInfoHolder;
 import models.comandos.WiFiInfoAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -18,6 +20,9 @@ public class getWifiInfo {
 	private Integer contTentativas = 0;
 
 	private WiFiInfoAction wiFiInfoAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public getWifiInfo() {
 
@@ -29,7 +34,7 @@ public class getWifiInfo {
 
 		try {
 
-			this.wifiInfoHolders = this.wiFiInfoAction.getWiFiInfo(deviceId, JSFUtil.autenticacao(), "{\"frequency\":\"2.4GHz\"}");
+			this.wifiInfoHolders = this.wiFiInfoAction.getWiFiInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva(), "{\"frequency\":\"2.4GHz\"}");
 
 			this.contTentativas = 0;
 

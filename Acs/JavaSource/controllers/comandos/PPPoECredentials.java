@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.pppoECredentials.PPPoECredentialsHolder;
 import models.comandos.PPPoECredentialsAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -20,6 +22,9 @@ public class PPPoECredentials {
 	private Integer contador = 0;
 	
 	private PPPoECredentialsAction ppPoECredentialsAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 	
 	public PPPoECredentials() {
 
@@ -75,7 +80,7 @@ public class PPPoECredentials {
 			
 			Thread.sleep(3000);
 			
-			this.ppPoECredentialsHolder = this.ppPoECredentialsAction.setPPPoECredentials(deviceId, JSFUtil.autenticacao(), confPppoe);
+			this.ppPoECredentialsHolder = this.ppPoECredentialsAction.setPPPoECredentials(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva(), confPppoe);
 			
 			if (this.ppPoECredentialsHolder.getStatus().equalsIgnoreCase("ok")) {
 				

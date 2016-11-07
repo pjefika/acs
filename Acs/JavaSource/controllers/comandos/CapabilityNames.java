@@ -2,10 +2,12 @@ package controllers.comandos;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import models.comandos.CapabilityNamesAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -42,10 +44,12 @@ public class CapabilityNames {
 	
 	private Boolean pppoeCredentials = false;
 	
-	private Boolean getPPPoECredentials = false;
-	
+	private Boolean getPPPoECredentials = false;	
 
 	private CapabilityNamesAction capabilityNamesAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public CapabilityNames() {
 		
@@ -61,7 +65,7 @@ public class CapabilityNames {
 			
 			if (ativo) {
 
-				List<String> values = this.capabilityNamesAction.listCapabilityNamesFor(deviceId, JSFUtil.autenticacao());
+				List<String> values = this.capabilityNamesAction.listCapabilityNamesFor(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 				for (String string : values) {
 

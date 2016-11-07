@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.lanHost.LanHostHolder;
 import models.comandos.LanHostsTableAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -16,6 +18,9 @@ public class LanHostsTable {
 	private LanHostsTableAction lanHostsTableAction;
 
 	private Integer cont = 0;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public LanHostsTable() {
 
@@ -27,7 +32,7 @@ public class LanHostsTable {
 		
 		try {
 						
-			this.lanHostHolders = this.lanHostsTableAction.getLanHostsTable(deviceId, JSFUtil.autenticacao());
+			this.lanHostHolders = this.lanHostsTableAction.getLanHostsTable(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
 

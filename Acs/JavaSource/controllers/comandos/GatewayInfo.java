@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.gatewayInfo.GatewayInfoHolder;
 import models.comandos.GatewayInfoAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 import entidades.gatewayInfo.Values;
 
@@ -20,6 +22,9 @@ public class GatewayInfo {
 	
 	private GatewayInfoAction gatewayInfoAction;
 	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
+	
 	public GatewayInfo() {
 
 		this.gatewayInfoAction = new GatewayInfoAction();
@@ -30,7 +35,7 @@ public class GatewayInfo {
 
 		try {
 
-			this.gatewayInfoHolder = this.gatewayInfoAction.getGatewayInfo(deviceId, JSFUtil.autenticacao());
+			this.gatewayInfoHolder = this.gatewayInfoAction.getGatewayInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			this.valuesgatway = this.gatewayInfoHolder.getValues();
 

@@ -1,5 +1,6 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -7,6 +8,7 @@ import entidades.dslConnectionInfo.DslConnectionInfoHolder;
 import util.JSFUtil;
 import entidades.dslConnectionInfo.Values;
 import models.comandos.DSLConnectionInfoAction;
+import models.sys.AutenticacaoServico;
 
 @ManagedBean
 @RequestScoped
@@ -20,6 +22,9 @@ public class DSLConnectionInfo {
 	
 	private Integer cont = 0;
 	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
+	
 	public DSLConnectionInfo() {
 
 		this.dslConnectionInfoAction = new DSLConnectionInfoAction();
@@ -30,7 +35,7 @@ public class DSLConnectionInfo {
 
 		try {
 			
-			this.dslConnectionInfoHolder = this.dslConnectionInfoAction.getDSLConnectionInfo(deviceId, JSFUtil.autenticacao());
+			this.dslConnectionInfoHolder = this.dslConnectionInfoAction.getDSLConnectionInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			this.valuesDslConnection = this.dslConnectionInfoHolder.getValues();
 

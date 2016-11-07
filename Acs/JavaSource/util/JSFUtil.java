@@ -8,6 +8,9 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import controllers.sys.AutenticacaoBean;
+import entidades.sys.Autenticacao;
+
 public class JSFUtil {
 
 	public static void addInfoMessage(String msg) {		
@@ -85,45 +88,41 @@ public class JSFUtil {
 
 
 	}
-	
+
 	public static String formatarTimeStampHra(Long date) {
-		
+
 		Date dateStamp = new Date(date);
-		
+
 		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-		
+
 		String dataFormatada = formatter.format(dateStamp);
-		
+
 		return dataFormatada;
+
+	}
+
+	public static Autenticacao autentica() {		
 		
+		AutenticacaoBean autenticacaoBean = new AutenticacaoBean();
+		
+		Autenticacao autenticacao = autenticacaoBean.listarAutenticacaoAtiva();
+		
+		System.out.println("Link: " + autenticacao.getLink());
+
+		return autenticacao;
+
 	}
 	
-	public static String autenticacao() {
+	public static String encodeUser(String usr, String password) {
 		
-		/*String username = "efika_system";
-		String password = "Efika@v1v0Gvt";*/
-		
-		String username = "co_g0047217";
-		String password = "chk1234";
-		
-		String userPassword = username + ":" + password;
+		String userPassword = usr + ":" + password;
 		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
 		String concat = "Basic " + encoding;
-		
+
 		return concat;	
-		
+
 	}
+
 	
-	public static String acs() {
-		
-		//Produção
-		//String link = "http://10.200.6.150/nbbs/api/";
-		
-		//Teste
-		String link = "http://10.200.38.235/nbbs/api/";		
-		
-		return link;
-		
-	}
-	
+
 }

@@ -8,32 +8,33 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.dados.ResultsHolder;
+import entidades.sys.Autenticacao;
 import util.JSFUtil;
 
 public class ListDevicesServico {
 
-	public ResultsHolder listDevices(String criteria, String parameter, String autenticacao) throws Exception {
+	public ResultsHolder listDevices(String criteria, String parameter, Autenticacao autenticacao) throws Exception {
 
 		try {
 
 			Client client = Client.create();
 
-			String url = JSFUtil.acs() + "core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
-
+			String url = autenticacao.getLink() + "core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
+			
 			WebResource webResource = client.resource(url);
 
-			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
-			
+			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
+
 			if (clientResponse.getStatus() != 200) {
 
 				if (clientResponse.getStatus() == 401) {
-					
+
 					throw new Exception("Erro de autorização, consulte o administrador do sistema.");
-					
+
 				} else {
-					
+
 					throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
-					
+
 				}				
 
 			}

@@ -11,6 +11,7 @@ import controllers.sys.LoginBean;
 import entidades.factoryReset.FactoryResetHolder;
 import entidades.sys.Logs;
 import models.comandos.FactoryResetAction;
+import models.sys.AutenticacaoServico;
 import models.sys.LogsServico;
 import util.JSFUtil;
 
@@ -30,6 +31,9 @@ public class FactoryReset {
 	@EJB
 	private LogsServico logsServico;
 	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
+	
 	public FactoryReset() {
 
 		this.factoryResetAction = new FactoryResetAction();
@@ -40,7 +44,7 @@ public class FactoryReset {
 
 		try {
 
-			this.retornoRf = this.factoryResetAction.factoryReset(deviceId, JSFUtil.autenticacao());
+			this.retornoRf = this.factoryResetAction.factoryReset(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			this.salvaLogResetFacory(parametro, this.retornoRf);
 			

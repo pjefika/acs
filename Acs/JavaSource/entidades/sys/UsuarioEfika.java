@@ -17,6 +17,8 @@ public class UsuarioEfika{
 		
 	@NotNull
 	private Integer nivel;
+	
+	private Boolean adm = false;
 		
 	public UsuarioEfika() {
 	}
@@ -35,6 +37,14 @@ public class UsuarioEfika{
 
 	public void setNivel(Integer nivel) {
 		this.nivel = nivel;
+	}	
+
+	public Boolean getAdm() {
+		return adm;
+	}
+
+	public void setAdm(Boolean adm) {
+		this.adm = adm;
 	}
 
 	@Override

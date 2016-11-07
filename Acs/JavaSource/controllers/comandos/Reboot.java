@@ -11,6 +11,7 @@ import controllers.sys.LoginBean;
 import entidades.reboot.RebootHolder;
 import entidades.sys.Logs;
 import models.comandos.RebootAction;
+import models.sys.AutenticacaoServico;
 import models.sys.LogsServico;
 import util.JSFUtil;
 
@@ -20,7 +21,7 @@ public class Reboot {
 
 	@ManagedProperty(value="#{loginBean}")
 	private LoginBean sessao;
-
+	
 	private RebootHolder rebootHolder;
 
 	private RebootAction rebootAction;
@@ -29,6 +30,9 @@ public class Reboot {
 
 	@EJB
 	private LogsServico logsServico;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public Reboot() {
 
@@ -40,7 +44,7 @@ public class Reboot {
 
 		try {
 
-			this.rebootHolder = this.rebootAction.Reboot(deviceId, JSFUtil.autenticacao());
+			this.rebootHolder = this.rebootAction.Reboot(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
 

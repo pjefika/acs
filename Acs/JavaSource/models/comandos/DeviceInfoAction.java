@@ -8,21 +8,22 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.getInfo.InfoHolder;
+import entidades.sys.Autenticacao;
 import util.JSFUtil;
 
 public class DeviceInfoAction {
 
-	public InfoHolder getDeviceInfo(Integer deviceId, String autenticacao) throws Exception {
+	public InfoHolder getDeviceInfo(Integer deviceId, Autenticacao autenticacao) throws Exception {
 
 		try {
 
 			Client client = Client.create();
 
-			String url = JSFUtil.acs() + "capability/diagnostic?diagnostic="+ URLEncoder.encode("\"getDeviceInfo\"", "UTF-8") +"&deviceId=" + deviceId;
+			String url = autenticacao.getLink() + "capability/diagnostic?diagnostic="+ URLEncoder.encode("\"getDeviceInfo\"", "UTF-8") +"&deviceId=" + deviceId;
 
 			WebResource webResource = client.resource(url);
 
-			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
 
 			if (clientResponse.getStatus() != 200) {
 

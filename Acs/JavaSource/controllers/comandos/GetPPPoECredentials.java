@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.getPPPoECredentials.GetPPPoECredentialsHolder;
 import models.comandos.GetPPPoECredentialsAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -16,6 +18,9 @@ public class GetPPPoECredentials {
 	private Integer contador = 0;
 
 	private GetPPPoECredentialsAction getPPPoECredentialsAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public GetPPPoECredentials() {
 
@@ -27,7 +32,7 @@ public class GetPPPoECredentials {
 
 		try {
 
-			this.getPPPoECredentialsHolder = this.getPPPoECredentialsAction.getPPPoECredentials(deviceId, JSFUtil.autenticacao());			
+			this.getPPPoECredentialsHolder = this.getPPPoECredentialsAction.getPPPoECredentials(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());			
 
 			JSFUtil.addInfoMessage("Comando executado com sucesso.");
 			

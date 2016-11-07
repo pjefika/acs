@@ -1,10 +1,12 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.interfaceStatics.InterfaceStaticsHolder;
 import models.comandos.InterfaceStaticsAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 import entidades.interfaceStatics.Values;
 
@@ -20,6 +22,9 @@ public class InterfaceStatic {
 	
 	private Integer cont = 0;
 	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
+	
 	public InterfaceStatic() {
 
 		this.interfaceStaticsAction = new InterfaceStaticsAction();
@@ -30,7 +35,7 @@ public class InterfaceStatic {
 
 		try {
 
-			this.interfaceStaticsHolder = this.interfaceStaticsAction.interfaceStatics(deviceId, JSFUtil.autenticacao());
+			this.interfaceStaticsHolder = this.interfaceStaticsAction.interfaceStatics(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			this.valuesInterfaces = this.interfaceStaticsHolder.getValues();
 

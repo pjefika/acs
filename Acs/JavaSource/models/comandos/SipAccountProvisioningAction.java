@@ -9,11 +9,12 @@ import com.sun.jersey.api.client.WebResource;
 
 import entidades.sip.SipAccountProvisioning;
 import entidades.sip.SipAccountProvisioningHolder;
+import entidades.sys.Autenticacao;
 import util.JSFUtil;
 
 public class SipAccountProvisioningAction {
 
-	public SipAccountProvisioningHolder sipAccountProvisioning(Integer deviceId, SipAccountProvisioning sipAccountProvisioning, String autenticacao) throws Exception {
+	public SipAccountProvisioningHolder sipAccountProvisioning(Integer deviceId, SipAccountProvisioning sipAccountProvisioning, Autenticacao autenticacao) throws Exception {
 
 		/**
 		 * Aciona o FXS 
@@ -21,13 +22,13 @@ public class SipAccountProvisioningAction {
 
 		Client client = Client.create();	
 
-		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"sipAccountProvisioning\"", "UTF-8") + "&deviceId="+ deviceId +"&input=" + URLEncoder.encode("{\"DirectoryNumber\":\"" + sipAccountProvisioning.getDirectoryNumber() + "\",\"AuthUserName\":\"" + sipAccountProvisioning.getAuthUserName() + "\",\"AuthPassword\":\"" + sipAccountProvisioning.getAuthPassword() + "\",\"ProxyServer\":\"" + sipAccountProvisioning.getProxyServer() + "\",\"RegistrarServer\":\"" + sipAccountProvisioning.getRegistrarServer() + "\",\"UserAgentDomain\":\"" + sipAccountProvisioning.getUserAgentDomain() + "\",\"OutboundProxy\":\"" + sipAccountProvisioning.getOutboundProxy() + "\",\"PhyReferenceList\":\"" + sipAccountProvisioning.getPhyReferenceList() + "\"}", "UTF-8");
+		String url = autenticacao.getLink() + "capability/execute?capability=" + URLEncoder.encode("\"sipAccountProvisioning\"", "UTF-8") + "&deviceId="+ deviceId +"&input=" + URLEncoder.encode("{\"DirectoryNumber\":\"" + sipAccountProvisioning.getDirectoryNumber() + "\",\"AuthUserName\":\"" + sipAccountProvisioning.getAuthUserName() + "\",\"AuthPassword\":\"" + sipAccountProvisioning.getAuthPassword() + "\",\"ProxyServer\":\"" + sipAccountProvisioning.getProxyServer() + "\",\"RegistrarServer\":\"" + sipAccountProvisioning.getRegistrarServer() + "\",\"UserAgentDomain\":\"" + sipAccountProvisioning.getUserAgentDomain() + "\",\"OutboundProxy\":\"" + sipAccountProvisioning.getOutboundProxy() + "\",\"PhyReferenceList\":\"" + sipAccountProvisioning.getPhyReferenceList() + "\"}", "UTF-8");
 
 		System.out.println(url);
 		
 		WebResource webResource = client.resource(url);
 
-		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
 
 		if (clientResponse.getStatus() != 200) {
 

@@ -1,5 +1,6 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
 import javax.faces.bean.RequestScoped;
@@ -7,6 +8,7 @@ import javax.faces.bean.RequestScoped;
 import entidades.sip.SipAccountProvisioning;
 import entidades.sip.SipAccountProvisioningHolder;
 import models.comandos.SipAccountProvisioningAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -18,6 +20,9 @@ public class AccountProvisioning {
 	private SipAccountProvisioningHolder sipAccountProvisioningHolder;	
 	
 	private SipAccountProvisioningAction sipAccountProvisioningAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 	
 	public AccountProvisioning() {
 		
@@ -31,7 +36,7 @@ public class AccountProvisioning {
 
 		try {
 			
-			this.sipAccountProvisioningHolder = this.sipAccountProvisioningAction.sipAccountProvisioning(deviceId, this.sipAccountProvisioning, JSFUtil.autenticacao());
+			this.sipAccountProvisioningHolder = this.sipAccountProvisioningAction.sipAccountProvisioning(deviceId, this.sipAccountProvisioning, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			if (this.sipAccountProvisioningHolder.getStatusCode().equals(0)) {
 

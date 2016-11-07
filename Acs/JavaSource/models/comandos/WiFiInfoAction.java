@@ -7,12 +7,13 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import entidades.sys.Autenticacao;
 import entidades.wifiInfo.WifiInfoHolder;
 import util.JSFUtil;
 
 public class WiFiInfoAction {
 
-	public WifiInfoHolder[] getWiFiInfo(Integer deviceId, String autenticacao, String frequency) throws Exception {
+	public WifiInfoHolder[] getWiFiInfo(Integer deviceId, Autenticacao autenticacao, String frequency) throws Exception {
 
 		/**
 		 * Busca informações do wifi no modem.
@@ -20,11 +21,11 @@ public class WiFiInfoAction {
 
 		Client client = Client.create();
 
-		String url = JSFUtil.acs() + "capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode(frequency, "UTF-8");
+		String url = autenticacao.getLink() + "capability/execute?capability=" + URLEncoder.encode("\"getLanWiFiInfo\"", "UTF-8") + "&deviceId=" + deviceId + "&input=" + URLEncoder.encode(frequency, "UTF-8");
 				
 		WebResource webResource = client.resource(url);
 
-		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", autenticacao).get(ClientResponse.class);
+		ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
 
 		if (clientResponse.getStatus() != 200) {
 

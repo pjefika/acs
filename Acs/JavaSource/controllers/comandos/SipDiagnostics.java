@@ -1,11 +1,13 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.sip.SipDiagnosticsHolder;
 import entidades.sip.Values;
 import models.comandos.SipDiagnosticsAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -21,6 +23,9 @@ public class SipDiagnostics {
 	private Integer contTentativas = 0;
 	
 	private SipDiagnosticsAction sipDiagnosticsAction;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 	
 	public SipDiagnostics() {
 		
@@ -40,7 +45,7 @@ public class SipDiagnostics {
 
 		try {
 									
-			this.sipDiagnosticsHolder = this.sipDiagnosticsAction.sipDiagnostics(deviceId, this.phyReferenceList, JSFUtil.autenticacao());
+			this.sipDiagnosticsHolder = this.sipDiagnosticsAction.sipDiagnostics(deviceId, this.phyReferenceList, this.autenticacaoServico.listarAutenticacaoAtiva());
 			
 			int cont = 0;
 

@@ -1,11 +1,13 @@
 package controllers.comandos;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import entidades.getInfo.InfoHolder;
 import entidades.getInfo.Values;
 import models.comandos.DeviceInfoAction;
+import models.sys.AutenticacaoServico;
 import util.JSFUtil;
 
 @ManagedBean
@@ -27,6 +29,9 @@ public class DeviceInfo {
 	private String status = "Inativo"; 
 
 	private Integer contador = 0;
+	
+	@EJB
+	private AutenticacaoServico autenticacaoServico;
 
 	public DeviceInfo() {
 
@@ -47,7 +52,7 @@ public class DeviceInfo {
 
 			this.values = null;
 
-			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
+			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			this.values = this.infoHolder.getValues();
 
@@ -69,7 +74,7 @@ public class DeviceInfo {
 
 			this.values2 = null;
 
-			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao());
+			this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
 
 			int cont = 0;
 
@@ -113,7 +118,7 @@ public class DeviceInfo {
 
 		try {
 
-			this.status = this.deviceInfoAction.getDeviceInfo(deviceId, JSFUtil.autenticacao()).getStatus();
+			this.status = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva()).getStatus();
 
 			return this.status;
 
