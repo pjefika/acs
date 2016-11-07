@@ -69,8 +69,6 @@ public class LoginBean implements Serializable{
 
 		}
 		
-		System.out.println(adm);
-
 		return adm;
 
 	}

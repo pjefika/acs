@@ -21,6 +21,9 @@ public class ListDevicesServico {
 
 			String url = autenticacao.getLink() + "core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
 			
+			System.out.println(autenticacao.getUser());			
+			System.out.println(autenticacao.getPassword());
+			
 			WebResource webResource = client.resource(url);
 
 			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);

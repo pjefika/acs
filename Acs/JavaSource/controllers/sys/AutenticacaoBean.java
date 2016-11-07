@@ -39,7 +39,7 @@ public class AutenticacaoBean implements Serializable {
 			this.autenticacaoServico.cadastrarAutenticacao(this.autenticacao);
 
 			JSFUtil.addInfoMessage("Cadastrado com sucesso.");
-
+			
 			this.autenticacao = new Autenticacao();
 
 		} catch (Exception e) {
@@ -55,7 +55,7 @@ public class AutenticacaoBean implements Serializable {
 		try {
 
 			this.autenticacaoServico.modificarAutenticacao(this.autenticacaoModifica);
-
+			
 			JSFUtil.addInfoMessage("Modificado com sucesso.");
 
 			this.autenticacaoModifica = new Autenticacao();

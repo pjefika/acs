@@ -58,6 +58,12 @@
 				emptyMessage="Não possui autenticações registradas."
 				style="text-align: center;">
 
+				<p:column headerText="Id">
+
+					<h:outputText value="#{autenticacao.id}" />
+
+				</p:column>
+
 				<p:column headerText="Link">
 
 					<h:outputText value="#{autenticacao.link}" />
@@ -109,6 +115,9 @@
 				showEffect="fade" hideEffect="fade">
 
 				<h:panelGrid columns="2" id="modAuthPanel">
+
+					<h:outputText value="Id: " />
+					<p:inputText value="#{autenticacaoBean.autenticacaoModifica.id}" />
 
 					<h:outputText value="Link: " />
 					<p:inputText value="#{autenticacaoBean.autenticacaoModifica.link}" />
