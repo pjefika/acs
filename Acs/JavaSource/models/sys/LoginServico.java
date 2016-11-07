@@ -28,7 +28,7 @@ public class LoginServico {
 	public Usuario buscaLoginWS(String login) throws Exception {
 
 		Usuario usuarioWS = efikaUsersProxy.consultarUsuario(login);
-				
+
 		if (usuarioWS == null){
 
 			throw new Exception("Usuário não encontrado, se você não possui login de acesso utilize a opção \"Solicite o seu acesso\" na pagina http://efika/web");
@@ -52,7 +52,7 @@ public class LoginServico {
 		this.buscaLogin(usuario);
 
 	}
-	
+
 	public void buscaLogin(Usuario usuario) throws Exception {
 
 		try {
@@ -69,8 +69,8 @@ public class LoginServico {
 				this.updateLogin(usuarioEfika);
 
 			}else{
-				
-				
+
+
 			}
 
 		} catch (Exception e) {
@@ -97,22 +97,39 @@ public class LoginServico {
 		this.entityManager.merge(usuarioEfika);		
 
 	}
-	
+
 	public UsuarioEfika listarUsuarioEfikaEspecifico(UsuarioEfika usuarioEfika) throws Exception {
-		
+
 		try {
-			
+
 			Query query = this.entityManager.createQuery("FROM UsuarioEfika u WHERE u.login =:param1");
 			query.setParameter("param1", usuarioEfika.getLogin());
 			return (UsuarioEfika) query.getSingleResult();
-			
+
 		} catch (Exception e) {
-			
+
 			throw new Exception("Usuário não cadastrado");
-			
+
 		}
-		
+
 	}
-	
-	
+
+	public UsuarioEfika buscaUsuario(UsuarioEfika usuarioEfika) {
+
+		try {
+
+			Query query = this.entityManager.createQuery("FROM UsuarioEfika u WHERE u.login =:param1");
+			query.setParameter("param1", usuarioEfika.getLogin());
+
+			return (UsuarioEfika) query.getSingleResult();
+
+		} catch (Exception e) {
+
+			return null;
+
+		}
+
+	}
+
+
 }

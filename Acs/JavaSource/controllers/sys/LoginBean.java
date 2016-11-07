@@ -2,6 +2,7 @@ package controllers.sys;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -57,6 +58,46 @@ public class LoginBean implements Serializable{
 
 	}
 
+	public Boolean validaSeAdm() {
+
+		Boolean adm = false;
+
+		if (this.logado) {
+			
+			this.usuario = this.servicoLogin.buscaUsuario(this.usuario);
+
+			adm = this.usuario.getAdm();
+
+		}
+		
+		System.out.println(adm);
+
+		return adm;
+
+	}
+	
+	public void redirecionaIndex(Boolean param) {
+		
+		try {
+			
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			
+			if (!param){
+				
+				System.out.println("Entro Restrito");
+							
+				context.redirect("/Acs/index.jsf");			
+				
+			}
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+	}
+
 	public String logar() {
 
 		try {
@@ -91,7 +132,7 @@ public class LoginBean implements Serializable{
 		this.pagina = pagina;
 
 	}	
-	
+
 	public UsuarioEfika getUsuario() {
 		return usuario;
 	}
