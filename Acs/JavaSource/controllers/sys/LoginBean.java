@@ -2,7 +2,6 @@ package controllers.sys;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -83,9 +82,7 @@ public class LoginBean implements Serializable{
 			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 			
 			if (!param){
-				
-				System.out.println("Entro Restrito");
-							
+											
 				context.redirect("/Acs/index.jsf");			
 				
 			}
