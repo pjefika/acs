@@ -1,17 +1,26 @@
 package controllers.comandos;
 
+import java.util.Date;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import controllers.sys.LoginBean;
 import entidades.pppoECredentials.PPPoECredentialsHolder;
+import entidades.sys.Logs;
 import models.comandos.PPPoECredentialsAction;
 import models.sys.AutenticacaoServico;
+import models.sys.LogsServico;
 import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
 public class PPPoECredentials {
+	
+	@ManagedProperty(value="#{loginBean}")
+	private LoginBean sessao;
 	
 	private String username;
 	
@@ -22,6 +31,9 @@ public class PPPoECredentials {
 	private Integer contador = 0;
 	
 	private PPPoECredentialsAction ppPoECredentialsAction;
+	
+	@EJB
+	private LogsServico logsServico;
 	
 	@EJB
 	private AutenticacaoServico autenticacaoServico;
@@ -38,7 +50,7 @@ public class PPPoECredentials {
 		
 	}
 	
-	public void configPPPoECredentials(Integer deviceId) {
+	public void configPPPoECredentials(Integer deviceId, String parametro) {
 		
 		StringBuffer confPppoeBuff = new StringBuffer();
 		
@@ -70,11 +82,11 @@ public class PPPoECredentials {
 		
 		String confPppoe = confPppoeBuff.toString();
 						
-		this.setPPPoECredentials(deviceId, confPppoe);
+		this.setPPPoECredentials(deviceId, confPppoe, parametro);
 		
 	}
 	
-	public void setPPPoECredentials(Integer deviceId, String confPppoe) {
+	public void setPPPoECredentials(Integer deviceId, String confPppoe, String parametro) {
 		
 		try {
 			
@@ -86,6 +98,8 @@ public class PPPoECredentials {
 				
 				this.contador = 0;
 				
+				this.salvaLogPPPoECredentials(parametro, confPppoe);
+				
 				JSFUtil.addInfoMessage("Comando executado com sucesso.");
 				
 				this.username = "";
@@ -95,7 +109,7 @@ public class PPPoECredentials {
 				
 				this.contador++;
 				
-				this.setPPPoECredentials(deviceId, confPppoe);
+				this.setPPPoECredentials(deviceId, confPppoe, parametro);
 				
 			} else {
 				
@@ -116,6 +130,29 @@ public class PPPoECredentials {
 			
 		}
 		
+	}
+	
+	public void salvaLogPPPoECredentials(String parametro, String valor) {
+
+		try {
+
+			Logs logs = new Logs();
+			Date date = new Date();
+
+			logs.setUsuarioEfika(this.sessao.getUsuario());
+			logs.setDataHora(date);
+			logs.setComando("PPPoECredentials");
+			logs.setParametro(parametro);
+			logs.setValor(valor);
+
+			this.logsServico.cadastrarLog(logs);
+
+		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+
+		}
+
 	}
 
 	public String getUsername() {
@@ -140,6 +177,14 @@ public class PPPoECredentials {
 
 	public void setPpPoECredentialsAction(PPPoECredentialsAction ppPoECredentialsAction) {
 		this.ppPoECredentialsAction = ppPoECredentialsAction;
+	}
+
+	public LoginBean getSessao() {
+		return sessao;
+	}
+
+	public void setSessao(LoginBean sessao) {
+		this.sessao = sessao;
 	}	
 	
 }
