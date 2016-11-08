@@ -77,7 +77,7 @@ public class SipDiagnostics {
 
 		} catch (Exception e) {
 			
-			if (this.contTentativas < 11) {
+			if (this.contTentativas < 6) {
 				
 				Thread.sleep(1000);
 				

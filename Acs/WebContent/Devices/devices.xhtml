@@ -38,8 +38,10 @@
 				<h:panelGrid columns="4">
 
 					<h:outputText value="Parametro" />
-					<p:inputText value="#{listDevices.parameter}" id="inputParam" title="Inisira o Designador / Mac / Ip / Serial Number"/>
-					<p:tooltip id="tooltip" for="inputParam" showEvent="focus" hideEvent="blur" position="bottom"/>
+					<p:inputText value="#{listDevices.parameter}" id="inputParam"
+						title="Inisira o Designador / Mac / Ip / Serial Number" />
+					<p:tooltip id="tooltip" for="inputParam" showEvent="focus"
+						hideEvent="blur" position="bottom" />
 
 					<p:commandButton action="#{listDevices.listDevices()}"
 						update="dataGridResults formTemplate:msgs" value="Buscar">
@@ -67,7 +69,8 @@
 						styleClass="#{deviceInfo.ativo == true ? 'colorSeAtivo' : 'colorSeFalse'}"
 						style="height: 100%;">
 
-						<p:panelGrid columns="2" style="float: left; width: 38%; margin-bottom: 5px; margin-right: 2%;">
+						<p:panelGrid columns="2"
+							style="float: left; width: 38%; margin-bottom: 5px; margin-right: 2%;">
 
 							<h:outputText value="Numero de Serie: " />
 							<h:outputText value="#{results.serialNumber}"
@@ -77,8 +80,7 @@
 							<h:outputText value="#{results.mac}" styleClass="fontBlack" />
 
 							<h:outputText value="Designador: " />
-							<h:outputText value="#{results.userKey3}"
-								styleClass="fontBlack"/>
+							<h:outputText value="#{results.userKey3}" styleClass="fontBlack" />
 
 							<h:outputText value="Firmware: " />
 							<h:outputText value="#{results.softwareVersion}"
@@ -242,8 +244,7 @@
 							<p:panelGrid columns="2">
 
 								<h:outputText value="Nome do Host " />
-								<h:outputText value="#{lanHost.hostname}"
-									styleClass="fontBlack" />
+								<h:outputText value="#{lanHost.hostname}" styleClass="fontBlack" />
 
 								<h:outputText value="Status: " />
 								<h:outputText value="Ativo" rendered="#{lanHost.status}"
@@ -252,16 +253,13 @@
 									styleClass="fontBlack" />
 
 								<h:outputText value="Tipo conexão: " />
-								<h:outputText value="#{lanHost.iftype}"
-									styleClass="fontBlack" />
+								<h:outputText value="#{lanHost.iftype}" styleClass="fontBlack" />
 
 								<h:outputText value="Mac: " />
-								<h:outputText value="#{lanHost.hostmac}"
-									styleClass="fontBlack" />
+								<h:outputText value="#{lanHost.hostmac}" styleClass="fontBlack" />
 
 								<h:outputText value="Tempo de Conexão: " />
-								<h:outputText value="#{lanHost.ltremain}"
-									styleClass="fontBlack" />
+								<h:outputText value="#{lanHost.ltremain}" styleClass="fontBlack" />
 
 							</p:panelGrid>
 
@@ -432,10 +430,12 @@
 							<p:panelGrid columns="2" style="width:100%;">
 
 								<h:outputText value="Nome do host: " />
-								<h:outputText value="#{gateWayInfo.hostname}" styleClass="fontBlack" />
+								<h:outputText value="#{gateWayInfo.hostname}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="DNS primario: " />
-								<h:outputText value="#{gateWayInfo.primaryDNS}" styleClass="fontBlack" />
+								<h:outputText value="#{gateWayInfo.primaryDNS}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="DNS alternativo: " />
 								<h:outputText value="#{gateWayInfo.alternateDNS}"
@@ -470,8 +470,7 @@
 									styleClass="fontBlack" />
 
 								<h:outputText value="UPnP:  " />
-								<h:outputText value="#{gateWayInfo.UPnP}"
-									styleClass="fontBlack" />
+								<h:outputText value="#{gateWayInfo.UPnP}" styleClass="fontBlack" />
 
 								<h:outputText value="timeZone Name: " />
 								<h:outputText value="#{gateWayInfo.timeZone.name}"
@@ -539,11 +538,11 @@
 									<h:outputText value="Status" />
 									<h:outputText value="#{wifiConf.enableStatus}"
 										styleClass="fontBlack" />
-										
+
 									<h:outputText value="Status Broadcast" />
 									<h:outputText value="#{wifiConf.broadcastEnabled}"
 										styleClass="fontBlack" />
-										
+
 									<h:outputText value="Status da interface " />
 									<h:outputText value="#{wifiConf.interfaceStatus}"
 										styleClass="fontBlack" />
@@ -557,8 +556,7 @@
 										styleClass="fontBlack" />
 
 									<h:outputText value="Nome da rede" />
-									<h:outputText value="#{wifiConf.SSID}"
-										styleClass="fontBlack" />
+									<h:outputText value="#{wifiConf.SSID}" styleClass="fontBlack" />
 
 									<h:outputText value="MAC" />
 									<h:outputText value="#{wifiConf.macAddresses}"
@@ -638,7 +636,7 @@
 
 						<h:outputText value="Status" />
 						<h:outputText value="#{sipDiagnostics.values.status}"
-							styleClass="#{sipDiagnostics.values.status == 'OK' ? 'colorGreen' : 'colorRed'} 'fontBlack'"/>
+							styleClass="#{sipDiagnostics.values.status == 'OK' ? 'colorGreen' : 'colorRed'} 'fontBlack'" />
 
 						<h:outputText value="AuthUserName" />
 						<h:outputText value="#{sipDiagnostics.values.authUserName}"
@@ -802,19 +800,24 @@
 					<p:panelGrid columns="2" id="pingActions" style="width: 100%;">
 
 						<h:outputText value="Status" />
-						<h:outputText value="#{getPing.pingHolder.pingStatus}" />
+						<h:outputText value="#{getPing.pingHolder.pingStatus}"
+							styleClass="fontBlack" />
 
 						<h:outputText value="Response Time" />
-						<h:outputText value="#{getPing.pingHolder.responseTime}" />
+						<h:outputText value="#{getPing.pingHolder.responseTime}"
+							styleClass="fontBlack" />
 
 						<h:outputText value="Success Count" />
-						<h:outputText value="#{getPing.pingHolder.successCount}" />
+						<h:outputText value="#{getPing.pingHolder.successCount}"
+							styleClass="fontBlack" />
 
 						<h:outputText value="Repetitions" />
-						<h:outputText value="#{getPing.pingHolder.repetitions}" />
+						<h:outputText value="#{getPing.pingHolder.repetitions}"
+							styleClass="fontBlack" />
 
 						<h:outputText value="Host Adress" />
-						<h:outputText value="#{getPing.pingHolder.hostAddress}" />
+						<h:outputText value="#{getPing.pingHolder.hostAddress}"
+							styleClass="fontBlack" />
 
 					</p:panelGrid>
 
@@ -977,22 +980,28 @@
 									styleClass="#{lanEthernet.ethernetEnable == 'On' ? 'colorGreen' : 'colorRed'}" />
 
 								<h:outputText value="EthernetErrorsSentRcvd: " />
-								<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}" />
+								<h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="EthernetDuplexMode: " />
-								<h:outputText value="#{lanEthernet.ethernetDuplexMode}" />
+								<h:outputText value="#{lanEthernet.ethernetDuplexMode}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="EthernetMACAddress: " />
-								<h:outputText value="#{lanEthernet.ethernetMACAddress}" />
+								<h:outputText value="#{lanEthernet.ethernetMACAddress}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="EthernetBytesSentReceived: " />
-								<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}" />
+								<h:outputText value="#{lanEthernet.ethernetBytesSentReceived}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="EthernetMACCtrlEnabled: " />
-								<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}" />
+								<h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}"
+									styleClass="fontBlack" />
 
 								<h:outputText value="EthernetMaxBitRate: " />
-								<h:outputText value="#{lanEthernet.ethernetMaxBitRate}" />
+								<h:outputText value="#{lanEthernet.ethernetMaxBitRate}"
+									styleClass="fontBlack" />
 
 							</p:panelGrid>
 
@@ -1037,7 +1046,7 @@
 
 						<h:outputText value="Username" />
 						<h:outputText
-							value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}" />
+							value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}" styleClass="fontBlack" />
 
 					</p:panelGrid>
 

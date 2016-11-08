@@ -94,7 +94,7 @@ public class DeviceInfo {
 
 		} catch (Exception e) {
 
-			if (this.contador < 8) {
+			if (this.contador < 5) {
 
 				this.contador++;
 
