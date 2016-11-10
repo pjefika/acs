@@ -70,7 +70,7 @@
 						style="height: 100%;">
 
 						<p:panelGrid columns="2"
-							style="float: left; width: 38%; margin-bottom: 5px; margin-right: 2%;">
+							style="float: left; width: 50%; margin-bottom: 5px; margin-right: 2%;">
 
 							<h:outputText value="Numero de Serie: " />
 							<h:outputText value="#{results.serialNumber}"
@@ -115,7 +115,7 @@
 
 						</p:panelGrid>
 
-						<h:panelGroup style="float: left; width: 60%;">
+						<h:panelGroup style="float: left; width: 45%;">
 
 							<p:panel header="Informações">
 
@@ -232,7 +232,7 @@
 				</p:dataGrid>
 
 				<p:dialog header="Informações de Host" widgetVar="infoLanHosts"
-					resizable="false" width="750" minWidth="750" height="400"
+					resizable="true" width="750" minWidth="750" height="400"
 					minHeight="400" modal="true">
 
 					<p:dataGrid id="infoLanHosts"
@@ -270,7 +270,7 @@
 				</p:dialog>
 
 				<p:dialog header="Interface Statistics"
-					widgetVar="interfaceStatistic" resizable="false" width="850"
+					widgetVar="interfaceStatistic" resizable="true" width="850"
 					minWidth="850" height="320" minHeight="320" modal="true"
 					style="overflow-y: auto;">
 
@@ -345,7 +345,7 @@
 				</p:dialog>
 
 				<p:dialog header="Informação DSL Connection"
-					widgetVar="infoDslConnect" resizable="false" width="600"
+					widgetVar="infoDslConnect" resizable="true" width="600"
 					minWidth="600" height="350" minHeight="350" modal="true">
 
 					<p:dataGrid id="dslConnectInfos"
@@ -418,7 +418,7 @@
 				</p:dialog>
 
 				<p:dialog header="Informações de GateWay" widgetVar="infoGateWay"
-					resizable="false" width="600" minWidth="600" height="460"
+					resizable="true" width="600" minWidth="600" height="460"
 					minHeight="460" modal="true">
 
 					<p:dataGrid id="gateWayInfos" value="#{gatewayInfo.valuesgatway}"
@@ -510,7 +510,7 @@
 
 				</p:dialog>
 
-				<p:dialog widgetVar="infoWifi" resizable="false" minHeight="300"
+				<p:dialog widgetVar="infoWifi" resizable="true" minHeight="300"
 					height="300" width="800" minWidth="800" modal="true"
 					closeOnEscape="true" responsive="true" header="Informações do Wifi">
 
@@ -591,8 +591,8 @@
 				</p:dialog>
 
 				<p:dialog header="Sip Status" widgetVar="sipDiagnostic"
-					resizable="false" width="300" minWidth="300" height="420"
-					minHeight="420" modal="true">
+					resizable="true" width="350" minWidth="350" height="450"
+					minHeight="450" modal="true">
 
 					<h:panelGrid columns="2">
 
@@ -671,7 +671,7 @@
 				</p:dialog>
 
 				<p:dialog header="Port Mapping Table"
-					widgetVar="infoPortMappingTable" resizable="false" width="600"
+					widgetVar="infoPortMappingTable" resizable="true" width="600"
 					minWidth="600" height="280" minHeight="280" modal="true">
 
 					<p:dataGrid id="portMappingTables"
@@ -773,7 +773,7 @@
 
 					<p:commandButton value="Eviar FXS"
 						action="#{accountProvisioning.sipAccountProvisioningAction(deviceInfo.id, listDevices.parameter)}"
-						update="@all formTemplate:msgs" />
+						update="formTemplate:msgs" oncomplete="PF('sipAccountPro').hide();"/>
 
 				</p:dialog>
 
@@ -960,7 +960,7 @@
 				</p:dialog>
 
 				<p:dialog header="Lan Ethernet Info" widgetVar="infoLanEthernetInfo"
-					resizable="false" width="600" minWidth="600" height="280"
+					resizable="true" width="600" minWidth="600" height="280"
 					minHeight="280">
 
 					<p:dataGrid id="lanEthernetInfos" value="#{lanEthernetInfo.values}"
@@ -1032,7 +1032,7 @@
 
 				</p:dialog>
 
-				<p:dialog widgetVar="infoGetPPPoECred" resizable="false"
+				<p:dialog widgetVar="infoGetPPPoECred" resizable="true"
 					minHeight="100" minWidth="300" height="100" width="300"
 					modal="true" header="PPPoE Credentials">
 

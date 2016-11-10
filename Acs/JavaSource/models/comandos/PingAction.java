@@ -18,8 +18,6 @@ public class PingAction {
 		Client client = Client.create();
 
 		String url = autenticacao.getLink() + "capability/execute?capability="+ URLEncoder.encode("\"Ping\"", "UTF-8") +"&deviceId=" + deviceId + "&input=" + URLEncoder.encode("{\"hostAddress\":\""+hostAdress+"\", \"numberOfRepetitions\":" + numberOfRepetitions + "}", "UTF-8");
-
-		System.out.println(url);		
 		
 		WebResource webResource = client.resource(url);
 
