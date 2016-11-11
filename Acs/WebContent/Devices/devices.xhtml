@@ -117,111 +117,126 @@
 
 						<h:panelGroup style="float: left; width: 45%;">
 
-							<p:panel header="Informações">
+							<p:panel header="Informações" style="font-size: 105% !important;">
 
-								<p:commandButton value="Tabela de Hosts"
-									update="@form:infoLanHosts formTemplate:msgs"
-									oncomplete="PF('infoLanHosts').show();"
-									actionListener="#{lanHostsTable.getLanHostsTableAction(results.id)}"
-									rendered="#{capabilityNames.lanHost}" />
+								<p:panelGrid columns="2" style="width: 100%; color: blue;">
 
-								<p:commandButton value="Estatisticas de Interface"
-									action="#{interfaceStatic.interfaceStatics(results.id)}"
-									update="@form:interfaceStatistics formTemplate:msgs"
-									rendered="#{capabilityNames.interfaceStatistics}"
-									oncomplete="PF('interfaceStatistic').show();" />
+									<p:commandLink value="Tabela de Hosts"
+										update="@form:infoLanHosts formTemplate:msgs"
+										oncomplete="PF('infoLanHosts').show();"
+										actionListener="#{lanHostsTable.getLanHostsTableAction(results.id)}"
+										rendered="#{capabilityNames.lanHost}" style="color:blue;" />
 
-								<p:commandButton value="Conexão DSL"
-									action="#{dSLConnectionInfo.DSLConnectionInfoAction(results.id)}"
-									rendered="#{capabilityNames.infoDslConnection}"
-									oncomplete="PF('infoDslConnect').show()"
-									update="@form:dslConnectInfos formTemplate:msgs" />
+									<p:commandLink value="Estatisticas de Interface"
+										action="#{interfaceStatic.interfaceStatics(results.id)}"
+										update="@form:interfaceStatistics formTemplate:msgs"
+										rendered="#{capabilityNames.interfaceStatistics}"
+										oncomplete="PF('interfaceStatistic').show();"
+										style="color:blue;" />
 
-								<p:commandButton value="Informação de Gateway"
-									action="#{gatewayInfo.GatewayInfoAction(results.id)}"
-									update="@form:gateWayInfos formTemplate:msgs"
-									rendered="#{capabilityNames.gateWayInfo}"
-									oncomplete="PF('infoGateWay').show()" />
+									<p:commandLink value="Conexão DSL"
+										action="#{dSLConnectionInfo.DSLConnectionInfoAction(results.id)}"
+										rendered="#{capabilityNames.infoDslConnection}"
+										oncomplete="PF('infoDslConnect').show()"
+										update="@form:dslConnectInfos formTemplate:msgs"
+										style="color:blue;" />
 
-								<p:commandButton value="Informação de Wifi"
-									actionListener="#{getWifiInfo.buscaInformacoesWifi(results.id)}"
-									update="@form:infoWifiGets formTemplate:msgs"
-									rendered="#{capabilityNames.wifiInfo}"
-									oncomplete="PF('infoWifi').show()" />
+									<p:commandLink value="Informação de Gateway"
+										action="#{gatewayInfo.GatewayInfoAction(results.id)}"
+										update="@form:gateWayInfos formTemplate:msgs"
+										rendered="#{capabilityNames.gateWayInfo}"
+										oncomplete="PF('infoGateWay').show()" style="color:blue;" />
 
-								<p:commandButton value="Consulta Sip"
-									rendered="#{capabilityNames.sipDiagnostic}"
-									oncomplete="PF('sipDiagnostic').show()"
-									action="#{deviceInfo.colocarDeviceId(results.id)}"
-									actionListener="#{sipDiagnostics.clearVariables()}"
-									update="@form:form:sipDiagnosticsValues" />
+									<p:commandLink value="Informação de Wifi"
+										actionListener="#{getWifiInfo.buscaInformacoesWifi(results.id)}"
+										update="@form:infoWifiGets formTemplate:msgs"
+										rendered="#{capabilityNames.wifiInfo}"
+										oncomplete="PF('infoWifi').show()" style="color:blue;" />
 
-								<p:commandButton value="Tabela de Porta"
-									action="#{portMappingTable.getPortMappingTableAction(results.id)}"
-									update="@form:portMappingTables formTemplate:msgs"
-									rendered="#{capabilityNames.portMapping}"
-									oncomplete="PF('infoPortMappingTable').show()" />
+									<p:commandLink value="Consulta Sip"
+										rendered="#{capabilityNames.sipDiagnostic}"
+										oncomplete="PF('sipDiagnostic').show()"
+										action="#{deviceInfo.colocarDeviceId(results.id)}"
+										actionListener="#{sipDiagnostics.clearVariables()}"
+										update="@form:form:sipDiagnosticsValues" style="color:blue;" />
 
-								<p:commandButton value="Informações Lan Ethernet"
-									action="#{lanEthernetInfo.getLanEthernetInfoAction(results.id)}"
-									update="@form:lanEthernetInfos formTemplate:msgs"
-									rendered="#{capabilityNames.lanEthernetInfo}"
-									oncomplete="PF('infoLanEthernetInfo').show()" />
+									<p:commandLink value="Tabela de Porta"
+										action="#{portMappingTable.getPortMappingTableAction(results.id)}"
+										update="@form:portMappingTables formTemplate:msgs"
+										rendered="#{capabilityNames.portMapping}"
+										oncomplete="PF('infoPortMappingTable').show()"
+										style="color:blue;" />
 
-								<p:commandButton value="Informações Credenciais PPPoE"
-									action="#{getPPPoECredentials.getPPPoECredentialAction(results.id)}"
-									update="@form:infoGetPPPoECreds formTemplate:msgs"
-									rendered="#{capabilityNames.getPPPoECredentials}"
-									oncomplete="PF('infoGetPPPoECred').show()" />
+									<p:commandLink value="Informações Lan Ethernet"
+										action="#{lanEthernetInfo.getLanEthernetInfoAction(results.id)}"
+										update="@form:lanEthernetInfos formTemplate:msgs"
+										rendered="#{capabilityNames.lanEthernetInfo}"
+										oncomplete="PF('infoLanEthernetInfo').show()"
+										style="color:blue;" />
+
+									<p:commandLink value="Informações Credenciais PPPoE"
+										action="#{getPPPoECredentials.getPPPoECredentialAction(results.id)}"
+										update="@form:infoGetPPPoECreds formTemplate:msgs"
+										rendered="#{capabilityNames.getPPPoECredentials}"
+										oncomplete="PF('infoGetPPPoECred').show()" style="color:blue;" />
+
+								</p:panelGrid>
 
 							</p:panel>
 
 							<br />
 
-							<p:panel header="Ações">
+							<p:panel header="Ações"
+								style="margin-bottom: 10px; font-size: 105% !important;">
 
-								<p:commandButton value="Reboot"
-									actionListener="#{reboot.RebootAction(results.id, listDevices.parameter)}"
-									rendered="#{capabilityNames.reboot}" update="formTemplate:msgs">
+								<p:panelGrid columns="2"
+									style="width: 100%; font-color: blue !important;">
 
-									<p:confirm header="Resetar modem?" message="Você tem certeza?"
-										icon="ui-icon-alert" />
+									<p:commandLink value="Reboot"
+										actionListener="#{reboot.RebootAction(results.id, listDevices.parameter)}"
+										rendered="#{capabilityNames.reboot}"
+										update="formTemplate:msgs" style="color:blue;">
 
-								</p:commandButton>
+										<p:confirm header="Resetar modem?" message="Você tem certeza?"
+											icon="ui-icon-alert" />
 
-								<p:commandButton value="Reset de Fabrica"
-									actionListener="#{factoryReset.factoryResetAction(results.id, listDevices.parameter)}"
-									rendered="#{capabilityNames.factoryReset}"
-									update="formTemplate:msgs">
+									</p:commandLink>
 
-									<p:confirm header="Reset de Fabrica?"
-										message="Você tem certeza?" icon="ui-icon-alert" />
+									<p:commandLink value="Reset de Fabrica"
+										actionListener="#{factoryReset.factoryResetAction(results.id, listDevices.parameter)}"
+										rendered="#{capabilityNames.factoryReset}"
+										update="formTemplate:msgs" style="color:blue;">
 
-								</p:commandButton>
+										<p:confirm header="Reset de Fabrica?"
+											message="Você tem certeza?" icon="ui-icon-alert" />
 
-								<p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
-									actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
-									onclick="PF('sipAccountPro').show();" />
+									</p:commandLink>
 
-								<p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
-									oncomplete="PF('pingAction').show()"
-									action="#{deviceInfo.colocarDeviceId(results.id)}"
-									actionListener="#{getPing.clearVariables()}"
-									update="@form:form:pingActions" />
+									<p:commandLink value="FXS" rendered="#{capabilityNames.fxs}"
+										actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
+										onclick="PF('sipAccountPro').show();" style="color:blue;" />
 
-								<p:commandButton value="Configurar Wifi"
-									rendered="#{capabilityNames.setWiFiConfig}"
-									oncomplete="PF('wifiConfig').show()"
-									action="#{deviceInfo.colocarDeviceId(results.id)}"
-									actionListener="#{setWiFiConfig.clearVariables()}"
-									update="@form:form:formConfigWifi" />
+									<p:commandLink value="Ping" rendered="#{capabilityNames.ping}"
+										oncomplete="PF('pingAction').show()"
+										action="#{deviceInfo.colocarDeviceId(results.id)}"
+										actionListener="#{getPing.clearVariables()}"
+										update="@form:form:pingActions" style="color:blue;" />
 
-								<p:commandButton value="Credenciais PPPoE"
-									rendered="#{capabilityNames.pppoeCredentials}"
-									oncomplete="PF('ppoeCredentials').show()"
-									action="#{deviceInfo.colocarDeviceId(results.id)}"
-									actionListener="#{pPPoECredentials.clearVariables()}"
-									update="@form:form:ppoeCred" />
+									<p:commandLink value="Configurar Wifi"
+										rendered="#{capabilityNames.setWiFiConfig}"
+										oncomplete="PF('wifiConfig').show()"
+										action="#{deviceInfo.colocarDeviceId(results.id)}"
+										actionListener="#{setWiFiConfig.clearVariables()}"
+										update="@form:form:formConfigWifi" style="color:blue;" />
+
+									<p:commandLink value="Credenciais PPPoE"
+										rendered="#{capabilityNames.pppoeCredentials}"
+										oncomplete="PF('ppoeCredentials').show()"
+										action="#{deviceInfo.colocarDeviceId(results.id)}"
+										actionListener="#{pPPoECredentials.clearVariables()}"
+										update="@form:form:ppoeCred" style="color:blue;" />
+
+								</p:panelGrid>
 
 							</p:panel>
 
@@ -233,13 +248,14 @@
 
 				<p:dialog header="Informações de Host" widgetVar="infoLanHosts"
 					resizable="true" width="750" minWidth="750" height="400"
-					minHeight="400" modal="true">
+					minHeight="400" modal="true" closeOnEscape="true">
 
 					<p:dataGrid id="infoLanHosts"
 						value="#{lanHostsTable.lanHostHolders}" var="lanHost" columns="3"
 						layout="grid" emptyMessage="Nenhum registro encontrado">
 
-						<p:panel header="#{lanHost.hostinst}" style="height:100%;">
+						<p:panel header="#{lanHost.hostinst}"
+							style="height:100%; font-size: 110% !important;">
 
 							<p:panelGrid columns="2">
 
@@ -272,9 +288,10 @@
 				<p:dialog header="Interface Statistics"
 					widgetVar="interfaceStatistic" resizable="true" width="850"
 					minWidth="850" height="320" minHeight="320" modal="true"
-					style="overflow-y: auto;">
+					style="overflow-y: auto;" closeOnEscape="true">
 
-					<p:scrollPanel mode="native" style="width: 100%; height: 100%;">
+					<p:scrollPanel mode="native"
+						style="width: 100%; height: 100%; font-size: 110% !important;">
 
 						<p:dataGrid id="interfaceStatistics"
 							value="#{interfaceStatic.interfaceStaticsHolder.values}"
@@ -353,7 +370,8 @@
 						var="dslConnectInfo" columns="2" layout="grid"
 						emptyMessage="Nenhum registro encontrado">
 
-						<p:panel header="#{dslConnectInfo.direction}">
+						<p:panel header="#{dslConnectInfo.direction}"
+							style="font-size: 110% !important;">
 
 							<p:panelGrid columns="2" style="width:100%;">
 
@@ -425,7 +443,7 @@
 						var="gateWayInfo" layout="grid" columns="1"
 						emptyMessage="Nenhum registro encontrado">
 
-						<p:panel header="Info">
+						<p:panel header="Info" style="font-size: 110% !important;">
 
 							<p:panelGrid columns="2" style="width:100%;">
 
@@ -514,24 +532,13 @@
 					height="300" width="800" minWidth="800" modal="true"
 					closeOnEscape="true" responsive="true" header="Informações do Wifi">
 
-					<!-- <f:facet name="header">
-					
-						Informações do Wifi
-
-						<p:commandButton icon="fa fa-refresh" widgetVar="refreshInfoWifi"
-							action="#{wiFiInfo.buscaInformacoesWifi(deviceInfo.id)}"
-							update="@form:infoWifiGets formTemplate:msgs"
-							onclick="PF('refreshInfoWifi').disable()"
-							oncomplete="PF('refreshInfoWifi').enable()" />
-
-					</f:facet> -->
-
 					<p:scrollPanel style="width: 100%; height: 100%;" mode="native">
 
 						<p:dataGrid value="#{getWifiInfo.wifiInfoHolders}" var="wifiConf"
 							columns="10" layout="grid" id="infoWifiGets">
 
-							<p:panel header="#{wifiConf.SSID}">
+							<p:panel header="#{wifiConf.SSID}"
+								style="font-size: 110% !important;">
 
 								<p:panelGrid columns="2" style="text-align: center;">
 
@@ -679,7 +686,7 @@
 						layout="grid" emptyMessage="Nenhum registro encontrado"
 						style="width: 100%;">
 
-						<p:panel header="Info">
+						<p:panel header="Info" style="font-size: 110% !important;">
 
 							<p:panelGrid columns="2" style="width: 100%;">
 
@@ -773,7 +780,8 @@
 
 					<p:commandButton value="Eviar FXS"
 						action="#{accountProvisioning.sipAccountProvisioningAction(deviceInfo.id, listDevices.parameter)}"
-						update="formTemplate:msgs" oncomplete="PF('sipAccountPro').hide();"/>
+						update="formTemplate:msgs"
+						oncomplete="PF('sipAccountPro').hide();" />
 
 				</p:dialog>
 
@@ -1046,7 +1054,8 @@
 
 						<h:outputText value="Username" />
 						<h:outputText
-							value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}" styleClass="fontBlack" />
+							value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}"
+							styleClass="fontBlack" />
 
 					</p:panelGrid>
 

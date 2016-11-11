@@ -33,12 +33,7 @@
 	background: linear-gradient(to right, rgba(0, 51, 69, 1) 0%,
 		rgba(0, 140, 158, 1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003345',
-		endColorstr='#008c9e', GradientType=1);
-	f84f32
-	',
-	endColorstr='#3c00ff',
-	GradientType=1
-	);
+		endColorstr='#008c9e', GradientType=1);	
 }
 
 .ui-widget {
@@ -236,5 +231,11 @@ ul#menu li a.selected {
 	
 	color: #000000;
 	font-weight: bolder;
+		
+}
+
+.fontColorLink {
+	
+	color: blue !important;
 	
 }
