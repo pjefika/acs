@@ -9,13 +9,12 @@
 }
 
 .colorSeAtivo>.ui-panel-titlebar {
-	background-color: #00b300!important;
+	background-color: #00b300 !important;
 }
 
 .colorSeFalse>.ui-panel-titlebar {
-	background-color: #ff704d!important;
+	background-color: #ff704d !important;
 }
-
 
 .gradienteTelefonica {
 	font-family: Telefonica_Header;
@@ -33,7 +32,7 @@
 	background: linear-gradient(to right, rgba(0, 51, 69, 1) 0%,
 		rgba(0, 140, 158, 1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003345',
-		endColorstr='#008c9e', GradientType=1);	
+		endColorstr='#008c9e', GradientType=1);
 }
 
 .ui-widget {
@@ -214,28 +213,20 @@ ul#menu li a.selected {
 }
 
 .colorGreen {
-	
 	color: #32f920;
 	font-weight: bold;
-	
 }
 
 .colorRed {
-	
 	color: #f71e1b;
 	font-weight: bold;
-	
 }
 
 .fontBlack {
-	
 	color: #000000;
 	font-weight: bolder;
-		
 }
 
 .fontColorLink {
-	
 	color: blue !important;
-	
 }
