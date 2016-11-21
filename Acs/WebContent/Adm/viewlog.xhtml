@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/recursos/template/template.xhtml">
+
+        <ui:define name="tituloPagina">
+            Logs
+        </ui:define>
+        <ui:define name="tituloPrincipal">
+            <i class="fa fa-cogs"> </i> Logs</ui:define>
+        <ui:define name="tituloSecundario"></ui:define>
+
+        <ui:define name="botoesAcao"></ui:define>
+
+        <ui:insert name="eventos">
+
+            <f:metadata>
+
+                <f:event listener="#{loginBean.validaPagina('')}"
+                         type="preRenderView" />
+
+                <f:event
+                    listener="#{loginBean.redirecionaIndex(loginBean.validaSeAdm())}"
+                    type="preRenderView" />
+
+            </f:metadata>
+
+        </ui:insert>
+
+        <ui:define name="conteudo">
+
+            <p:panel header="Logs">
+
+                <h:panelGrid columns="4">
+
+                    <h:outputText value="Parametro"/>
+                    <p:inputText value="#{logsBean.parametro}" title="Inisira o Designador / Mac / Ip / Serial Number" id="inputParam"/>
+                    <p:tooltip id="tooltip" for="inputParam" showEvent="focus"
+                               hideEvent="blur" position="bottom" />
+
+                    <p:commandButton value="Buscar" action="#{logsBean.listarLogsParametro()}" update="listaDeLogs">
+
+                        <p:ajaxStatus onstart="PF('loadingDialogInfo').show();"
+                                      onsuccess="PF('loadingDialogInfo').hide();" />
+
+                    </p:commandButton>
+
+                </h:panelGrid>
+
+                <br />
+
+                <p:dataTable id="listaDeLogs" value="#{logsBean.listaDeLogs}" var="logsList" style="text-align: center; width: 100%;" emptyMessage="Logs não encontrados.">
+
+                    <p:column headerText="Comando">
+
+                        <h:outputText value="#{logsList.comando}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Login">
+
+                        <h:outputText value="#{logsList.usuarioEfika.login}"/>
+
+                    </p:column>                  
+
+                    <p:column headerText="Hora da Ação">
+
+                        <h:outputText value="#{logsList.dataHora}">
+
+                            <f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss"/>
+
+                        </h:outputText>
+
+                    </p:column>
+
+                    <p:column headerText="Valor">
+
+                        <h:outputText value="#{logsList.valor}"/>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+
+            <p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
+                      resizable="false" width="260" height="25" minWidth="260"
+                      minHeight="25" showEffect="fade" hideEffect="fade" modal="true"
+                      closable="false">
+
+                <img id="j_idt17:form:j_idt45"
+                     src="/Acs/recursos/images/ajax-loader.gif" alt="" />
+
+            </p:dialog>
+
+        </ui:define>
+    </ui:composition>
+</html>

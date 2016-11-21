@@ -24,7 +24,7 @@ public class AutenticacaoServico {
 			
 		} catch (Exception e) {
 
-			throw new Exception("Erro ao cadastrar Autentica��o.");
+			throw new Exception("Erro ao cadastrar Autenticação.");
 			
 		}
 		
@@ -38,7 +38,7 @@ public class AutenticacaoServico {
 			
 		} catch (Exception e) {
 			
-			throw new Exception("Erro ao modificar Autenticacao");
+			throw new Exception("Erro ao modificar Autenticação");
 			
 		}
 		
