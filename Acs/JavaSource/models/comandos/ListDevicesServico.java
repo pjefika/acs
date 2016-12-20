@@ -29,7 +29,7 @@ public class ListDevicesServico {
 
 				if (clientResponse.getStatus() == 401) {
 
-					throw new Exception("Erro de autorização, consulte o administrador do sistema.");
+					throw new Exception("Erro de autorizaÃ§Ã£o, consulte o administrador do sistema.");
 
 				} else {
 

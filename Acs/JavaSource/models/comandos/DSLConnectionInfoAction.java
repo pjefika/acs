@@ -16,7 +16,7 @@ public class DSLConnectionInfoAction {
 	public DslConnectionInfoHolder getDSLConnectionInfo(Integer deviceId, Autenticacao autenticacao) throws Exception {
 
 		/**
-		 * Busca informações de conexão ADSL
+		 * Busca informaÃ§Ãµes de conexÃ£o ADSL
 		 **/
 
 		Client client = Client.create();

@@ -217,6 +217,11 @@ ul#menu li a.selected {
 	font-weight: bold;
 }
 
+.colorBlue {
+	color: blue;
+	font-weight: bold;
+}
+
 .colorRed {
 	color: #f71e1b;
 	font-weight: bold;
@@ -229,4 +234,10 @@ ul#menu li a.selected {
 
 .fontColorLink {
 	color: blue !important;
+}
+
+.AHandredPercent {
+        
+    width: 100% !important;
+
 }
