@@ -75,7 +75,7 @@ public class AutenticacaoServico {
         Autenticacao a = new Autenticacao();
 
         a.setAtivo(Boolean.TRUE);
-        a.setLink("http://10.200.6.150/nbbs/api/");
+        a.setLink("http://10.200.6.150/nbbs/api");
         a.setUser("efika_system");
         a.setPassword("Efika@viv0Gvt");
 

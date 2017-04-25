@@ -20,12 +20,16 @@ public class ListDevicesServico {
 			Client client = Client.create();
 
 			String url = autenticacao.getLink() + "core/device/listDevices?offset=0&limit=10&criteria=" + URLEncoder.encode("{\""+criteria+"\":\""+parameter+"\"}", "UTF-8");
-			
+                        			
+                        System.out.println(url);
+                        
 			WebResource webResource = client.resource(url);
 
 			ClientResponse clientResponse = webResource.accept("application/json").header("Authorization", JSFUtil.encodeUser(autenticacao.getUser(), autenticacao.getPassword())).get(ClientResponse.class);
-
-			if (clientResponse.getStatus() != 200) {
+                        
+                        
+                        
+                        if (clientResponse.getStatus() != 200) {
 
 				if (clientResponse.getStatus() == 401) {
 
@@ -40,6 +44,8 @@ public class ListDevicesServico {
 			}
 
 			String output = clientResponse.getEntity(String.class);
+                        
+                        System.out.println(output);
 
 			Gson gson = new Gson();
 

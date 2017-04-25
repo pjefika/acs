@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import controllers.sys.AutenticacaoBean;
 import entidades.sys.Autenticacao;
+import java.util.Base64;
 
 public class JSFUtil {
 
@@ -31,7 +32,7 @@ public class JSFUtil {
 
 	public static void addWarnMessage(String msg) {
 
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Informação", msg);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Informaï¿½ï¿½o", msg);
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -116,8 +117,9 @@ public class JSFUtil {
 	public static String encodeUser(String usr, String password) {
 		
 		String userPassword = usr + ":" + password;
-		String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
-		String concat = "Basic " + encoding;
+		//String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
+                String enconding = new String(Base64.getEncoder().encode(userPassword.getBytes()));
+		String concat = "Basic " + enconding;
 
 		return concat;	
 
