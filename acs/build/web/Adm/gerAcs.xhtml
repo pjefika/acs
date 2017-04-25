@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/recursos/template/template.xhtml">
+
+	<ui:define name="tituloPagina">
+		 Devices
+	</ui:define>
+	<ui:define name="tituloPrincipal">
+		<i class="fa fa-cogs"> </i> Devices</ui:define>
+	<ui:define name="tituloSecundario"></ui:define>
+
+	<ui:define name="botoesAcao"></ui:define>
+
+	<ui:insert name="eventos">
+
+		<f:metadata>
+
+			<f:event listener="#{loginBean.validaPagina('')}"
+				type="preRenderView" />
+
+			<f:event
+				listener="#{loginBean.redirecionaIndex(loginBean.validaSeAdm())}"
+				type="preRenderView" />
+
+		</f:metadata>
+
+	</ui:insert>
+
+	<ui:define name="conteudo">
+
+		<p:panel header="Autenticação">
+
+			<h:panelGrid columns="2">
+
+				<h:outputText value="Link: " />
+				<p:inputText value="#{autenticacaoBean.autenticacao.link}" />
+
+				<h:outputText value="User: " />
+				<p:inputText value="#{autenticacaoBean.autenticacao.user}" />
+
+				<h:outputText value="Password: " />
+				<p:inputText value="#{autenticacaoBean.autenticacao.password}" />
+
+				<p:commandButton value="Cadastrar"
+					action="#{autenticacaoBean.cadastrarAutenticacao()}" update="@all" />
+
+			</h:panelGrid>
+
+			<br />
+
+			<p:dataTable value="#{autenticacaoBean.listarTodasAutenticacao()}"
+				var="autenticacao"
+				emptyMessage="Não possui autenticações registradas."
+				style="text-align: center;">
+
+				<p:column headerText="Id">
+
+					<h:outputText value="#{autenticacao.id}" />
+
+				</p:column>
+
+				<p:column headerText="Link">
+
+					<h:outputText value="#{autenticacao.link}" />
+
+				</p:column>
+
+				<p:column headerText="User">
+
+					<h:outputText value="#{autenticacao.user}" />
+
+				</p:column>
+
+				<p:column headerText="Password">
+
+					<h:outputText value="#{autenticacao.password}" />
+
+				</p:column>
+
+				<p:column headerText="Ativo?">
+
+					<h:outputText value="#{autenticacao.ativo}" />
+
+				</p:column>
+
+				<p:column headerText="Modifica">
+
+					<p:commandButton value="Ativar"
+						action="#{autenticacaoBean.ativaAutenticacao()}" update="@all">
+
+						<f:setPropertyActionListener value="#{autenticacao}"
+							target="#{autenticacaoBean.autenticacaoModifica}" />
+
+					</p:commandButton>
+
+					<p:commandButton value="Modificar" onclick="PF('modAuth').show()"
+						update="@form:modAuthPanel">
+
+						<f:setPropertyActionListener value="#{autenticacao}"
+							target="#{autenticacaoBean.autenticacaoModifica}" />
+
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+
+			<p:dialog widgetVar="modAuth" header="Modifica Autenticação"
+				width="400" minWidth="400" height="150" minHeight="150" modal="true"
+				showEffect="fade" hideEffect="fade">
+
+				<h:panelGrid columns="2" id="modAuthPanel">
+
+					<h:outputText value="Id: " />
+					<p:inputText value="#{autenticacaoBean.autenticacaoModifica.id}" />
+
+					<h:outputText value="Link: " />
+					<p:inputText value="#{autenticacaoBean.autenticacaoModifica.link}" />
+
+					<h:outputText value="User: " />
+					<p:inputText value="#{autenticacaoBean.autenticacaoModifica.user}" />
+
+					<h:outputText value="Password: " />
+					<p:inputText
+						value="#{autenticacaoBean.autenticacaoModifica.password}" />
+
+					<p:commandButton
+						action="#{autenticacaoBean.modificarAutenticacao()}" update="@all"
+						value="Modificar" />
+
+				</h:panelGrid>
+
+			</p:dialog>
+
+		</p:panel>
+
+	</ui:define>
+</ui:composition>
+</html>
