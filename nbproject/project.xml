@@ -153,5 +153,8 @@
             </source-roots>
             <test-roots/>
         </data>
+        <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
+            <definitions>WebContent/WEB-INF/lib\nblibraries.properties</definitions>
+        </libraries>
     </configuration>
 </project>

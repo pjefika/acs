@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/recursos/template/template.xhtml">
+
+        <ui:define name="tituloPagina">
+            Devices
+        </ui:define>
+        <ui:define name="tituloPrincipal">
+            <i class="fa fa-cogs"> </i> Devices</ui:define>
+        <ui:define name="tituloSecundario"></ui:define>
+
+        <ui:define name="botoesAcao"></ui:define>
+
+        <ui:insert name="eventos">
+
+            <f:metadata>
+
+                <f:event listener="#{loginBean.validaPagina('')}"
+                         type="preRenderView" />
+
+                <f:event listener="#{loginBean.validarLogin()}" type="preRenderView" />
+
+            </f:metadata>
+
+        </ui:insert>
+
+        <ui:define name="conteudo">
+
+            <h:form id="form" style="width: 100%;">
+
+                <p:panel header="Consulta de Devices">
+
+                    <h:panelGrid columns="4">
+
+                        <h:outputText value="Parametro" />
+                        <p:inputText value="#{listDevices.parameter}" id="inputParam"
+                                     title="Inisira o Designador / Mac / Ip / Serial Number" />
+                        <p:tooltip id="tooltip" for="inputParam" showEvent="focus"
+                                   hideEvent="blur" position="bottom" />
+
+                        <p:commandButton action="#{listDevices.listDevices()}"
+                                         update="dataGridResults formTemplate:msgs" value="Buscar">
+
+                            <p:ajaxStatus onstart="PF('loadingDialogInfo').show();"
+                                          onsuccess="PF('loadingDialogInfo').hide();" />
+
+                        </p:commandButton>
+
+                    </h:panelGrid>
+
+                    <br />
+
+                    <p:dataGrid value="#{listDevices.listaResults}" var="results"
+                                columns="1" layout="grid" id="dataGridResults"
+                                emptyMessage="Nenhum registro encontrado">
+
+                        <h:outputText
+                            value="#{deviceInfo.getDeviceInfoActionValue(results.id)}" />
+
+                        <h:outputText
+                            value="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
+
+                        <h:outputText value="#{preferredFirmwareVersion.buscaFirmware(results.id)}" />
+
+                        <p:panel header="#{results.vendor} #{results.model}"
+                                 styleClass="#{deviceInfo.ativo ? 'colorSeAtivo' : 'colorSeFalse'}"
+                                 style="height: 100%;">
+
+                            <p:panelGrid columns="2"
+                                         style="float: left; width: 50%; margin-bottom: 5px; margin-right: 2%;">
+
+                                <h:outputText value="Numero de Serie: " />
+                                <h:outputText value="#{results.serialNumber}"
+                                              styleClass="fontBlack" />
+
+                                <h:outputText value="Mac: " />
+                                <h:outputText value="#{results.mac}" styleClass="fontBlack" />
+
+                                <h:outputText value="Designador: " />
+                                <h:outputText value="#{results.userKey3}" styleClass="fontBlack" />
+
+                                <h:outputText value="Firmware: " />
+                                <h:outputText value="#{results.softwareVersion}" styleClass="fontBlack"/>
+
+                                <h:outputText value="Ip: " />
+                                <h:outputText value="#{results.ip}" styleClass="fontBlack" />
+
+                                <h:outputText value="Primeiro contato: " />
+                                <h:outputText value="#{results.firstContactTimeFormat}"
+                                              styleClass="fontBlack" />
+
+                                <h:outputText value="Classe: " />
+                                <h:outputText value="Modem"
+                                              rendered="#{results.classification=='IAD'}"
+                                              styleClass="fontBlack" />
+                                <h:outputText value="Decoder"
+                                              rendered="#{results.classification=='STB'}"
+                                              styleClass="fontBlack" />
+
+                                <h:outputText value="Modelo: " />
+                                <h:outputText value="#{deviceInfo.values2.model}"
+                                              styleClass="fontBlack" />
+
+                                <h:outputText value="Tipo de dispositivo: " />
+                                <h:outputText value="#{deviceInfo.values2.devicetype}"
+                                              styleClass="fontBlack" />
+
+                                <h:outputText value="Tempo Online: " />
+                                <h:outputText value="#{deviceInfo.values2.uptime}"
+                                              styleClass="fontBlack" />
+
+                            </p:panelGrid>
+
+                            <h:panelGroup style="float: left; width: 45%;" id="panelsButton">
+
+                                <p:panel header="Informações" style="font-size: 105% !important;" >
+
+                                    <p:panelGrid columns="2" style="width: 100%; color: blue;">
+
+                                        <p:commandButton value="Tabela de Hosts"
+                                                         update="@form:infoLanHosts formTemplate:msgs"
+                                                         oncomplete="PF('infoLanHosts').show();"
+                                                         actionListener="#{lanHostsTable.getLanHostsTableAction(results.id)}"
+                                                         rendered="#{capabilityNames.lanHost}" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Estatisticas de Interface"
+                                                         action="#{interfaceStatic.interfaceStatics(results.id)}"
+                                                         update="@form:interfaceStatistics formTemplate:msgs"
+                                                         rendered="#{capabilityNames.interfaceStatistics}"
+                                                         oncomplete="PF('interfaceStatistic').show();" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Conexão DSL"
+                                                         action="#{dSLConnectionInfo.DSLConnectionInfoAction(results.id)}"
+                                                         rendered="#{capabilityNames.infoDslConnection}"
+                                                         oncomplete="PF('infoDslConnect').show()"
+                                                         update="@form:dslConnectInfos formTemplate:msgs" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Informação de Gateway"
+                                                         action="#{gatewayInfo.GatewayInfoAction(results.id)}"
+                                                         update="@form:gateWayInfos formTemplate:msgs"
+                                                         rendered="#{capabilityNames.gateWayInfo}"
+                                                         oncomplete="PF('infoGateWay').show()" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Informação de Wifi"
+                                                         actionListener="#{getWifiInfo.buscaInformacoesWifi(results.id)}"
+                                                         update="@form:infoWifiGets formTemplate:msgs"
+                                                         rendered="#{capabilityNames.wifiInfo}"
+                                                         oncomplete="PF('infoWifi').show()" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Consulta Sip"
+                                                         rendered="#{capabilityNames.sipDiagnostic}"
+                                                         oncomplete="PF('sipDiagnostic').show()"
+                                                         action="#{deviceInfo.colocarDeviceId(results.id)}"
+                                                         actionListener="#{sipDiagnostics.clearVariables()}"
+                                                         update="@form:form:sipDiagnosticsValues" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Tabela de Porta"
+                                                         action="#{portMappingTable.getPortMappingTableAction(results.id)}"
+                                                         update="@form:portMappingTables formTemplate:msgs"
+                                                         rendered="#{capabilityNames.portMapping}"
+                                                         oncomplete="PF('infoPortMappingTable').show()" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Informações Lan Ethernet"
+                                                         action="#{lanEthernetInfo.getLanEthernetInfoAction(results.id)}"
+                                                         update="@form:lanEthernetInfos formTemplate:msgs"
+                                                         rendered="#{capabilityNames.lanEthernetInfo}"
+                                                         oncomplete="PF('infoLanEthernetInfo').show()" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Informações Credenciais PPPoE"
+                                                         action="#{getPPPoECredentials.getPPPoECredentialAction(results.id)}"
+                                                         update="@form:infoGetPPPoECreds formTemplate:msgs"
+                                                         rendered="#{capabilityNames.getPPPoECredentials}"
+                                                         oncomplete="PF('infoGetPPPoECred').show()" styleClass="AHandredPercent"/>
+
+                                    </p:panelGrid>
+
+                                </p:panel>
+
+                                <br />
+
+                                <p:panel header="Ações"
+                                         style="margin-bottom: 10px; font-size: 105% !important;">
+
+                                    <p:panelGrid columns="2"
+                                                 style="width: 100%; font-color: blue !important;">
+
+                                        <p:commandButton value="Reboot"
+                                                         actionListener="#{reboot.RebootAction(results.id, listDevices.parameter)}"
+                                                         rendered="#{capabilityNames.reboot}"
+                                                         update="formTemplate:msgs" styleClass="AHandredPercent">
+
+                                            <p:confirm header="Resetar modem?" message="Você tem certeza?"
+                                                       icon="ui-icon-alert" />
+
+                                        </p:commandButton>
+
+                                        <p:commandButton value="Reset de Fabrica"
+                                                         actionListener="#{factoryReset.factoryResetAction(results.id, listDevices.parameter)}"
+                                                         rendered="#{capabilityNames.factoryReset}"
+                                                         update="formTemplate:msgs" styleClass="AHandredPercent">
+
+                                            <p:confirm header="Reset de Fabrica?"
+                                                       message="Você tem certeza?" icon="ui-icon-alert" />
+
+                                        </p:commandButton>
+
+                                        <p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
+                                                         actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
+                                                         onclick="PF('sipAccountPro').show();" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
+                                                         oncomplete="PF('pingAction').show()"
+                                                         action="#{deviceInfo.colocarDeviceId(results.id)}"
+                                                         actionListener="#{getPing.clearVariables()}"
+                                                         update="@form:form:pingActions" styleClass="AHandredPercent" />
+
+                                        <p:commandButton value="Configurar Wifi"
+                                                         rendered="#{capabilityNames.setWiFiConfig}"
+                                                         oncomplete="PF('wifiConfig').show()"
+                                                         action="#{deviceInfo.colocarDeviceId(results.id)}"
+                                                         actionListener="#{setWiFiConfig.clearVariables()}"
+                                                         update="@form:form:formConfigWifi" styleClass="AHandredPercent"/>
+
+                                        <p:commandButton value="Credenciais PPPoE"
+                                                         rendered="#{capabilityNames.pppoeCredentials}"
+                                                         oncomplete="PF('ppoeCredentials').show()"
+                                                         action="#{deviceInfo.colocarDeviceId(results.id)}"
+                                                         actionListener="#{pPPoECredentials.clearVariables()}"
+                                                         update="@form:form:ppoeCred" styleClass="AHandredPercent"/>
+
+                                    </p:panelGrid>
+
+                                </p:panel>
+
+                            </h:panelGroup>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+
+                    <p:dialog header="Informações de Host" widgetVar="infoLanHosts"
+                              resizable="true" width="750" minWidth="750" height="400"
+                              minHeight="400" modal="true" closeOnEscape="true">
+
+                        <p:dataGrid id="infoLanHosts"
+                                    value="#{lanHostsTable.lanHostHolders}" var="lanHost" columns="3"
+                                    layout="grid" emptyMessage="Nenhum registro encontrado">
+
+                            <p:panel header="#{lanHost.hostinst}"
+                                     style="height:100%; font-size: 110% !important;">
+
+                                <p:panelGrid columns="2">
+
+                                    <h:outputText value="Nome do Host " />
+                                    <h:outputText value="#{lanHost.hostname}" styleClass="fontBlack" />
+
+                                    <h:outputText value="Status: " />
+                                    <h:outputText value="Ativo" rendered="#{lanHost.status}"
+                                                  styleClass="fontBlack" />
+                                    <h:outputText value="Inativo" rendered="#{!lanHost.status}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Tipo conexão: " />
+                                    <h:outputText value="#{lanHost.iftype}" styleClass="fontBlack" />
+
+                                    <h:outputText value="Mac: " />
+                                    <h:outputText value="#{lanHost.hostmac}" styleClass="fontBlack" />
+
+                                    <h:outputText value="Tempo de Conexão: " />
+                                    <h:outputText value="#{lanHost.ltremain}" styleClass="fontBlack" />
+
+                                </p:panelGrid>
+
+                            </p:panel>
+
+                        </p:dataGrid>
+
+                    </p:dialog>
+
+                    <p:dialog header="Interface Statistics"
+                              widgetVar="interfaceStatistic" resizable="true" width="850"
+                              minWidth="850" height="320" minHeight="320" modal="true"
+                              style="overflow-y: auto;" closeOnEscape="true">
+
+                        <p:scrollPanel mode="native"
+                                       style="width: 100%; height: 100%; font-size: 110% !important;">
+
+                            <p:dataGrid id="interfaceStatistics"
+                                        value="#{interfaceStatic.interfaceStaticsHolder.values}"
+                                        var="interfaceStatistics" columns="20" layout="grid"
+                                        emptyMessage="Nenhum registro encontrado">
+
+                                <p:panel header="#{interfaceStatistics.name}"
+                                         style="height: 100%;">
+
+                                    <p:panelGrid columns="2" style="width: 200px;">
+
+                                        <h:outputText value="Tipo:" />
+                                        <h:outputText value="#{interfaceStatistics.type}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Status:" />
+                                        <h:outputText value="#{interfaceStatistics.status}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Ativo:" />
+                                        <h:outputText value="#{interfaceStatistics.enabled}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Name:" />
+                                        <h:outputText value="#{interfaceStatistics.name}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Ip:" />
+                                        <h:outputText value="#{interfaceStatistics.ip}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Mac:" />
+                                        <h:outputText value="#{interfaceStatistics.mac}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Bytes enviados:" />
+                                        <h:outputText value="#{interfaceStatistics.bytesSent}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Bytes recebidos:" />
+                                        <h:outputText value="#{interfaceStatistics.bytesReceived}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Errors enviados:" />
+                                        <h:outputText value="#{interfaceStatistics.errorsSent}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Errors recebidos:" />
+                                        <h:outputText value="#{interfaceStatistics.errorsReceived}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Packet enviados:" />
+                                        <h:outputText value="#{interfaceStatistics.packetsSent}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Packet recebidos:" />
+                                        <h:outputText value="#{interfaceStatistics.packetsReceived}"
+                                                      styleClass="fontBlack" />
+
+                                    </p:panelGrid>
+
+                                </p:panel>
+
+                            </p:dataGrid>
+
+                        </p:scrollPanel>
+
+                    </p:dialog>
+
+                    <p:dialog header="Informação DSL Connection"
+                              widgetVar="infoDslConnect" resizable="true" width="600"
+                              minWidth="600" height="350" minHeight="350" modal="true">
+
+                        <p:dataGrid id="dslConnectInfos"
+                                    value="#{dSLConnectionInfo.valuesDslConnection}"
+                                    var="dslConnectInfo" columns="2" layout="grid"
+                                    emptyMessage="Nenhum registro encontrado">
+
+                            <p:panel header="#{dslConnectInfo.direction}"
+                                     style="font-size: 110% !important;">
+
+                                <p:panelGrid columns="2" style="width:100%;">
+
+                                    <h:outputText value="Modulação: " />
+                                    <h:outputText value="#{dslConnectInfo.modulationType}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Erros por segundo: " />
+                                    <h:outputText value="#{dslConnectInfo.errorSeconds}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Erros de FEC: " />
+                                    <h:outputText value="#{dslConnectInfo.FECErrors}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Erros de CRC: " />
+                                    <h:outputText value="#{dslConnectInfo.CRCErrors}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Erros de HEC: " />
+                                    <h:outputText value="#{dslConnectInfo.HECErrors}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Loss of Framing: " />
+                                    <h:outputText value="#{dslConnectInfo.lossOfFraming}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Perda de link: " />
+                                    <h:outputText value="#{dslConnectInfo.lossOfLink}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Margen de ruido: " />
+                                    <h:outputText value="#{dslConnectInfo.noiseMargin}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Max Rate: " />
+                                    <h:outputText value="#{dslConnectInfo.maxRate}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Tempo de iniciado: " />
+                                    <h:outputText value="#{dslConnectInfo.dslShowtimeStartStamp}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Atenuação: " />
+                                    <h:outputText value="#{dslConnectInfo.attenuation}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Power Level: " />
+                                    <h:outputText value="#{dslConnectInfo.powerLevel}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Synch Rate: " />
+                                    <h:outputText value="#{dslConnectInfo.synchRate}"
+                                                  styleClass="fontBlack" />
+
+                                </p:panelGrid>
+
+                            </p:panel>
+
+                        </p:dataGrid>
+
+                    </p:dialog>
+
+                    <p:dialog header="Informações de GateWay" widgetVar="infoGateWay"
+                              resizable="true" width="600" minWidth="600" height="460"
+                              minHeight="460" modal="true">
+
+                        <p:dataGrid id="gateWayInfos" value="#{gatewayInfo.valuesgatway}"
+                                    var="gateWayInfo" layout="grid" columns="1"
+                                    emptyMessage="Nenhum registro encontrado">
+
+                            <p:panel header="Info" style="font-size: 110% !important;">
+
+                                <p:panelGrid columns="2" style="width:100%;">
+
+                                    <h:outputText value="Nome do host: " />
+                                    <h:outputText value="#{gateWayInfo.hostname}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="DNS primario: " />
+                                    <h:outputText value="#{gateWayInfo.primaryDNS}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="DNS alternativo: " />
+                                    <h:outputText value="#{gateWayInfo.alternateDNS}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Status do server DHCP: " />
+                                    <h:outputText value="#{gateWayInfo.DHCPServerStatus}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="DHCPRelayAgent: " />
+                                    <h:outputText value="#{gateWayInfo.DHCPRelayAgent}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="DHCPLeaseTime: " />
+                                    <h:outputText value="#{gateWayInfo.DHCPLeaseTime}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="DHCPStartingAddress: " />
+                                    <h:outputText value="#{gateWayInfo.DHCPStartingAddress}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="DHCPEndingAddress: " />
+                                    <h:outputText value="#{gateWayInfo.DHCPEndingAddress}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Tempo ativo: " />
+                                    <h:outputText value="#{gateWayInfo.uptime}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="daylightSavingsTime: " />
+                                    <h:outputText value="#{gateWayInfo.daylightSavingsTime}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="UPnP:  " />
+                                    <h:outputText value="#{gateWayInfo.UPnP}" styleClass="fontBlack" />
+
+                                    <h:outputText value="timeZone Name: " />
+                                    <h:outputText value="#{gateWayInfo.timeZone.name}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="timeZone Offset " />
+                                    <h:outputText value="#{gateWayInfo.timeZone.offset}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="Nome do dominio: " />
+                                    <h:outputText value="#{gateWayInfo.domainName}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="alternateNTPServer:  " />
+                                    <h:outputText value="#{gateWayInfo.alternateNTPServer}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="NTPClientStatus: " />
+                                    <h:outputText value="#{gateWayInfo.NTPClientStatus}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="primaryNTPServer: " />
+                                    <h:outputText value="#{gateWayInfo.primaryNTPServer}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="wanIpAddress: " />
+                                    <h:outputText value="#{gateWayInfo.wanIpAddress}"
+                                                  styleClass="fontBlack" />
+
+
+
+                                </p:panelGrid>
+
+                            </p:panel>
+
+                        </p:dataGrid>
+
+                    </p:dialog>
+
+                    <p:dialog widgetVar="infoWifi" resizable="true" minHeight="300"
+                              height="300" width="800" minWidth="800" modal="true"
+                              closeOnEscape="true" responsive="true" header="Informações do Wifi">
+
+                        <p:scrollPanel style="width: 100%; height: 100%;" mode="native">
+
+                            <p:dataGrid value="#{getWifiInfo.wifiInfoHolders}" var="wifiConf"
+                                        columns="10" layout="grid" id="infoWifiGets">
+
+                                <p:panel header="#{wifiConf.SSID}"
+                                         style="font-size: 110% !important;">
+
+                                    <p:panelGrid columns="2" style="text-align: center;">
+
+                                        <h:outputText value="Status" />
+                                        <h:outputText value="#{wifiConf.enableStatus}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Status Broadcast" />
+                                        <h:outputText value="#{wifiConf.broadcastEnabled}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Status da interface " />
+                                        <h:outputText value="#{wifiConf.interfaceStatus}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Canal" />
+                                        <h:outputText value="#{wifiConf.channel}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Criptografia" />
+                                        <h:outputText value="#{wifiConf.encryption}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Nome da rede" />
+                                        <h:outputText value="#{wifiConf.SSID}" styleClass="fontBlack" />
+
+                                        <h:outputText value="MAC" />
+                                        <h:outputText value="#{wifiConf.macAddresses}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Autenticação" />
+                                        <h:outputText value="#{wifiConf.authentication}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Bytes enviados" />
+                                        <h:outputText value="#{wifiConf.bytesSent}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Standard" />
+                                        <h:outputText value="#{wifiConf.standard}"
+                                                      styleClass="fontBlack" />
+
+                                        <h:outputText value="Bytes recebidos" />
+                                        <h:outputText value="#{wifiConf.bytesReceived}"
+                                                      styleClass="fontBlack" />
+
+
+
+                                    </p:panelGrid>
+
+                                </p:panel>
+
+                            </p:dataGrid>
+
+                        </p:scrollPanel>
+
+                    </p:dialog>
+
+                    <p:dialog header="Sip Status" widgetVar="sipDiagnostic"
+                              resizable="true" width="350" minWidth="350" height="450"
+                              minHeight="450" modal="true">
+
+                        <h:panelGrid columns="2">
+
+                            <h:outputText value="PhyReferenceList" />
+                            <p:inputText value="#{sipDiagnostics.phyReferenceList}" />
+
+                            <p:commandButton value="Consultar"
+                                             action="#{sipDiagnostics.sipDiagnostics(deviceInfo.id)}"
+                                             update="@form:form:sipDiagnosticsValues formTemplate:msgs" />
+
+                        </h:panelGrid>
+
+                        <br />
+
+                        <p:panelGrid columns="2" id="sipDiagnosticsValues"
+                                     style="width: 100%;">
+
+                            <h:outputText value="UserAgentDomain" />
+                            <h:outputText value="#{sipDiagnostics.values.userAgentDomain}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="DirectoryNumber" />
+                            <h:outputText value="#{sipDiagnostics.values.directoryNumber}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="T38Enabled" />
+                            <h:outputText value="#{sipDiagnostics.values.t38Enabled}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="DTMFMethod" />
+                            <h:outputText value="#{sipDiagnostics.values.DTMFMethod}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="VoiceCodec" />
+                            <h:outputText value="#{sipDiagnostics.values.voiceCodec}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="Enable" />
+                            <h:outputText value="#{sipDiagnostics.values.enable}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="Status" />
+                            <h:outputText value="#{sipDiagnostics.values.status}"
+                                          styleClass="#{sipDiagnostics.values.status == 'OK' ? 'colorGreen' : 'colorRed'}" />
+
+                            <h:outputText value="AuthUserName" />
+                            <h:outputText value="#{sipDiagnostics.values.authUserName}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="IPAddress" />
+                            <h:outputText value="#{sipDiagnostics.values.IPAddress}"
+                                          styleClass="#{sipDiagnostics.values.IPAddress == '0.0.0.0' ? 'colorRed' : 'colorGreen'}" />
+
+                            <h:outputText value="ProxyServer" />
+                            <h:outputText value="#{sipDiagnostics.values.proxyServer}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="CallState" />
+                            <h:outputText value="#{sipDiagnostics.values.callState}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="LostPackets" />
+                            <h:outputText value="#{sipDiagnostics.values.lostPackets}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="OutboundProxy" />
+                            <h:outputText value="#{sipDiagnostics.values.outboundProxy}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="ConferenceCallURI" />
+                            <h:outputText value="#{sipDiagnostics.values.conferenceCallURI}"
+                                          styleClass="fontBlack" />
+
+                        </p:panelGrid>
+
+                    </p:dialog>
+
+                    <p:dialog header="Port Mapping Table"
+                              widgetVar="infoPortMappingTable" resizable="true" width="600"
+                              minWidth="600" height="280" minHeight="280" modal="true">
+
+                        <p:dataGrid id="portMappingTables"
+                                    value="#{portMappingTable.values}" var="portMapping" columns="2"
+                                    layout="grid" emptyMessage="Nenhum registro encontrado"
+                                    style="width: 100%;">
+
+                            <p:panel header="Info" style="font-size: 110% !important;">
+
+                                <p:panelGrid columns="2" style="width: 100%;">
+
+                                    <h:outputText value="protocol: " />
+                                    <h:outputText value="#{portMapping.protocol}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="import: " />
+                                    <h:outputText value="#{portMapping.intport}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="status: " />
+                                    <h:outputText value="#{portMapping.status}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="LeaseDuration: " />
+                                    <h:outputText value="#{portMapping.leaseDuration}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="intip: " />
+                                    <h:outputText value="#{portMapping.intip}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="portMapName: " />
+                                    <h:outputText value="#{portMapping.portMapName}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="RemoteAddress: " />
+                                    <h:outputText value="#{portMapping.remoteAddress}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="extport: " />
+                                    <h:outputText value="#{portMapping.extport}"
+                                                  style="font-weight: bold;" />
+
+                                </p:panelGrid>
+
+                            </p:panel>
+
+                        </p:dataGrid>
+
+                    </p:dialog>
+
+                    <p:dialog header="FXS" widgetVar="sipAccountPro" resizable="false"
+                              width="300" minWidth="300" height="250" minHeight="250"
+                              modal="true">
+
+                        <h:panelGrid columns="2">
+
+                            <h:outputText value="DirectoryNumber" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.directoryNumber}"
+                                placeholder="+55 Instância" />
+
+                            <h:outputText value="AuthUserName" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.authUserName}"
+                                placeholder="+55 Instância" />
+
+                            <h:outputText value="AuthPassword" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.authPassword}"
+                                placeholder="Senha" />
+
+                            <h:outputText value="ProxyServer" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.proxyServer}"
+                                placeholder="Proxy" />
+
+                            <h:outputText value="RegistrarServer" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.registrarServer}"
+                                placeholder="Domain IMS" />
+
+                            <h:outputText value="UserAgentDomain" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.userAgentDomain}"
+                                placeholder="Domain IMS" />
+
+                            <h:outputText value="OutboundProxy" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.outboundProxy}"
+                                placeholder="Proxy" />
+
+                            <h:outputText value="PhyReferenceList" />
+                            <p:inputText
+                                value="#{accountProvisioning.sipAccountProvisioning.phyReferenceList}"
+                                placeholder="1" />
+
+                        </h:panelGrid>
+
+                        <p:commandButton value="Eviar FXS"
+                                         action="#{accountProvisioning.sipAccountProvisioningAction(deviceInfo.id, listDevices.parameter)}"
+                                         update="formTemplate:msgs"
+                                         oncomplete="PF('sipAccountPro').hide();" />
+
+                    </p:dialog>
+
+                    <p:dialog header="Ping" widgetVar="pingAction" resizable="false"
+                              width="300" minWidth="320" height="320" minHeight="350"
+                              modal="true">
+
+                        <h:panelGrid columns="1">
+
+                            <h:outputText value="Endereço" />
+                            <p:inputText value="#{getPing.hostAdress}" />
+
+                            <h:outputText value="Numero de repetição" />
+                            <p:inputText value="#{getPing.numberRepetitions}" />
+
+                            <p:commandButton value="Consultar"
+                                             action="#{getPing.PingAction(deviceInfo.id)}"
+                                             update="@form:form:pingActions formTemplate:msgs" />
+
+                        </h:panelGrid>
+
+                        <br />
+
+                        <p:panelGrid columns="2" id="pingActions" style="width: 100%;">
+
+                            <h:outputText value="Status" />
+                            <h:outputText value="#{getPing.pingHolder.pingStatus}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="Response Time" />
+                            <h:outputText value="#{getPing.pingHolder.responseTime}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="Success Count" />
+                            <h:outputText value="#{getPing.pingHolder.successCount}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="Repetitions" />
+                            <h:outputText value="#{getPing.pingHolder.repetitions}"
+                                          styleClass="fontBlack" />
+
+                            <h:outputText value="Host Adress" />
+                            <h:outputText value="#{getPing.pingHolder.hostAddress}"
+                                          styleClass="fontBlack" />
+
+                        </p:panelGrid>
+
+                    </p:dialog>
+
+                    <p:dialog header="Wifi Config" widgetVar="wifiConfig"
+                              resizable="false" width="350" minWidth="350" height="380"
+                              minHeight="380" modal="true">
+
+                        Preencha somente os campos que deseja alterar.
+
+                        <p:tabView id="formConfigWifi">
+
+                            <p:tab title="Basico">
+
+                                <h:panelGrid>
+
+                                    <h:outputText value="Frequencia" />
+                                    <p:selectOneMenu value="#{setWiFiConfig.wifiConf.frequency}">
+
+                                        <f:selectItem itemLabel="2.4GHz" itemValue="2.4GHz" />
+                                        <f:selectItem itemLabel="5GHz" itemValue="5GHz" />
+
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Nome da rede" />
+                                    <p:inputText value="#{setWiFiConfig.wifiConf.ssid}" />
+
+                                    <h:outputText value="Senha" />
+                                    <p:inputText value="#{setWiFiConfig.wifiConf.ssidPassword}" />
+
+                                    <h:outputText value="standard" />
+                                    <p:selectOneMenu value="#{setWiFiConfig.wifiConf.standard}">
+
+                                        <f:selectItem itemLabel="" />
+                                        <f:selectItem itemLabel="b" itemValue="b" />
+                                        <f:selectItem itemLabel="g" itemValue="g" />
+                                        <f:selectItem itemLabel="n" itemValue="n" />
+                                        <f:selectItem itemLabel="ac" itemValue="ac" />
+                                        <f:selectItem itemLabel="bgn" itemValue="bgn" />
+                                        <f:selectItem itemLabel="gn" itemValue="gn" />
+
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Canal" />
+                                    <p:selectOneMenu value="#{setWiFiConfig.wifiConf.channel}">
+
+                                        <f:selectItem itemLabel="" />
+
+                                        <f:selectItem itemLabel=" -- Parametros 2.4GHz -- "
+                                                      itemValue="" itemDisabled="true" />
+
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="11" itemValue="11" />
+
+                                        <f:selectItem itemLabel=" -- Parametros 5GHz -- " itemValue=""
+                                                      itemDisabled="true" />
+
+                                        <f:selectItem itemLabel="36" itemValue="36" />
+                                        <f:selectItem itemLabel="40" itemValue="40" />
+                                        <f:selectItem itemLabel="44" itemValue="44" />
+                                        <f:selectItem itemLabel="48" itemValue="48" />
+                                        <f:selectItem itemLabel="149" itemValue="149" />
+                                        <f:selectItem itemLabel="153" itemValue="153" />
+                                        <f:selectItem itemLabel="157" itemValue="157" />
+                                        <f:selectItem itemLabel="161" itemValue="161" />
+                                        <f:selectItem itemLabel="165" itemValue="165" />
+                                        <!-- <f:selectItem itemLabel="auto" itemValue="auto" /> -->
+
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+
+                            </p:tab>
+
+                            <p:tab title="Avançado">
+
+                                <h:panelGrid>
+
+                                    <h:outputText value="Status" />
+                                    <p:selectOneMenu value="#{setWiFiConfig.wifiConf.enableStatus}">
+
+                                        <f:selectItem itemLabel="" />
+                                        <f:selectItem itemLabel="true" itemValue="true" />
+                                        <f:selectItem itemLabel="false" itemValue="false" />
+
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Status Broadcast" />
+                                    <p:selectOneMenu
+                                        value="#{setWiFiConfig.wifiConf.broadcastEnabled}">
+
+                                        <f:selectItem itemLabel="" />
+                                        <f:selectItem itemLabel="true" itemValue="true" />
+                                        <f:selectItem itemLabel="false" itemValue="false" />
+
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Status Radio" />
+                                    <p:selectOneMenu value="#{setWiFiConfig.wifiConf.radioEnable}">
+
+                                        <f:selectItem itemLabel="" />
+                                        <f:selectItem itemLabel="true" itemValue="true" />
+                                        <f:selectItem itemLabel="false" itemValue="false" />
+
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Criptografia" />
+                                    <p:selectOneMenu value="#{setWiFiConfig.wifiConf.encryption}">
+
+                                        <f:selectItem itemLabel="" />
+                                        <f:selectItem itemLabel="WPA2-Personal"
+                                                      itemValue="WPA2-Personal" />
+                                        <f:selectItem itemLabel="WPA-WPA2-Personal"
+                                                      itemValue="WPA-WPA2-Personal" />
+
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+
+                            </p:tab>
+
+                        </p:tabView>
+
+                        <br />
+
+                        <p:commandButton value="Modificar"
+                                         action="#{setWiFiConfig.configWifiNew(deviceInfo.id, listDevices.parameter)}"
+                                         update="formTemplate:msgs" oncomplete="PF('wifiConfig').hide();" />
+
+                    </p:dialog>
+
+                    <p:dialog header="Lan Ethernet Info" widgetVar="infoLanEthernetInfo"
+                              resizable="true" width="600" minWidth="600" height="280"
+                              minHeight="280">
+
+                        <p:dataGrid id="lanEthernetInfos" value="#{lanEthernetInfo.values}"
+                                    var="lanEthernet" columns="2" layout="grid"
+                                    emptyMessage="Nenhum registro encontrado">
+
+                            <p:panel>
+
+                                <p:panelGrid columns="2">
+
+                                    <h:outputText value="EthernetStatus: " />
+                                    <h:outputText value="#{lanEthernet.ethernetStatus}"
+                                                  styleClass="#{lanEthernet.ethernetStatus == 'Up' ? 'colorGreen' : 'colorRed'}" />
+
+                                    <h:outputText value="EthernetEnable: " />
+                                    <h:outputText value="#{lanEthernet.ethernetEnable}"
+                                                  styleClass="#{lanEthernet.ethernetEnable == 'On' ? 'colorGreen' : 'colorRed'}" />
+
+                                    <h:outputText value="EthernetErrorsSentRcvd: " />
+                                    <h:outputText value="#{lanEthernet.ethernetErrorsSentRcvd}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="EthernetDuplexMode: " />
+                                    <h:outputText value="#{lanEthernet.ethernetDuplexMode}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="EthernetMACAddress: " />
+                                    <h:outputText value="#{lanEthernet.ethernetMACAddress}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="EthernetBytesSentReceived: " />
+                                    <h:outputText value="#{lanEthernet.ethernetBytesSentReceived}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="EthernetMACCtrlEnabled: " />
+                                    <h:outputText value="#{lanEthernet.ethernetMACCtrlEnabled}"
+                                                  styleClass="fontBlack" />
+
+                                    <h:outputText value="EthernetMaxBitRate: " />
+                                    <h:outputText value="#{lanEthernet.ethernetMaxBitRate}"
+                                                  styleClass="fontBlack" />
+
+                                </p:panelGrid>
+
+                            </p:panel>
+
+                        </p:dataGrid>
+
+                    </p:dialog>
+
+                    <p:dialog header="PPPoE Credentials" widgetVar="ppoeCredentials"
+                              resizable="false" width="300" minWidth="300" height="150"
+                              minHeight="150" modal="true">
+
+                        <h:panelGrid columns="2" id="ppoeCred" style="width: 100%;">
+
+                            <h:outputText value="Username: " />
+                            <p:inputText value="#{pPPoECredentials.username}" />
+
+                            <h:outputText value="Password" />
+                            <p:inputText value="#{pPPoECredentials.password}" />
+
+                            <p:commandButton value="Modificar"
+                                             action="#{pPPoECredentials.configPPPoECredentials(deviceInfo.id, listDevices.parameter)}"
+                                             update="@form:form:ppoeCred formTemplate:msgs"
+                                             oncomplete="PF('ppoeCredentials').hide()" />
+
+                        </h:panelGrid>
+
+                    </p:dialog>
+
+                    <p:dialog widgetVar="infoGetPPPoECred" resizable="true"
+                              minHeight="100" minWidth="300" height="100" width="300"
+                              modal="true" header="PPPoE Credentials">
+
+                        <p:panelGrid columns="2" style="width: 100%; text-align: center;"
+                                     id="infoGetPPPoECreds">
+
+                            <h:outputText value="Status" />
+                            <h:outputText
+                                value="#{getPPPoECredentials.getPPPoECredentialsHolder.status}"
+                                styleClass="#{getPPPoECredentials.getPPPoECredentialsHolder.status == 'Connected' ? 'colorGreen' : 'colorRed'}" />
+
+                            <h:outputText value="Username" />
+                            <h:outputText
+                                value="#{getPPPoECredentials.getPPPoECredentialsHolder.username}"
+                                styleClass="fontBlack" />
+
+                        </p:panelGrid>
+
+                    </p:dialog>
+
+                    <p:dialog widgetVar="loadingDialogInfo" header="Aguarde..."
+                              resizable="false" width="260" height="25" minWidth="260"
+                              minHeight="25" showEffect="fade" hideEffect="fade" modal="true"
+                              closable="false">
+
+                        <img id="j_idt17:form:j_idt45"
+                             src="/Acs/recursos/images/ajax-loader.gif" alt="" />
+
+                    </p:dialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+
+                        <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check" />
+                        <p:commandButton value="Não" styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close" />
+
+                    </p:confirmDialog>
+
+                </p:panel>
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
