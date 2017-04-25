@@ -1,10 +1,9 @@
 package controllers.comandos;
 
+import entidades.wifiInfo.WifiInfoHolder;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import entidades.wifiInfo.WifiInfoHolder;
 import models.comandos.WiFiInfoAction;
 import models.sys.AutenticacaoServico;
 import util.JSFUtil;
@@ -49,7 +48,7 @@ public class getWifiInfo {
 			} else {
 
 				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao consultar informações do Wifi");
+				JSFUtil.addErrorMessage("Erro ao consultar informaÃ§Ãµes do Wifi");
 				this.contTentativas = 0;
 
 			}

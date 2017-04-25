@@ -1,11 +1,10 @@
 package models.sys;
 
+import entidades.sys.UsuarioEfika;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import entidades.sys.UsuarioEfika;
 import webservices.EfikaUsersProxy;
 import webservices.Usuario;
 
@@ -31,7 +30,7 @@ public class LoginServico {
 
 		if (usuarioWS == null){
 
-			throw new Exception("Usuário não encontrado, se você não possui login de acesso utilize a opção \"Solicite o seu acesso\" na pagina http://efika/web");
+			throw new Exception("UsuÃ¡rio nÃ£o encontrado, se vocï¿½ nï¿½o possui login de acesso utilize a opÃ§Ã£o \"Solicite o seu acesso\" na pÃ¡gina http://efika/web");
 
 		}
 
@@ -45,7 +44,7 @@ public class LoginServico {
 
 		if (!auth) {
 
-			throw new Exception("Login e senha incorretos, se você esqueceu da sua senha utilize a opção \"Esqueci minha senha\" na pagina http://efika/web");
+			throw new Exception("Login e senha incorretos, se vocÃª esqueceu da sua senha utilize a opÃ§Ã£o \"Esqueci minha senha\" na pÃ¡gina http://efika/web");
 
 		}
 
@@ -108,7 +107,7 @@ public class LoginServico {
 
 		} catch (Exception e) {
 
-			throw new Exception("Usuário não cadastrado");
+			throw new Exception("UsuÃ¡rio nÃ£o cadastrado");
 
 		}
 

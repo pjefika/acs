@@ -1,14 +1,12 @@
 package models.comandos;
 
-import java.net.URLEncoder;
-
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
 import entidades.interfaceStatics.InterfaceStaticsHolder;
 import entidades.sys.Autenticacao;
+import java.net.URLEncoder;
 import util.JSFUtil;
 
 public class InterfaceStaticsAction {
@@ -16,7 +14,7 @@ public class InterfaceStaticsAction {
 	public InterfaceStaticsHolder interfaceStatics(Integer deviceId, Autenticacao autenticacao) throws Exception {
 
 		/**
-		 * Busca informações de statisticas de interface
+		 * Busca informaÃ§Ãµes de statisticas de interface
 		 **/
 
 		Client client = Client.create();		

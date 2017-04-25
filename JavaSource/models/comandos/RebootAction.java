@@ -1,15 +1,12 @@
 package models.comandos;
 
-import java.net.URLEncoder;
-
-
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
 import entidades.reboot.RebootHolder;
 import entidades.sys.Autenticacao;
+import java.net.URLEncoder;
 import util.JSFUtil;
 
 public class RebootAction {
@@ -17,7 +14,7 @@ public class RebootAction {
 	public RebootHolder Reboot(Integer deviceId, Autenticacao autenticacao) throws Exception {
 
 		/**
-		 * Realiza o reset padr„o no Equipamento. 
+		 * Realiza o reset padr√£o no Equipamento. 
 		 **/
 
 		Client client = Client.create();

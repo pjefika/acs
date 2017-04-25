@@ -1,14 +1,12 @@
 package models.comandos;
 
-import java.net.URLEncoder;
-
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
 import entidades.gatewayInfo.GatewayInfoHolder;
 import entidades.sys.Autenticacao;
+import java.net.URLEncoder;
 import util.JSFUtil;
 
 public class GatewayInfoAction {
@@ -16,7 +14,7 @@ public class GatewayInfoAction {
 	public GatewayInfoHolder getGatewayInfo(Integer deviceId, Autenticacao autenticacao) throws Exception {
 
 		/**
-		 * Busca informações de GateWay
+		 * Busca informaÃ§Ãµes de GateWay
 		 **/
 
 		Client client = Client.create();

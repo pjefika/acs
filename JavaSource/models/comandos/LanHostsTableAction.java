@@ -1,21 +1,19 @@
 package models.comandos;
 
-import java.net.URLEncoder;
-
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
 import entidades.lanHost.LanHostHolder;
 import entidades.sys.Autenticacao;
+import java.net.URLEncoder;
 import util.JSFUtil;
 
 public class LanHostsTableAction {
 
 	public LanHostHolder[] getLanHostsTable(Integer deviceId, Autenticacao autenticacao) throws Exception {
 		/**
-		 * Busca os aparelhos que est„o conectado ou se conectaram no Modem.
+		 * Busca os aparelhos que est√£o conectado ou se conectaram no Modem.
 		 **/
 
 		Client client = Client.create();

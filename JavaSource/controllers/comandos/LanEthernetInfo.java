@@ -1,11 +1,10 @@
 package controllers.comandos;
 
+import entidades.LanEthernetInfo.LanEthernetInfoHolder;
+import entidades.LanEthernetInfo.Values;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import entidades.LanEthernetInfo.LanEthernetInfoHolder;
-import entidades.LanEthernetInfo.Values;
 import models.comandos.LanEthernetInfoAction;
 import models.sys.AutenticacaoServico;
 import util.JSFUtil;
@@ -54,7 +53,7 @@ public class LanEthernetInfo {
 			} else {
 
 				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao buscar Informações de Ethernets");
+				JSFUtil.addErrorMessage("Erro ao buscar InformaÃ§Ãµes de Ethernets");
 				this.cont = 0;
 
 			}

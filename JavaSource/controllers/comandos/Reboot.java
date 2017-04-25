@@ -1,15 +1,13 @@
 package controllers.comandos;
 
+import controllers.sys.LoginBean;
+import entidades.reboot.RebootHolder;
+import entidades.sys.Logs;
 import java.util.Date;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-
-import controllers.sys.LoginBean;
-import entidades.reboot.RebootHolder;
-import entidades.sys.Logs;
 import models.comandos.RebootAction;
 import models.sys.AutenticacaoServico;
 import models.sys.LogsServico;
@@ -52,7 +50,7 @@ public class Reboot {
 
 			} else {
 
-				JSFUtil.addInfoMessage("Reboot n„o realizado.");
+				JSFUtil.addInfoMessage("Reboot n√£o realizado.");
 
 			}
 
