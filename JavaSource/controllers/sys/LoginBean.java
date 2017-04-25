@@ -1,18 +1,16 @@
 package controllers.sys;
 
+import entidades.sys.UsuarioEfika;
+import java.io.IOException;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-
-import entidades.sys.UsuarioEfika;
 import models.sys.LoginServico;
 import util.JSFUtil;
 import webservices.Usuario;
-
-import java.io.IOException;
-import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @Named
@@ -45,7 +43,7 @@ public class LoginBean implements Serializable{
 
 			if (!this.logado) {
 
-				context.redirect("/Acs/index.jsf");
+				context.redirect("/acs-arris/index.jsf");
 
 			}			
 
@@ -81,7 +79,7 @@ public class LoginBean implements Serializable{
 			
 			if (!param){
 											
-				context.redirect("/Acs/index.jsf");			
+				context.redirect("/acs-arris/index.jsf");			
 				
 			}
 			
