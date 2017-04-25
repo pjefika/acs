@@ -20,3 +20,9 @@ local.properties
 /acsarris/build/
 /acsarris/dist/
 /acsarris/nbproject/private/
+/acs-arris/nbproject/private/
+/acs-arris/build/
+/acs-arris/dist/
+/build/
+/dist/
+/nbproject/private/
