@@ -9,13 +9,14 @@ package dal.arris.capability;
  *
  * @author G0042204
  */
-public enum EnumCapability {
+public enum EnumCapabilitySimple {
 
     getDeviceInfo,
     getDSLConnectionInfo,
     getGatewayInfo,
     getInterfaceStats,
     getLanEthernetInfo,
-    getPortMappingTable;
+    getPortMappingTable,
+    getPreferredFirmwareVersion;
 
 }

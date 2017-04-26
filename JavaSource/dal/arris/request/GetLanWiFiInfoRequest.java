@@ -13,10 +13,10 @@ import dal.arris.capability.EnumCapabilityComplex;
  *
  * @author G0042204
  */
-public class SipDiagnosticsRequest extends RequestCapabilityDiagnosticComplex implements ComandoArris {
+public class GetLanWiFiInfoRequest extends RequestCapabilityDiagnosticComplex implements ComandoArris {
 
-    public SipDiagnosticsRequest(Integer deviceId, String phyReferenceList) {
-        super(EnumCapabilityComplex.sipDiagnostics.name(), deviceId, "{\"PhyReferenceList\":\"" + phyReferenceList + "\"}");
+    public GetLanWiFiInfoRequest(Integer deviceId, String frequency) {
+        super(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, "{\"frequency\":\"" + frequency + "\"}");
     }
 
 }

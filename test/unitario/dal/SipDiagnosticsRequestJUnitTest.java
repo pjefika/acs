@@ -39,7 +39,7 @@ public class SipDiagnosticsRequestJUnitTest {
 
     @Test
     public void test() {
-        SipDiagnosticsRequest r = new SipDiagnosticsRequest(194859257);
+        SipDiagnosticsRequest r = new SipDiagnosticsRequest(194859257, "1");
         System.out.println(r.getRequestUrl());
     }
 }

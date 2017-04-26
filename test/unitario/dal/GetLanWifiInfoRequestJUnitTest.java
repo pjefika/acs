@@ -5,8 +5,7 @@
  */
 package unitario.dal;
 
-import dal.arris.RequestCapabilityDiagnosticSimple;
-import dal.arris.capability.EnumCapabilitySimple;
+import dal.arris.request.GetLanWiFiInfoRequest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +16,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class ArrisDAOJUnitTest {
+public class GetLanWifiInfoRequestJUnitTest {
 
-    public ArrisDAOJUnitTest() {
+    public GetLanWifiInfoRequestJUnitTest() {
     }
 
     @BeforeClass
@@ -40,13 +39,7 @@ public class ArrisDAOJUnitTest {
 
     @Test
     public void test() {
-        EnumCapabilitySimple[] e = EnumCapabilitySimple.values();
-        
-        for (EnumCapabilitySimple enumCapability : e) {
-            RequestCapabilityDiagnosticSimple s = new RequestCapabilityDiagnosticSimple(enumCapability, 194859257);   
-            System.out.println(s.getRequestUrl());
-        }
-        
-       
+        GetLanWiFiInfoRequest r = new GetLanWiFiInfoRequest(194859257, "2.4GHz");
+        System.out.println(r.getRequestUrl());
     }
 }

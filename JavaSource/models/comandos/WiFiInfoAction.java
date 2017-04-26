@@ -29,11 +29,11 @@ public class WiFiInfoAction {
         String output = clientResponse.getEntity(String.class);
 
         if (clientResponse.getStatus() != 200) {
+            clientResponse.close();
             if (output.contains("api.capability.execution_error")) {
                 Thread.sleep(10000);
                 return this.getWiFiInfo(deviceId, autenticacao, frequency);
             } else {
-                clientResponse.close();
                 throw new RuntimeException("Failed : HTTP error code : " + clientResponse.getStatus());
             }
 

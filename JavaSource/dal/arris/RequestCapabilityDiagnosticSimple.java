@@ -5,7 +5,7 @@
  */
 package dal.arris;
 
-import dal.arris.capability.EnumCapability;
+import dal.arris.capability.EnumCapabilitySimple;
 
 /**
  *
@@ -13,7 +13,7 @@ import dal.arris.capability.EnumCapability;
  */
 public class RequestCapabilityDiagnosticSimple extends RequestCapabilityDiagnostic {
 
-    public RequestCapabilityDiagnosticSimple(EnumCapability cap, Integer deviceId) {
+    public RequestCapabilityDiagnosticSimple(EnumCapabilitySimple cap, Integer deviceId) {
         super(cap.name(), deviceId);
     }
 
