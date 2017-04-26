@@ -30,8 +30,7 @@ public class WiFiInfoAction {
 
         if (clientResponse.getStatus() != 200) {
             if (output.contains("api.capability.execution_error")) {
-                Thread.sleep(1000);
-                clientResponse.close();
+                Thread.sleep(10000);
                 return this.getWiFiInfo(deviceId, autenticacao, frequency);
             } else {
                 clientResponse.close();
