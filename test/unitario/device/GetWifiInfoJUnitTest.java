@@ -12,6 +12,7 @@ import model.AuthFactory;
 import models.comandos.WiFiInfoAction;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,11 +50,13 @@ public class GetWifiInfoJUnitTest {
         WiFiInfoAction dao = new WiFiInfoAction();
 
         try {
-            ret = dao.getWiFiInfo(8328571, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
-            System.out.println("Fim");
+            // :112239590:194859257
+            ret = dao.getWiFiInfo(194859257, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
+            assertTrue(ret != null);
         } catch (Exception ex) {
+            assertTrue(false);
             Logger.getLogger(GetWifiInfoJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        System.out.println("");
     }
 }
