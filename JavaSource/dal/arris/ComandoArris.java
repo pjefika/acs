@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dal;
+package dal.arris;
 
 /**
  *
  * @author G0042204
  */
-public interface Comando {
+public interface ComandoArris {
+
+    public String getRequestUrl();
 
 }

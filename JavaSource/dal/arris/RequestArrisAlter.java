@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dal;
+package dal.arris;
 
 import entidades.sys.Autenticacao;
 import java.io.BufferedReader;
@@ -25,9 +25,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
  *
  * @author G0042204
  */
-public class RequestArris {
+public class RequestArrisAlter {
 
-    public RequestArris(Integer deviceId, Autenticacao autenticacao, String frequency) throws UnsupportedEncodingException, IOException {
+    public RequestArrisAlter(Integer deviceId, Autenticacao autenticacao, String frequency) throws UnsupportedEncodingException, IOException {
 
         Autenticacao a = AuthFactory.getEnd();
 

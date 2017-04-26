@@ -5,9 +5,8 @@
  */
 package unitario.dal;
 
-import dal.arris.RequestArrisAlter;
-import java.io.IOException;
-import model.AuthFactory;
+import dal.arris.RequestCapabilityDiagnosticSimple;
+import dal.arris.capability.EnumCapability;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,9 +17,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class RequestArrisJUnitTest {
+public class ArrisDAOJUnitTest {
 
-    public RequestArrisJUnitTest() {
+    public ArrisDAOJUnitTest() {
     }
 
     @BeforeClass
@@ -40,9 +39,8 @@ public class RequestArrisJUnitTest {
     }
 
     @Test
-    public void requestArris() throws IOException {
-
-        RequestArrisAlter r = new RequestArrisAlter(194859257, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
-
+    public void test() {
+        RequestCapabilityDiagnosticSimple s = new RequestCapabilityDiagnosticSimple(EnumCapability.getDeviceInfo, 194859257);
+        System.out.println(s.getRequestUrl());
     }
 }

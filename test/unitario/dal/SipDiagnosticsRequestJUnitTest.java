@@ -5,9 +5,7 @@
  */
 package unitario.dal;
 
-import dal.arris.RequestArrisAlter;
-import java.io.IOException;
-import model.AuthFactory;
+import dal.arris.request.SipDiagnosticsRequest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,9 +16,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class RequestArrisJUnitTest {
+public class SipDiagnosticsRequestJUnitTest {
 
-    public RequestArrisJUnitTest() {
+    public SipDiagnosticsRequestJUnitTest() {
     }
 
     @BeforeClass
@@ -40,9 +38,8 @@ public class RequestArrisJUnitTest {
     }
 
     @Test
-    public void requestArris() throws IOException {
-
-        RequestArrisAlter r = new RequestArrisAlter(194859257, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
-
+    public void test() {
+        SipDiagnosticsRequest r = new SipDiagnosticsRequest(194859257);
+        System.out.println(r.getRequestUrl());
     }
 }
