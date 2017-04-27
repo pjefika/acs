@@ -13,6 +13,8 @@ import dal.arris.auth.EnumEndpoint;
  */
 public class RequestArris extends Request {
 
+    protected String result;
+
     public RequestArris() {
         super(EnumEndpoint.ARRIS_PRODUCAO);
     }

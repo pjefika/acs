@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dal.arris.capability;
+package dal.arris;
 
 /**
  *
  * @author G0042204
  */
-public enum EnumCapabilitySimple {
+public class DeviceDAO {
 
-    getDeviceInfo,
-    getDSLConnectionInfo,
-    getGatewayInfo,
-    getInterfaceStats,
-    getLanEthernetInfo,
-    getPortMappingTable;
 }

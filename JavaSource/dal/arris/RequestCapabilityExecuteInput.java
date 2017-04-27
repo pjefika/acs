@@ -9,15 +9,17 @@ package dal.arris;
  *
  * @author G0042204
  */
-public abstract class RequestCapabilityDiagnostic extends RequestCapability implements ComandoArris {
+public class RequestCapabilityExecuteInput extends RequestCapabilityExecute implements ComandoArris {
 
-    public RequestCapabilityDiagnostic(String capability, Integer deviceId) {
+    protected String input;
+
+    public RequestCapabilityExecuteInput(String capability, Integer deviceId, String input) {
         super(capability, deviceId);
+        this.input = input;
     }
 
     @Override
     public String getRequestUrl() {
-        return super.getRequestUrl() + "diagnostic?diagnostic=\"" + this.capability + "\"&deviceId=" + this.deviceId;
+        return super.getRequestUrl() + "&input=" + this.input;
     }
-
 }

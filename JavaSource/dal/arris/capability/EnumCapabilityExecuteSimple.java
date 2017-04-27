@@ -9,12 +9,9 @@ package dal.arris.capability;
  *
  * @author G0042204
  */
-public enum EnumCapabilitySimple {
+public enum EnumCapabilityExecuteSimple {
 
-    getDeviceInfo,
-    getDSLConnectionInfo,
-    getGatewayInfo,
-    getInterfaceStats,
-    getLanEthernetInfo,
-    getPortMappingTable;
+    getLanHostsTable,
+    getPreferredFirmwareVersion,
+    Reboot;
 }

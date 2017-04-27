@@ -17,9 +17,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class ArrisDAOJUnitTest {
+public class EnumCapabilitySimpleJUnitTest {
 
-    public ArrisDAOJUnitTest() {
+    public EnumCapabilitySimpleJUnitTest() {
     }
 
     @BeforeClass
@@ -39,14 +39,15 @@ public class ArrisDAOJUnitTest {
     }
 
     @Test
-    public void test() {
+    public void requestCapabilityDiagnosticSimple() {
         EnumCapabilitySimple[] e = EnumCapabilitySimple.values();
-        
+
+        System.out.println("EnumCapabilitySimple");
+
         for (EnumCapabilitySimple enumCapability : e) {
-            RequestCapabilityDiagnosticSimple s = new RequestCapabilityDiagnosticSimple(enumCapability, 194859257);   
+            RequestCapabilityDiagnosticSimple s = new RequestCapabilityDiagnosticSimple(enumCapability, 194859257);
             System.out.println(s.getRequestUrl());
         }
-        
-       
+        System.out.println("--------------------");
     }
 }
