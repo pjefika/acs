@@ -42,7 +42,7 @@ public class RequestArrisJUnitTest {
     @Test
     public void requestArris() throws IOException {
 
-        RequestArrisAlter r = new RequestArrisAlter(8328571, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
+//        RequestArrisAlter r = new RequestArrisAlter(8328571, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
         RequestArrisAlter c = new RequestArrisAlter(194859257, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
 
         // 8328571

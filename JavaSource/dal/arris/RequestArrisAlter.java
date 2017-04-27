@@ -19,6 +19,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.routing.HttpRoute;
@@ -43,8 +45,14 @@ public class RequestArrisAlter {
         HttpHost localhost = new HttpHost("10.200.6.150", 80);
         cm.setMaxPerRoute(new HttpRoute(localhost), 50);
 
+        // Cookies
+        RequestConfig globalConfig = RequestConfig.custom()
+                .setCookieSpec(CookieSpecs.DEFAULT)
+                .build();
+
         CloseableHttpClient httpclient = HttpClients.custom()
                 .setConnectionManager(cm)
+                .setDefaultRequestConfig(globalConfig)
                 .build();
 
         byte[] encodedAuth = Base64.encodeBase64(
@@ -57,6 +65,13 @@ public class RequestArrisAlter {
             httpget.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
             httpget.setHeader(HttpHeaders.CONTENT_TYPE, "text/html");
             httpget.setHeader("Cookie", "JSESSIONID=aaazqNDcHoduPbavRvVUv; AX-CARE-AGENTS-20480=HECDMIAKJABP");
+
+            RequestConfig localConfig = RequestConfig.copy(globalConfig)
+                    .setCookieSpec(CookieSpecs.STANDARD_STRICT)
+                    .build();
+
+            HttpGet httpGet = new HttpGet("/");
+            httpGet.setConfig(localConfig);
 
 //            httpget.setHeader(n);
             System.out.println("Executing request " + httpget.getRequestLine());
