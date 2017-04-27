@@ -5,10 +5,17 @@
  */
 package dal.arris;
 
+import dal.arris.auth.EnumEndpoint;
+
 /**
  *
  * @author G0042204
  */
 public class DeviceDAO {
+
+    private EnumEndpoint end = EnumEndpoint.ARRIS_PRODUCAO;
+
+    public DeviceDAO() {
+    }
 
 }

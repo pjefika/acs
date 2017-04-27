@@ -5,9 +5,6 @@
  */
 package unitario.dal;
 
-import dal.arris.RequestArrisAlter;
-import java.io.IOException;
-import model.AuthFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,9 +15,9 @@ import org.junit.Test;
  *
  * @author G0042204
  */
-public class RequestArrisJUnitTest {
+public class HttpClientJUnitTest {
 
-    public RequestArrisJUnitTest() {
+    public HttpClientJUnitTest() {
     }
 
     @BeforeClass
@@ -40,11 +37,7 @@ public class RequestArrisJUnitTest {
     }
 
     @Test
-    public void requestArris() throws IOException {
+    public void hello() {
 
-        RequestArrisAlter r = new RequestArrisAlter(8328571, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
-        RequestArrisAlter c = new RequestArrisAlter(194859257, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
-
-        // 8328571
     }
 }
