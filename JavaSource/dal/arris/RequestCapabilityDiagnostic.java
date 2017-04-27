@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author G0042204
  */
-public abstract class RequestCapabilityDiagnostic extends RequestCapability implements ComandoArris {
+public class RequestCapabilityDiagnostic extends RequestCapability implements ComandoArris {
 
     public RequestCapabilityDiagnostic(String capability, Integer deviceId) {
         super(capability, deviceId);

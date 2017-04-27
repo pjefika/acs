@@ -13,4 +13,10 @@ public interface ComandoArris {
 
     public String getRequestUrl();
 
+    public String getCapability();
+
+    public void setResult(String param);
+
+    public String getResult();
+
 }

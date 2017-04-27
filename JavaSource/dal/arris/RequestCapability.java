@@ -25,4 +25,19 @@ public abstract class RequestCapability extends RequestArris implements ComandoA
         return super.getEndPoint().getUrl() + "capability/";
     }
 
+    @Override
+    public String getCapability() {
+        return capability;
+    }
+
+    @Override
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    @Override
+    public String getResult() {
+        return result;
+    }
+
 }

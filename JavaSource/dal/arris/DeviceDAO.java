@@ -6,7 +6,6 @@
 package dal.arris;
 
 import dal.arris.auth.EnumEndpoint;
-import dal.arris.capability.EnumCapabilitySimple;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,19 +42,16 @@ public class DeviceDAO {
     public DeviceDAO() {
     }
 
-    public RequestCapabilityDiagnosticSimple request(EnumCapabilitySimple c, Integer deviceId) throws IOException {
-
-        RequestCapabilityDiagnosticSimple s = new RequestCapabilityDiagnosticSimple(c, deviceId);
+    public ComandoArris request(ComandoArris c) throws IOException {
 
         try {
             this.prepare();
-            HttpGet httpget = new HttpGet(s.getRequestUrl());
+            HttpGet httpget = new HttpGet(c.getRequestUrl());
             httpget.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
             httpget.setHeader(HttpHeaders.CONTENT_TYPE, "text/html");
             httpget.setHeader("Cookie", "JSESSIONID=aaazqNDcHoduPbavRvVUv; AX-CARE-AGENTS-20480=HECDMIAKJABP");
 
-            httpget.setConfig(localConfig);
-
+//            httpget.setConfig(localConfig);
             System.out.println("Executing request " + httpget.getRequestLine());
             CloseableHttpResponse response = httpclient.execute(httpget);
 
@@ -73,7 +69,7 @@ public class DeviceDAO {
                     try {
                         instream.read();
                         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                        s.setResult(rd.readLine());
+                        c.setResult(rd.readLine());
                         // do something useful with the response
                     } catch (IOException ex) {
                         // In case of an IOException the connection will be released
@@ -96,7 +92,7 @@ public class DeviceDAO {
 
         httpclient.close();
 
-        return s;
+        return c;
     }
 
     private void prepare() {

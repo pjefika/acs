@@ -48,8 +48,8 @@ public class DeviceDAOTest {
             EnumCapabilitySimple c = value;
             Integer deviceId = 194859257;
             DeviceDAO instance = new DeviceDAO();
-            RequestCapabilityDiagnosticSimple expResult = null;
-            RequestCapabilityDiagnosticSimple result = instance.request(c, deviceId);
+
+            ComandoArris result = instance.request(new RequestCapabilityDiagnostic(c.name(), deviceId));
             System.out.println(result.getResult());
             // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
