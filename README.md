@@ -1,12 +1,5 @@
 Acs
 ===================
-### Desenvolvedor
-\#| Nome
--------- | ---
-1| Fabio Henrique Clem
-
-
-===================
 
 ### Implementação
 
