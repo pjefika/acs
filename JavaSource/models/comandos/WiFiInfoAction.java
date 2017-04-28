@@ -14,7 +14,7 @@ public class WiFiInfoAction extends AbstractAction {
 
         Gson gson = new Gson();
         WifiConf in = new WifiConf();
-        in.setFrequency("2.4GHz");
+        in.setFrequency("5GHz");
         gson.toJson(in, WifiConf.class);
 
         ComandoArris c = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, in));
