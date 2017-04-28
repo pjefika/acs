@@ -1,7 +1,6 @@
 package entidades.sys;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,77 +8,82 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="acs_logs")
+@Table(name = "acs_logs")
 public class Logs {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@ManyToOne
-	private UsuarioEfika usuarioEfika;
-	
-	private Date dataHora;	
-	
-	/**
-	 * Nome do comando
-	 * Ex: Reboot, Factory Reset, SetWifi...
-	 **/
-	private String comando;	
-	
-	/**
-	 * Designador, Numero de serie, Mac...
-	 **/
-	private String parametro;
-	
-	private String valor;	
 
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne
+    private UsuarioEfika usuarioEfika;
 
-	public UsuarioEfika getUsuarioEfika() {
-		return usuarioEfika;
-	}
+    private Date dataHora;
 
-	public void setUsuarioEfika(UsuarioEfika usuarioEfika) {
-		this.usuarioEfika = usuarioEfika;
-	}
+    /**
+     * Nome do comando Ex: Reboot, Factory Reset, SetWifi...
+     *
+     */
+    private String comando;
 
-	public Date getDataHora() {
-		return dataHora;
-	}
+    /**
+     * Designador, Numero de serie, Mac...
+     *
+     */
+    private String parametro;
 
-	public void setDataHora(Date dataHora) {
-		this.dataHora = dataHora;
-	}
+    private String valor;
 
-	public String getComando() {
-		return comando;
-	}
+    public Logs() {
+        this.dataHora = new Date();
+    }
 
-	public void setComando(String comando) {
-		this.comando = comando;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getValor() {
-		return valor;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
+    public UsuarioEfika getUsuarioEfika() {
+        return usuarioEfika;
+    }
 
-	public String getParametro() {
-		return parametro;
-	}
+    public void setUsuarioEfika(UsuarioEfika usuarioEfika) {
+        this.usuarioEfika = usuarioEfika;
+    }
 
-	public void setParametro(String parametro) {
-		this.parametro = parametro;
-	}
-	
+    public Date getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public String getComando() {
+        return comando;
+    }
+
+    public void setComando(String comando) {
+        this.comando = comando;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
+    public String getParametro() {
+        return parametro;
+    }
+
+    public void setParametro(String parametro) {
+        this.parametro = parametro;
+    }
+
 }

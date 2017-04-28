@@ -5,11 +5,11 @@
  */
 package dal.arris;
 
-import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import util.GsonUtil;
 
 /**
  *
@@ -26,7 +26,7 @@ public class RequestCapabilityExecuteInput extends RequestCapabilityExecute impl
 
     @Override
     public String getRequestUrl() {
-        return super.getRequestUrl() + "&input=" + encodeAlter(new Gson().toJson(this.input, input.getClass()));
+        return super.getRequestUrl() + "&input=" + encodeAlter(GsonUtil.serialize(this.input));
     }
 
     protected String encodeAlter(String param) {

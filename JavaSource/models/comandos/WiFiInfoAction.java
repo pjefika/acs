@@ -11,15 +11,12 @@ import entidades.wifiInfo.WifiInfoHolder;
 public class WiFiInfoAction extends AbstractAction {
 
     public WifiInfoHolder[] getWiFiInfo(Integer deviceId, Autenticacao autenticacao, String frequency) throws Exception {
+        WifiConf in = new WifiConf();
+        in.setFrequency("2.4GHz");
 
         Gson gson = new Gson();
-        WifiConf in = new WifiConf();
-        in.setFrequency("5GHz");
-        gson.toJson(in, WifiConf.class);
 
         ComandoArris c = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, in));
-        gson = new Gson();
-        System.out.println(c.getResult());
 
         return gson.fromJson(c.getResult(), WifiInfoHolder[].class);
     }

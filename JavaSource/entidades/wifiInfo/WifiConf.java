@@ -25,6 +25,7 @@ public class WifiConf {
     private String radioEnable;
 
     public WifiConf() {
+        this.frequency = EnumFrequency.DEFAULT.getValor();
     }
 
     public WifiConf(EnumFrequency f) {
