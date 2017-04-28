@@ -68,7 +68,6 @@ public class DeviceDAO {
                 if (entity != null) {
                     InputStream instream = entity.getContent();
                     try {
-                        instream.read();
                         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                         StringBuffer result = new StringBuffer();
                         String line = "";
