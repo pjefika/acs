@@ -1,90 +1,46 @@
 package controllers.comandos;
 
-import javax.ejb.EJB;
+import dal.arris.RequestCapabilityDiagnostic;
+import dal.arris.capability.EnumCapabilitySimple;
+import entidades.dslConnectionInfo.DslConnectionInfoHolder;
+import entidades.dslConnectionInfo.Values;
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import entidades.dslConnectionInfo.DslConnectionInfoHolder;
-import util.JSFUtil;
-import entidades.dslConnectionInfo.Values;
-import models.comandos.DSLConnectionInfoAction;
-import models.sys.AutenticacaoServico;
+import util.GsonUtil;
 
 @ManagedBean
 @RequestScoped
-public class DSLConnectionInfo {
-	
-	private DslConnectionInfoHolder dslConnectionInfoHolder;
+public class DSLConnectionInfo extends AcsAbstractBean {
 
-	private Values[] valuesDslConnection;
-	
-	private DSLConnectionInfoAction dslConnectionInfoAction;
-	
-	private Integer cont = 0;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
-	
-	public DSLConnectionInfo() {
+    private DslConnectionInfoHolder dslConnectionInfoHolder;
 
-		this.dslConnectionInfoAction = new DSLConnectionInfoAction();
-		
-	}
-	
-	public void DSLConnectionInfoAction(Integer deviceId) {
+    private Values[] valuesDslConnection;
 
-		try {
-			
-			this.dslConnectionInfoHolder = this.dslConnectionInfoAction.getDSLConnectionInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
+    public DSLConnectionInfo() {
+    }
 
-			this.valuesDslConnection = this.dslConnectionInfoHolder.getValues();
+    public void DSLConnectionInfoAction(Integer deviceId) throws IOException {
+        String response = dao.request(new RequestCapabilityDiagnostic(EnumCapabilitySimple.getDSLConnectionInfo.name(), deviceId)).getResult();
+//        System.out.println(response);
+        String leResponse = response.replace("{\"pivotColumn\":\"direction\",\"values\":", "");
+        valuesDslConnection = (Values[]) GsonUtil.convert(leResponse, Values[].class);
+    }
 
-			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
-			
-			this.cont = 0;
+    public DslConnectionInfoHolder getDslConnectionInfoHolder() {
+        return dslConnectionInfoHolder;
+    }
 
-		} catch (Exception e) {
+    public void setDslConnectionInfoHolder(DslConnectionInfoHolder dslConnectionInfoHolder) {
+        this.dslConnectionInfoHolder = dslConnectionInfoHolder;
+    }
 
-			if (this.cont < 11) {
+    public Values[] getValuesDslConnection() {
+        return valuesDslConnection;
+    }
 
-				this.cont++;
-
-				this.DSLConnectionInfoAction(deviceId);
-				
-			} else {
-
-				JSFUtil.addErrorMessage(e.getMessage());
-				
-				this.cont = 0;
-
-			}		
-
-		}
-
-	}
-
-	public DslConnectionInfoHolder getDslConnectionInfoHolder() {
-		return dslConnectionInfoHolder;
-	}
-
-	public void setDslConnectionInfoHolder(DslConnectionInfoHolder dslConnectionInfoHolder) {
-		this.dslConnectionInfoHolder = dslConnectionInfoHolder;
-	}
-
-	public Values[] getValuesDslConnection() {
-		return valuesDslConnection;
-	}
-
-	public void setValuesDslConnection(Values[] valuesDslConnection) {
-		this.valuesDslConnection = valuesDslConnection;
-	}
-
-	public Integer getCont() {
-		return cont;
-	}
-
-	public void setCont(Integer cont) {
-		this.cont = cont;
-	}	
+    public void setValuesDslConnection(Values[] valuesDslConnection) {
+        this.valuesDslConnection = valuesDslConnection;
+    }
 
 }

@@ -1,6 +1,5 @@
 package controllers.comandos;
 
-import dal.arris.DeviceDAO;
 import dal.arris.RequestCapabilityDiagnosticComplex;
 import dal.arris.capability.EnumCapabilityComplex;
 import entidades.wifiInfo.WifiConf;
@@ -17,28 +16,25 @@ public class GetWiFiConfig extends AcsAbstractBean {
 
     private WifiInfoHolder[] infoHolder;
 
-    private DeviceDAO dao;
-
     public GetWiFiConfig() {
         this.wifiConf = new WifiConf();
         wifiConf.setFrequency("2.4GHz");
-        this.dao = new DeviceDAO();
     }
 
     public void consultar() {
         try {
-            String oi = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
-            String leOi = oi.replace("{\"pivotColumn\":null,\"values\":", "");
+            String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
+            String leResponse = response.replace("{\"pivotColumn\":null,\"values\":", "");
 //            String[] ola = leOi.split(",");
 //            for (String string : ola) {
 //                System.out.println(string);
 //                      
 //            }
-            infoHolder = (WifiInfoHolder[]) GsonUtil.convert(leOi.substring(0, leOi.length()-2), WifiInfoHolder[].class);    
+            infoHolder = (WifiInfoHolder[]) GsonUtil.convert(leResponse.substring(0, leResponse.length() - 2), WifiInfoHolder[].class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     public WifiConf getWifiConf() {

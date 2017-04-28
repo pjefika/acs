@@ -6,6 +6,7 @@
 package controllers.comandos;
 
 import controllers.sys.LoginBean;
+import dal.arris.DeviceDAO;
 import entidades.sys.Logs;
 import java.util.Date;
 import javax.ejb.EJB;
@@ -29,6 +30,8 @@ public class AcsAbstractBean {
     protected AutenticacaoServico autenticacaoServico;
     
     protected Integer deviceId;
+    
+    protected DeviceDAO dao = new DeviceDAO();
 
     public void salvarLog(String parametro, String valor) {
 
