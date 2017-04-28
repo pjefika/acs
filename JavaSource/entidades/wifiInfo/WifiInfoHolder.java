@@ -2,6 +2,9 @@ package entidades.wifiInfo;
 
 public class WifiInfoHolder {
 
+    public WifiInfoHolder() {
+    }
+
 	private String errorsSent;
 	
 	private String BroadcastEnabled;

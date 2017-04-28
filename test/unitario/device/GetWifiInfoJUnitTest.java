@@ -5,14 +5,14 @@
  */
 package unitario.device;
 
+import dal.arris.ComandoArris;
+import dal.arris.DeviceDAO;
+import dal.arris.RequestCapabilityDiagnosticComplex;
+import dal.arris.capability.EnumCapabilityComplex;
 import entidades.wifiInfo.WifiInfoHolder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.AuthFactory;
-import models.comandos.WiFiInfoAction;
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,18 +45,10 @@ public class GetWifiInfoJUnitTest {
     }
 
     @Test
-    public void getWifiInfo() {
+    public void getWifiInfo() throws IOException {
+        DeviceDAO instance = new DeviceDAO();
+        ComandoArris result = instance.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.getLanWiFiInfo.name(), 194859257, "\"frequency\"=\"2.4Ghz\""));
+        System.out.println(result.getResult());
 
-        WiFiInfoAction dao = new WiFiInfoAction();
-
-        try {
-            // :112239590:194859257
-            ret = dao.getWiFiInfo(194859257, AuthFactory.getEnd(), "{\"frequency\":\"2.4GHz\"}");
-            assertTrue(ret != null);
-        } catch (Exception ex) {
-            assertTrue(false);
-            Logger.getLogger(GetWifiInfoJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("");
     }
 }

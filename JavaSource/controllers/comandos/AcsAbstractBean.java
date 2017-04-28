@@ -27,6 +27,8 @@ public class AcsAbstractBean {
 
     @EJB
     protected AutenticacaoServico autenticacaoServico;
+    
+    protected Integer deviceId;
 
     public void salvarLog(String parametro, String valor) {
 
@@ -50,4 +52,14 @@ public class AcsAbstractBean {
         }
 
     }
+
+    public Integer getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
+    }
+    
+    
 }

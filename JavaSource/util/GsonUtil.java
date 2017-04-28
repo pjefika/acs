@@ -6,6 +6,8 @@
 package util;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import java.io.StringReader;
 
 /**
  *
@@ -16,7 +18,9 @@ public class GsonUtil {
     private static Gson gson = new Gson();
 
     public static Object convert(String str, Class c) {
-        return gson.fromJson(str, c);
+        JsonReader reader = new JsonReader(new StringReader(str));
+        reader.setLenient(true);
+        return gson.fromJson(reader, c);
     }
 
     public static String serialize(Object ob) {
