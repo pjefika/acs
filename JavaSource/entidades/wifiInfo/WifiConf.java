@@ -1,106 +1,114 @@
 package entidades.wifiInfo;
 
+import model.EnumFrequency;
+
 public class WifiConf {
 
-	private String frequency;
+    private String frequency;
 
-	private String ssid;
+    private String ssid;
 
-	private String ssidPassword;
+    private String ssidPassword;
 
-	private String authentication;
+    private String authentication;
 
-	private String encryption;
+    private String encryption;
 
-	private String standard;
-	
-	private String channel;
-	
-	private String enableStatus;
-	
-	private String broadcastEnabled;
+    private String standard;
 
-	private String radioEnable;
+    private String channel;
 
-	public String getFrequency() {
-		return frequency;
-	}
+    private String enableStatus;
 
-	public void setFrequency(String frequency) {
-		this.frequency = frequency;
-	}
+    private String broadcastEnabled;
 
-	public String getSsid() {
-		return ssid;
-	}
+    private String radioEnable;
 
-	public void setSsid(String ssid) {
-		this.ssid = ssid;
-	}
+    public WifiConf() {
+    }
 
-	public String getSsidPassword() {
-		return ssidPassword;
-	}
+    public WifiConf(EnumFrequency f) {
+        this.frequency = f.getValor();
+    }
 
-	public void setSsidPassword(String ssidPassword) {
-		this.ssidPassword = ssidPassword;
-	}
+    public String getFrequency() {
+        return frequency;
+    }
 
-	public String getAuthentication() {
-		return authentication;
-	}
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
 
-	public void setAuthentication(String authentication) {
-		this.authentication = authentication;
-	}
+    public String getSsid() {
+        return ssid;
+    }
 
-	public String getEncryption() {
-		return encryption;
-	}
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
+    }
 
-	public void setEncryption(String encryption) {
-		this.encryption = encryption;
-	}
+    public String getSsidPassword() {
+        return ssidPassword;
+    }
 
-	public String getStandard() {
-		return standard;
-	}
+    public void setSsidPassword(String ssidPassword) {
+        this.ssidPassword = ssidPassword;
+    }
 
-	public void setStandard(String standard) {
-		this.standard = standard;
-	}
+    public String getAuthentication() {
+        return authentication;
+    }
 
-	public String getChannel() {
-		return channel;
-	}
+    public void setAuthentication(String authentication) {
+        this.authentication = authentication;
+    }
 
-	public void setChannel(String channel) {
-		this.channel = channel;
-	}
+    public String getEncryption() {
+        return encryption;
+    }
 
-	public String getEnableStatus() {
-		return enableStatus;
-	}
+    public void setEncryption(String encryption) {
+        this.encryption = encryption;
+    }
 
-	public void setEnableStatus(String enableStatus) {
-		this.enableStatus = enableStatus;
-	}
+    public String getStandard() {
+        return standard;
+    }
 
-	public String getBroadcastEnabled() {
-		return broadcastEnabled;
-	}
+    public void setStandard(String standard) {
+        this.standard = standard;
+    }
 
-	public void setBroadcastEnabled(String broadcastEnabled) {
-		this.broadcastEnabled = broadcastEnabled;
-	}
+    public String getChannel() {
+        return channel;
+    }
 
-	public String getRadioEnable() {
-		return radioEnable;
-	}
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
-	public void setRadioEnable(String radioEnable) {
-		this.radioEnable = radioEnable;
-	}
-	
+    public String getEnableStatus() {
+        return enableStatus;
+    }
+
+    public void setEnableStatus(String enableStatus) {
+        this.enableStatus = enableStatus;
+    }
+
+    public String getBroadcastEnabled() {
+        return broadcastEnabled;
+    }
+
+    public void setBroadcastEnabled(String broadcastEnabled) {
+        this.broadcastEnabled = broadcastEnabled;
+    }
+
+    public String getRadioEnable() {
+        return radioEnable;
+    }
+
+    public void setRadioEnable(String radioEnable) {
+        this.radioEnable = radioEnable;
+    }
 
 }

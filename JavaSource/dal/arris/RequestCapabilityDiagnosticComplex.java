@@ -5,22 +5,37 @@
  */
 package dal.arris;
 
+import com.google.gson.Gson;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author G0042204
  */
-public abstract class RequestCapabilityDiagnosticComplex extends RequestCapabilityDiagnostic implements ComandoArris {
+public class RequestCapabilityDiagnosticComplex extends RequestCapabilityDiagnostic implements ComandoArris {
 
-    protected String input;
+    protected Object input;
 
-    public RequestCapabilityDiagnosticComplex(String capability, Integer deviceId, String input) {
+    public RequestCapabilityDiagnosticComplex(String capability, Integer deviceId, Object input) {
         super(capability, deviceId);
         this.input = input;
     }
 
     @Override
     public String getRequestUrl() {
-        return super.getRequestUrl() + "&input=" + this.input;
+        return super.getRequestUrl() + "&input=" + encodeAlter(new Gson().toJson(this.input, input.getClass()));
+    }
+
+    protected String encodeAlter(String param) {
+        try {
+            return URLEncoder.encode(param, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RequestCapabilityDiagnostic.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 }

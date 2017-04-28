@@ -11,8 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
@@ -69,12 +70,25 @@ public class DeviceDAO {
                     try {
                         instream.read();
                         BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                        c.setResult(rd.readLine());
-                        // do something useful with the response
+                        StringBuffer result = new StringBuffer();
+                        String line = "";
+                        while ((line = rd.readLine()) != null) {
+                            result.append(line);
+                        }
+
+                        if (result.toString().contains("api.capability.execution_error")) {
+                            Thread.sleep(10000);
+                            return this.request(c);
+                        }
+
+                        c.setResult(result.toString());
+
                     } catch (IOException ex) {
                         // In case of an IOException the connection will be released
                         // back to the connection manager automatically
                         throw ex;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(DeviceDAO.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         // Closing the input stream will trigger connection release
                         instream.close();
@@ -82,16 +96,13 @@ public class DeviceDAO {
                 }
             } finally {
                 response.close();
-                for (Header allHeader : response.getAllHeaders()) {
-                    System.out.println("Nome: " + allHeader.getName() + " Valor: " + allHeader.getValue());
-                }
+//                for (Header allHeader : response.getAllHeaders()) {
+//                    System.out.println("Nome: " + allHeader.getName() + " Valor: " + allHeader.getValue());
+//                }
             }
         } finally {
             httpclient.close();
         }
-
-        httpclient.close();
-
         return c;
     }
 

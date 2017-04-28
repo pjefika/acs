@@ -17,7 +17,7 @@ public class RequestCapabilityExecute extends RequestCapability implements Coman
 
     @Override
     public String getRequestUrl() {
-        return super.getRequestUrl() + "execute?capability=\"" + this.capability + "\"&deviceId=" + this.deviceId;
+        return super.getRequestUrl() + "execute?capability=" + encode(this.capability) + "&deviceId=" + this.deviceId;
     }
 
 }
