@@ -2,84 +2,84 @@ package entidades.sip;
 
 public class SipAccountProvisioning {
 
-	private String directoryNumber;
-	
-	private String authUserName;
-	
-	private String authPassword;
-	
-	private String proxyServer;
-	
-	private String registrarServer;
-	
-	private String userAgentDomain;
-	
-	private String outboundProxy;
-	
-	private String phyReferenceList;
+    private String DirectoryNumber;
 
-	public String getDirectoryNumber() {
-		return directoryNumber;
-	}
+    private String AuthUserName;
 
-	public void setDirectoryNumber(String directoryNumber) {
-		this.directoryNumber = directoryNumber;
-	}
+    private String AuthPassword;
 
-	public String getAuthUserName() {
-		return authUserName;
-	}
+    private String ProxyServer;
 
-	public void setAuthUserName(String authUserName) {
-		this.authUserName = authUserName;
-	}
+    private String RegistrarServer;
 
-	public String getAuthPassword() {
-		return authPassword;
-	}
+    private String UserAgentDomain;
 
-	public void setAuthPassword(String authPassword) {
-		this.authPassword = authPassword;
-	}
+    private String OutboundProxy;
 
-	public String getProxyServer() {
-		return proxyServer;
-	}
+    private Integer PhyReferenceList = 1;
 
-	public void setProxyServer(String proxyServer) {
-		this.proxyServer = proxyServer;
-	}
+    public String getDirectoryNumber() {
+        return DirectoryNumber;
+    }
 
-	public String getRegistrarServer() {
-		return registrarServer;
-	}
+    public void setDirectoryNumber(String directoryNumber) {
+        this.DirectoryNumber = directoryNumber;
+    }
 
-	public void setRegistrarServer(String registrarServer) {
-		this.registrarServer = registrarServer;
-	}
+    public String getAuthUserName() {
+        return AuthUserName;
+    }
 
-	public String getUserAgentDomain() {
-		return userAgentDomain;
-	}
+    public void setAuthUserName(String authUserName) {
+        this.AuthUserName = authUserName;
+    }
 
-	public void setUserAgentDomain(String userAgentDomain) {
-		this.userAgentDomain = userAgentDomain;
-	}
+    public String getAuthPassword() {
+        return AuthPassword;
+    }
 
-	public String getOutboundProxy() {
-		return outboundProxy;
-	}
+    public void setAuthPassword(String authPassword) {
+        this.AuthPassword = authPassword;
+    }
 
-	public void setOutboundProxy(String outboundProxy) {
-		this.outboundProxy = outboundProxy;
-	}
+    public String getProxyServer() {
+        return ProxyServer;
+    }
 
-	public String getPhyReferenceList() {
-		return phyReferenceList;
-	}
+    public void setProxyServer(String proxyServer) {
+        this.ProxyServer = proxyServer;
+    }
 
-	public void setPhyReferenceList(String phyReferenceList) {
-		this.phyReferenceList = phyReferenceList;
-	}
-		
+    public String getRegistrarServer() {
+        return RegistrarServer;
+    }
+
+    public void setRegistrarServer(String registrarServer) {
+        this.RegistrarServer = registrarServer;
+    }
+
+    public String getUserAgentDomain() {
+        return UserAgentDomain;
+    }
+
+    public void setUserAgentDomain(String userAgentDomain) {
+        this.UserAgentDomain = userAgentDomain;
+    }
+
+    public String getOutboundProxy() {
+        return OutboundProxy;
+    }
+
+    public void setOutboundProxy(String outboundProxy) {
+        this.OutboundProxy = outboundProxy;
+    }
+
+    public Integer getPhyReferenceList() {
+        return PhyReferenceList;
+    }
+
+    public void setPhyReferenceList(Integer PhyReferenceList) {
+        this.PhyReferenceList = PhyReferenceList;
+    }
+
 }

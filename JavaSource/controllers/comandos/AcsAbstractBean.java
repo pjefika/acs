@@ -33,7 +33,7 @@ public class AcsAbstractBean {
     
     protected DeviceDAO dao = new DeviceDAO();
 
-    public void salvarLog(String parametro, String valor) {
+    public void salvarLog(String parametro, String valor, String comando) {
 
         try {
 
@@ -42,7 +42,7 @@ public class AcsAbstractBean {
 
             logs.setUsuarioEfika(this.sessao.getUsuario());
             logs.setDataHora(date);
-            logs.setComando("SetWifi");
+            logs.setComando(comando);
             logs.setParametro(parametro);
             logs.setValor(valor);
 
@@ -63,6 +63,12 @@ public class AcsAbstractBean {
     public void setDeviceId(Integer deviceId) {
         this.deviceId = deviceId;
     }
-    
-    
+
+    public LoginBean getSessao() {
+        return sessao;
+    }
+
+    public void setSessao(LoginBean sessao) {
+        this.sessao = sessao;
+    }    
 }
