@@ -1,89 +1,45 @@
 package controllers.comandos;
 
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.capability.EnumCapabilitySimple;
 import entidades.LanEthernetInfo.LanEthernetInfoHolder;
 import entidades.LanEthernetInfo.Values;
-import javax.ejb.EJB;
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import models.comandos.LanEthernetInfoAction;
-import models.sys.AutenticacaoServico;
-import util.JSFUtil;
+import util.GsonUtil;
 
 @ManagedBean
 @RequestScoped
-public class LanEthernetInfo {
+public class LanEthernetInfo extends AcsAbstractBean {
 
-	private LanEthernetInfoHolder lanEthernetInfoHolder;
+    private LanEthernetInfoHolder lanEthernetInfoHolder;
 
-	private Values[] values;
+    private Values[] values;
 
-	private Integer cont = 0;
+    public LanEthernetInfo() {
+    }
 
-	private LanEthernetInfoAction lanEthernetInfoAction;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
+    public void getLanEthernetInfoAction(Integer deviceId) throws IOException {
+        String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getLanEthernetInfo.name(), deviceId)).getResult();
+        System.out.println(result);
+        values = (Values[]) GsonUtil.convert(result, Values[].class);
+    }
 
-	public LanEthernetInfo() {
+    public LanEthernetInfoHolder getLanEthernetInfoHolder() {
+        return lanEthernetInfoHolder;
+    }
 
-		this.lanEthernetInfoAction = new LanEthernetInfoAction();
+    public void setLanEthernetInfoHolder(LanEthernetInfoHolder lanEthernetInfoHolder) {
+        this.lanEthernetInfoHolder = lanEthernetInfoHolder;
+    }
 
-	}
+    public Values[] getValues() {
+        return values;
+    }
 
-	public void getLanEthernetInfoAction(Integer deviceId) {
-
-		try {
-
-			this.lanEthernetInfoHolder = this.lanEthernetInfoAction.getLanEthernetInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-			
-			this.values = this.lanEthernetInfoHolder.getValues();
-			
-			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
-
-			this.cont = 0;
-
-		} catch (Exception e) {
-
-			if (cont < 2) {
-
-				cont++;
-
-				this.getLanEthernetInfoAction(deviceId);
-
-			} else {
-
-				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao buscar Informações de Ethernets");
-				this.cont = 0;
-
-			}
-
-		}
-
-	}
-
-	public LanEthernetInfoHolder getLanEthernetInfoHolder() {
-		return lanEthernetInfoHolder;
-	}
-
-	public void setLanEthernetInfoHolder(LanEthernetInfoHolder lanEthernetInfoHolder) {
-		this.lanEthernetInfoHolder = lanEthernetInfoHolder;
-	}
-
-	public Values[] getValues() {
-		return values;
-	}
-
-	public void setValues(Values[] values) {
-		this.values = values;
-	}
-
-	public Integer getCont() {
-		return cont;
-	}
-
-	public void setCont(Integer cont) {
-		this.cont = cont;
-	}
+    public void setValues(Values[] values) {
+        this.values = values;
+    }
 
 }
