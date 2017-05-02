@@ -75,7 +75,9 @@ public class DeviceDAO {
                             result.append(line);
                         }
 
-                        if (result.toString().contains("api.capability.execution_error")) {
+                        if (result.toString().contains("execution_error")) {
+                            System.out.println(result.toString());
+                            System.out.println("execution_error");
                             Thread.sleep(10000);
                             return this.request(c);
                         }

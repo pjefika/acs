@@ -1,6 +1,6 @@
 package controllers.comandos;
 
-import dal.arris.RequestCapabilityDiagnostic;
+import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.dslConnectionInfo.DslConnectionInfoHolder;
 import entidades.dslConnectionInfo.Values;
@@ -21,10 +21,9 @@ public class DSLConnectionInfo extends AcsAbstractBean {
     }
 
     public void DSLConnectionInfoAction(Integer deviceId) throws IOException {
-        String response = dao.request(new RequestCapabilityDiagnostic(EnumCapabilitySimple.getDSLConnectionInfo.name(), deviceId)).getResult();
-//        System.out.println(response);
-        String leResponse = response.replace("{\"pivotColumn\":\"direction\",\"values\":", "");
-        valuesDslConnection = (Values[]) GsonUtil.convert(leResponse, Values[].class);
+        String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getDSLConnectionInfo.name(), deviceId)).getResult();
+        System.out.println(response);
+        valuesDslConnection = (Values[]) GsonUtil.convert(response, Values[].class);
     }
 
     public DslConnectionInfoHolder getDslConnectionInfoHolder() {

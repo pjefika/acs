@@ -5,7 +5,6 @@
  */
 package controllers.comandos;
 
-import entidades.dslConnectionInfo.Values;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.fail;
@@ -13,15 +12,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import test.InitValues;
-import util.GsonUtil;
 
 /**
  *
- * @author G0041775
+ * @author G0042204
  */
-public class DSLConnectionInfoTest {
+public class GetPPPoECredentialsTest {
 
-    public DSLConnectionInfoTest() {
+    public GetPPPoECredentialsTest() {
     }
 
     @BeforeClass
@@ -41,24 +39,16 @@ public class DSLConnectionInfoTest {
     }
 
     /**
-     * Test of DSLConnectionInfoAction method, of class DSLConnectionInfo.
+     * Test of getPPPoECredentialAction method, of class GetPPPoECredentials.
      */
     @Test
-    public void testDSLConnectionInfoAction() {
-        System.out.println("DSLConnectionInfoAction");
-        try {
-            DSLConnectionInfo instance = new DSLConnectionInfo();
-            instance.DSLConnectionInfoAction(InitValues.deviceId);
-
-            for (Values values : instance.getValuesDslConnection()) {
-                System.out.println(GsonUtil.serialize(values));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("The test case is a prototype.");
-        }
-
+    public void testGetPPPoECredentialAction() {
+        System.out.println("getPPPoECredentialAction");
+        GetPPPoECredentials instance = new GetPPPoECredentials();
+        instance.setDeviceId(InitValues.deviceId);
+        instance.getPPPoECredentialAction();
         // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }
