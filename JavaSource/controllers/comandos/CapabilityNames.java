@@ -63,76 +63,75 @@ public class CapabilityNames extends AcsAbstractBean {
 
             String result = dao.request(new RequestCapabilityListCapabilityNames(deviceId)).getResult();
             String[] leResult = result.replace("[", "").replace("]", "").replace("\"", "").split(",");
+
             for (String string : leResult) {
-                System.out.println(string);
+
+                if (string.equalsIgnoreCase("Reboot")) {
+
+                    this.reboot = true;
+
+                } else if (string.equalsIgnoreCase("FactoryReset")) {
+
+                    this.factoryReset = true;
+
+                } else if (string.equalsIgnoreCase("getLanHostsTable")) {
+
+                    this.lanHost = true;
+
+                } else if (string.equalsIgnoreCase("getLanWiFiInfo")) {
+
+                    this.wifiInfo = true;
+
+                } else if (string.equalsIgnoreCase("sipAccountProvisioning")) {
+
+                    this.fxs = true;
+
+                } else if (string.equalsIgnoreCase("sipDiagnostics")) {
+
+                    this.sipDiagnostic = true;
+
+                } else if (string.equalsIgnoreCase("getInterfaceStats")) {
+
+                    this.interfaceStatistics = true;
+
+                } else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
+
+                    this.infoDslConnection = true;
+
+                } else if (string.equalsIgnoreCase("getGatewayInfo")) {
+
+                    this.gateWayInfo = true;
+
+                } else if (string.equalsIgnoreCase("getPortMappingTable")) {
+
+                    this.portMapping = true;
+
+                } else if (string.equalsIgnoreCase("getLanEthernetInfo")) {
+
+                    this.lanEthernetInfo = true;
+
+                } else if (string.equalsIgnoreCase("Ping")) {
+
+                    this.ping = true;
+
+                } else if (string.equalsIgnoreCase("setWiFiConfig")) {
+
+                    this.setWiFiConfig = true;
+
+                } else if (string.equalsIgnoreCase("setPPPoECredentials")) {
+
+                    this.pppoeCredentials = true;
+
+                } else if (string.equalsIgnoreCase("getPPPoECredentials")) {
+
+                    this.getPPPoECredentials = true;
+
+                } else if (string.equalsIgnoreCase("FirmwareDownload")) {
+
+                    this.setFirmwareDownload((Boolean) true);
+                }
             }
 
-//            for (String string : values) {
-//
-//                if (string.equalsIgnoreCase("Reboot")) {
-//
-//                    this.reboot = true;
-//
-//                } else if (string.equalsIgnoreCase("FactoryReset")) {
-//
-//                    this.factoryReset = true;
-//
-//                } else if (string.equalsIgnoreCase("getLanHostsTable")) {
-//
-//                    this.lanHost = true;
-//
-//                } else if (string.equalsIgnoreCase("getLanWiFiInfo")) {
-//
-//                    this.wifiInfo = true;
-//
-//                } else if (string.equalsIgnoreCase("sipAccountProvisioning")) {
-//
-//                    this.fxs = true;
-//
-//                } else if (string.equalsIgnoreCase("sipDiagnostics")) {
-//
-//                    this.sipDiagnostic = true;
-//
-//                } else if (string.equalsIgnoreCase("getInterfaceStats")) {
-//
-//                    this.interfaceStatistics = true;
-//
-//                } else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
-//
-//                    this.infoDslConnection = true;
-//
-//                } else if (string.equalsIgnoreCase("getGatewayInfo")) {
-//
-//                    this.gateWayInfo = true;
-//
-//                } else if (string.equalsIgnoreCase("getPortMappingTable")) {
-//
-//                    this.portMapping = true;
-//
-//                } else if (string.equalsIgnoreCase("getLanEthernetInfo")) {
-//
-//                    this.lanEthernetInfo = true;
-//
-//                } else if (string.equalsIgnoreCase("Ping")) {
-//
-//                    this.ping = true;
-//
-//                } else if (string.equalsIgnoreCase("setWiFiConfig")) {
-//
-//                    this.setWiFiConfig = true;
-//
-//                } else if (string.equalsIgnoreCase("setPPPoECredentials")) {
-//
-//                    this.pppoeCredentials = true;
-//
-//                } else if (string.equalsIgnoreCase("getPPPoECredentials")) {
-//
-//                    this.getPPPoECredentials = true;
-//
-//                } else if (string.equalsIgnoreCase("FirmwareDownload")) {
-//
-//                    this.setFirmwareDownload((Boolean) true);
-//
         }
 
     }
