@@ -1,92 +1,54 @@
 package controllers.comandos;
 
-import javax.ejb.EJB;
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.capability.EnumCapabilitySimple;
+import entidades.gatewayInfo.GatewayInfoHolder;
+import entidades.gatewayInfo.Values;
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import entidades.gatewayInfo.GatewayInfoHolder;
-import models.comandos.GatewayInfoAction;
-import models.sys.AutenticacaoServico;
-import util.JSFUtil;
-import entidades.gatewayInfo.Values;
+import util.GsonUtil;
 
 @ManagedBean
 @RequestScoped
-public class GatewayInfo {
-	
-	private GatewayInfoHolder gatewayInfoHolder;
+public class GatewayInfo extends AcsAbstractBean {
 
-	private Values[] valuesgatway;
-	
-	private Integer cont = 0;
-	
-	private GatewayInfoAction gatewayInfoAction;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
-	
-	public GatewayInfo() {
+    private GatewayInfoHolder gatewayInfoHolder;
 
-		this.gatewayInfoAction = new GatewayInfoAction();
-		
-	}
-	
-	public void GatewayInfoAction(Integer deviceId) {
+    private Values[] valuesgatway;
 
-		try {
+    private Integer cont = 0;
 
-			this.gatewayInfoHolder = this.gatewayInfoAction.getGatewayInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
+    public GatewayInfo() {
+    }
 
-			this.valuesgatway = this.gatewayInfoHolder.getValues();
+    public void GatewayInfoAction(Integer deviceId) throws IOException {
+        String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getGatewayInfo.name(), deviceId)).getResult();
+        valuesgatway = (Values[]) GsonUtil.convert(result, Values[].class);
+    }
 
-			JSFUtil.addInfoMessage("Busca realizada com sucesso,");
-			
-			this.cont = 0;
+    public GatewayInfoHolder getGatewayInfoHolder() {
+        return gatewayInfoHolder;
+    }
 
-		} catch (Exception e) {
+    public void setGatewayInfoHolder(GatewayInfoHolder gatewayInfoHolder) {
+        this.gatewayInfoHolder = gatewayInfoHolder;
+    }
 
-			if (this.cont < 11) {
-				
-				this.cont++;
-								
-				this.GatewayInfoAction(deviceId);				
+    public Values[] getValuesgatway() {
+        return valuesgatway;
+    }
 
-			} else {
+    public void setValuesgatway(Values[] valuesgatway) {
+        this.valuesgatway = valuesgatway;
+    }
 
-				System.out.println(e.getMessage());
+    public Integer getCont() {
+        return cont;
+    }
 
-				JSFUtil.addErrorMessage(e.getMessage());
-				
-				this.cont = 0;
-
-			}	
-
-		}
-
-	}
-
-	public GatewayInfoHolder getGatewayInfoHolder() {
-		return gatewayInfoHolder;
-	}
-
-	public void setGatewayInfoHolder(GatewayInfoHolder gatewayInfoHolder) {
-		this.gatewayInfoHolder = gatewayInfoHolder;
-	}
-
-	public Values[] getValuesgatway() {
-		return valuesgatway;
-	}
-
-	public void setValuesgatway(Values[] valuesgatway) {
-		this.valuesgatway = valuesgatway;
-	}
-
-	public Integer getCont() {
-		return cont;
-	}
-
-	public void setCont(Integer cont) {
-		this.cont = cont;
-	}
+    public void setCont(Integer cont) {
+        this.cont = cont;
+    }
 
 }
