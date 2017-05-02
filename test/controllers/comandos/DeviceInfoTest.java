@@ -45,7 +45,7 @@ public class DeviceInfoTest {
     public void testGetDeviceInfoAction() {
         System.out.println("getDeviceInfoAction");
         DeviceInfo instance = new DeviceInfo();
-        instance.getDeviceInfoAction(InitValues.deviceId);
+        instance.getDeviceInfoActionValue(InitValues.deviceId);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

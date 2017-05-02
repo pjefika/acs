@@ -1,5 +1,7 @@
 package controllers.comandos;
 
+import dal.arris.RequestCapabilityDiagnosticSimple;
+import dal.arris.capability.EnumCapabilitySimple;
 import entidades.getInfo.InfoHolder;
 import entidades.getInfo.Values;
 import javax.ejb.EJB;
@@ -7,11 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import models.comandos.DeviceInfoAction;
 import models.sys.AutenticacaoServico;
+import util.GsonUtil;
 import util.JSFUtil;
 
 @ManagedBean
 @ViewScoped
-public class DeviceInfo {
+public class DeviceInfo extends AcsAbstractBean {
 
     private InfoHolder infoHolder;
 
@@ -27,11 +30,6 @@ public class DeviceInfo {
 
     private String status = "Inativo";
 
-    private Integer contador = 0;
-
-    @EJB
-    private AutenticacaoServico autenticacaoServico;
-
     public DeviceInfo() {
 
         this.deviceInfoAction = new DeviceInfoAction();
@@ -44,90 +42,48 @@ public class DeviceInfo {
 
     }
 
-    public void getDeviceInfoAction(Integer deviceId) {
+//    public void getDeviceInfoAction(Integer deviceId) {
+//        try {
+//            String response = dao.request(new RequestCapabilityDiagnosticSimple(EnumCapabilitySimple.getDeviceInfo, deviceId)).getResult();
+//            this.infoHolder = (InfoHolder) GsonUtil.convert(response, InfoHolder.class);
+//            this.values = this.infoHolder.getValues();
+//            this.ativo = true;
+//        } catch (Exception e) {
+//            JSFUtil.addErrorMessage("Equipamento inativo.");
+//            this.ativo = false;
+//        }
+//
+//    }
 
+    public void getDeviceInfoActionValue(Integer deviceId) {
         try {
-
-            this.values = null;
-
-            this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-
-            this.values = this.infoHolder.getValues();
-
+            this.values2 = null;
+            String response = dao.request(new RequestCapabilityDiagnosticSimple(EnumCapabilitySimple.getDeviceInfo, deviceId)).getResult();
+            this.infoHolder = (InfoHolder) GsonUtil.convert(response, InfoHolder.class);
+            int cont = 0;
+            for (Values values2 : this.infoHolder.getValues()) {
+                if (cont == 0) {
+                    this.values2 = values2;
+                    cont++;
+                }
+            }
             this.ativo = true;
-
         } catch (Exception e) {
-
-            JSFUtil.addErrorMessage(e.getMessage());
             JSFUtil.addErrorMessage("Equipamento inativo.");
             this.ativo = false;
         }
 
     }
 
-    public void getDeviceInfoActionValue(Integer deviceId) {
-
-        try {
-
-            this.values2 = null;
-
-            this.infoHolder = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-
-            int cont = 0;
-
-            for (Values values2 : this.infoHolder.getValues()) {
-
-                if (cont == 0) {
-
-                    this.values2 = values2;
-
-                    cont++;
-
-                }
-
-            }
-
-            this.ativo = true;
-
-        } catch (Exception e) {
-
-            if (this.contador < 5) {
-
-                this.contador++;
-
-                this.getDeviceInfoActionValue(deviceId);
-
-            } else {
-
-                this.contador = 0;
-
-                JSFUtil.addErrorMessage(e.getMessage());
-                JSFUtil.addErrorMessage("Equipamento inativo.");
-                this.ativo = false;
-
-            }
-
-        }
-
-    }
-
-    public String getDeviceInfoActionStatus(Integer deviceId) {
-
-        try {
-
-            this.status = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva()).getStatus();
-
-            return this.status;
-
-        } catch (Exception e) {
-
-            JSFUtil.addErrorMessage(e.getMessage());
-
-            return this.status;
-
-        }
-
-    }
+//    public String getDeviceInfoActionStatus(Integer deviceId) {
+//        try {
+//            this.status = this.deviceInfoAction.getDeviceInfo(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva()).getStatus();
+//            return this.status;
+//        } catch (Exception e) {
+//            JSFUtil.addErrorMessage(e.getMessage());
+//            return this.status;
+//        }
+//    }
 
     public InfoHolder getInfoHolder() {
         return infoHolder;
