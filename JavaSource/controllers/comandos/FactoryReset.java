@@ -22,18 +22,27 @@ public class FactoryReset extends AcsAbstractBean {
 
     private String retornoRf;
 
-    private FactoryResetAction factoryResetAction;
-
     public FactoryReset() {
-        this.factoryResetAction = new FactoryResetAction();
     }
 
     public void factoryResetAction(Integer deviceId, String parametro) {
-        try {            
-            String response = dao.request(new RequestCoreDevice("Facoty Reset", deviceId)).getResult();
+        try {
+            String response = dao.request(new RequestCoreDevice("factoryReset", deviceId)).getResult();            
             this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
-            //this.salvarLog(parametro, response, "Facoty Reset");
-            JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
+            
+            //Documentação errada nao volta Ok ou Error
+            
+            switch (this.factoryResetHolder.getStatus()) {
+                case "ok":
+                    JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
+                    //this.salvarLog(parametro, response, "Facoty Reset");
+                    break;
+                case "error":
+                    JSFUtil.addInfoMessage("Erro ao realizar Reset de fábrica.");
+                    break;
+                default:
+                    break;
+            }            
         } catch (Exception e) {
             JSFUtil.addErrorMessage(e.getMessage());
             JSFUtil.addErrorMessage("Erro ao realizar Reset de Fabrica, Equipamento inativo.");
