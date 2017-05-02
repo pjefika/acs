@@ -32,7 +32,7 @@ public class AccountProvisioning extends AcsAbstractBean {
             switch (this.sipAccountProvisioningHolder.getStatusCode()) {
                 case 0:
                     this.sipAccountProvisioning = new SipAccountProvisioning();
-                    this.salvarLog(parametro, response, EnumCapabilityComplex.sipAccountProvisioning.name());
+                    //this.salvarLog(parametro, response, EnumCapabilityComplex.sipAccountProvisioning.name());
                     JSFUtil.addInfoMessage("Comando realizado com sucesso.");
                     break;
                 case 100:

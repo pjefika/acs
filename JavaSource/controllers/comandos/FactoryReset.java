@@ -8,102 +8,60 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import controllers.sys.LoginBean;
+import dal.arris.RequestCoreDevice;
 import entidades.factoryReset.FactoryResetHolder;
-import entidades.sys.Logs;
 import models.comandos.FactoryResetAction;
-import models.sys.AutenticacaoServico;
-import models.sys.LogsServico;
+import util.GsonUtil;
 import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
-public class FactoryReset {
-	
-	@ManagedProperty(value="#{loginBean}")
-	private LoginBean sessao;
-	
-	private FactoryResetHolder factoryResetHolder;
-	
-	private String retornoRf;
-	
-	private FactoryResetAction factoryResetAction;
-	
-	@EJB
-	private LogsServico logsServico;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
-	
-	public FactoryReset() {
+public class FactoryReset extends AcsAbstractBean {
 
-		this.factoryResetAction = new FactoryResetAction();
-		
-	}
-	
-	public void factoryResetAction(Integer deviceId, String parametro) {
+    private FactoryResetHolder factoryResetHolder;
 
-		try {
+    private String retornoRf;
 
-			this.retornoRf = this.factoryResetAction.factoryReset(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
+    private FactoryResetAction factoryResetAction;
 
-			this.salvaLogResetFacory(parametro, this.retornoRf);
-			
-			JSFUtil.addInfoMessage(this.retornoRf);			
+    public FactoryReset() {
+        this.factoryResetAction = new FactoryResetAction();
+    }
 
-		} catch (Exception e) {
+    public void factoryResetAction(Integer deviceId, String parametro) {
+        try {            
+            String response = dao.request(new RequestCoreDevice("Facoty Reset", deviceId)).getResult();
+            this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
+            //this.salvarLog(parametro, response, "Facoty Reset");
+            JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
+        } catch (Exception e) {
+            JSFUtil.addErrorMessage(e.getMessage());
+            JSFUtil.addErrorMessage("Erro ao realizar Reset de Fabrica, Equipamento inativo.");
+        }
+    }
 
-			JSFUtil.addErrorMessage(e.getMessage());
-			JSFUtil.addErrorMessage("Erro ao realizar Reset de Fabrica, Equipamento inativo.");
+    public FactoryResetHolder getFactoryResetHolder() {
+        return factoryResetHolder;
+    }
 
-		}
+    public void setFactoryResetHolder(FactoryResetHolder factoryResetHolder) {
+        this.factoryResetHolder = factoryResetHolder;
+    }
 
-	}
-	
-	public void salvaLogResetFacory(String parametro, String valor) {
+    public String getRetornoRf() {
+        return retornoRf;
+    }
 
-		try {
-			
-			Logs logs = new Logs();
-			Date date = new Date();
+    public void setRetornoRf(String retornoRf) {
+        this.retornoRf = retornoRf;
+    }
 
-			logs.setUsuarioEfika(this.sessao.getUsuario());
-			logs.setDataHora(date);
-			logs.setComando("Facoty Reset");
-			logs.setParametro(parametro);
-			logs.setValor(valor);
-			
-			this.logsServico.cadastrarLog(logs);
-			
-		} catch (Exception e) {
+    public LoginBean getSessao() {
+        return sessao;
+    }
 
-			System.out.println(e.getMessage());
-			
-		}
-
-	}
-
-	public FactoryResetHolder getFactoryResetHolder() {
-		return factoryResetHolder;
-	}
-
-	public void setFactoryResetHolder(FactoryResetHolder factoryResetHolder) {
-		this.factoryResetHolder = factoryResetHolder;
-	}
-
-	public String getRetornoRf() {
-		return retornoRf;
-	}
-
-	public void setRetornoRf(String retornoRf) {
-		this.retornoRf = retornoRf;
-	}
-
-	public LoginBean getSessao() {
-		return sessao;
-	}
-
-	public void setSessao(LoginBean sessao) {
-		this.sessao = sessao;
-	}	
+    public void setSessao(LoginBean sessao) {
+        this.sessao = sessao;
+    }
 
 }

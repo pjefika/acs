@@ -4,11 +4,9 @@ import dal.arris.RequestCapabilityDiagnosticSimple;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.getInfo.InfoHolder;
 import entidades.getInfo.Values;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import models.comandos.DeviceInfoAction;
-import models.sys.AutenticacaoServico;
 import util.GsonUtil;
 import util.JSFUtil;
 

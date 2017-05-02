@@ -34,26 +34,18 @@ public class AcsAbstractBean {
     protected DeviceDAO dao = new DeviceDAO();
 
     public void salvarLog(String parametro, String valor, String comando) {
-
         try {
-
             Logs logs = new Logs();
             Date date = new Date();
-
             logs.setUsuarioEfika(this.sessao.getUsuario());
             logs.setDataHora(date);
             logs.setComando(comando);
             logs.setParametro(parametro);
             logs.setValor(valor);
-
             this.logsServico.cadastrarLog(logs);
-
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
-
         }
-
     }
 
     public Integer getDeviceId() {
