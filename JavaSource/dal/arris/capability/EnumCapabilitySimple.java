@@ -16,5 +16,6 @@ public enum EnumCapabilitySimple {
     getGatewayInfo,
     getInterfaceStats,
     getLanEthernetInfo,
-    getPortMappingTable;
+    getPortMappingTable,
+    getPPPoECredentials;
 }

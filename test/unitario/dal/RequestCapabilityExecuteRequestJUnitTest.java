@@ -5,8 +5,9 @@
  */
 package unitario.dal;
 
-import dal.arris.RequestCapabilityExecute;
-import dal.arris.capability.EnumCapabilityExecuteSimple;
+import dal.arris.RequestCapabilityExecuteInput;
+import dal.arris.capability.EnumCapabilityComplex;
+import entidades.ping.PingHolder;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,11 +41,15 @@ public class RequestCapabilityExecuteRequestJUnitTest {
 
     @Test
     public void requestCapabilityExecute() {
-        EnumCapabilityExecuteSimple[] e = EnumCapabilityExecuteSimple.values();
-        for (EnumCapabilityExecuteSimple enu : e) {
-            RequestCapabilityExecute r = new RequestCapabilityExecute(enu.name(), 194859257);
-            System.out.println(r.getRequestUrl());
-        }
+//        EnumCapabilityExecuteSimple[] e = EnumCapabilityExecuteSimple.values();
+//        for (EnumCapabilityExecuteSimple enu : e) {
+//            RequestCapabilityExecute r = new RequestCapabilityExecute(enu.name(), 194859257);
+//            System.out.println(r.getRequestUrl());
+//        }
+        PingHolder h = new PingHolder();
+        h.setHostAddress("www.google.com.br");
+        RequestCapabilityExecuteInput i = new RequestCapabilityExecuteInput(EnumCapabilityComplex.Ping.name(), 666, h);
+        System.out.println(i.getRequestUrl());
 
     }
 }
