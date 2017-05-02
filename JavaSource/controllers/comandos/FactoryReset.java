@@ -1,17 +1,10 @@
 package controllers.comandos;
 
-import java.util.Date;
-
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-
 import controllers.sys.LoginBean;
 import dal.arris.RequestCoreDevice;
 import entidades.factoryReset.FactoryResetHolder;
-import models.comandos.FactoryResetAction;
-import util.GsonUtil;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import util.JSFUtil;
 
 @ManagedBean
@@ -27,22 +20,17 @@ public class FactoryReset extends AcsAbstractBean {
 
     public void factoryResetAction(Integer deviceId, String parametro) {
         try {
-            String response = dao.request(new RequestCoreDevice("factoryReset", deviceId)).getResult();            
-            this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
-            
+            String response = dao.request(new RequestCoreDevice("factoryReset", deviceId)).getResult();
+//            this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
+            System.out.println(response);
             //Documentação errada nao volta Ok ou Error
-            
-            switch (this.factoryResetHolder.getStatus()) {
-                case "ok":
-                    JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
-                    //this.salvarLog(parametro, response, "Facoty Reset");
-                    break;
-                case "error":
-                    JSFUtil.addInfoMessage("Erro ao realizar Reset de fábrica.");
-                    break;
-                default:
-                    break;
-            }            
+
+            if (new Integer(response).compareTo(0) > 0) {
+                JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
+                //this.salvarLog(parametro, response, "Facoty Reset");
+            } else {
+                JSFUtil.addInfoMessage("Erro ao realizar Reset de fábrica.");
+            }
         } catch (Exception e) {
             JSFUtil.addErrorMessage(e.getMessage());
             JSFUtil.addErrorMessage("Erro ao realizar Reset de Fabrica, Equipamento inativo.");
