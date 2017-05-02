@@ -16,11 +16,11 @@ import test.InitValues;
 
 /**
  *
- * @author G0042204
+ * @author G0041775
  */
-public class GetPPPoECredentialsTest {
+public class CapabilityNamesTest {
 
-    public GetPPPoECredentialsTest() {
+    public CapabilityNamesTest() {
     }
 
     @BeforeClass
@@ -40,23 +40,22 @@ public class GetPPPoECredentialsTest {
     }
 
     /**
-     * Test of getPPPoECredentialAction method, of class GetPPPoECredentials.
+     * Test of listCapabilityNamesFor method, of class CapabilityNames.
      */
     @Test
-    public void testGetPPPoECredentialAction() {
-        System.out.println("getPPPoECredentialAction");
+    public void testListCapabilityNamesFor() {
+        System.out.println("listCapabilityNamesFor");
         try {
-            GetPPPoECredentials instance = new GetPPPoECredentials();
-            instance.setDeviceId(InitValues.deviceId);
-            instance.getPPPoECredentialAction();
+            Integer deviceId = InitValues.deviceId;
+            Boolean ativo = true;
+            CapabilityNames instance = new CapabilityNames();
+            instance.listCapabilityNamesFor(deviceId, ativo);
             assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
         }
 
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
 }

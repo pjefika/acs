@@ -11,6 +11,8 @@ package test;
  */
 public class InitValues {
 
-    public static Integer deviceId = 197099633;
+    //197194995 - 345760666C90 - MITRASTAR
+    //197099633 - LU1322503001553 - SAGEMCOM
+    public static Integer deviceId = 197194995;
 
 }

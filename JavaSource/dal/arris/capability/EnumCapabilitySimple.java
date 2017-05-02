@@ -18,5 +18,6 @@ public enum EnumCapabilitySimple {
     getLanEthernetInfo,
     getPortMappingTable,
     getPPPoECredentials,
+    
     DeviceStatus;
 }

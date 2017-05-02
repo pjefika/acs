@@ -3,6 +3,7 @@ package controllers.comandos;
 import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.getPPPoECredentials.GetPPPoECredentialsHolder;
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
@@ -17,13 +18,9 @@ public class GetPPPoECredentials extends AcsAbstractBean {
         getPPPoECredentialsHolder = new GetPPPoECredentialsHolder();
     }
 
-    public void getPPPoECredentialAction() {
-        try {
-            String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getPPPoECredentials.name(), deviceId)).getResult();
-            getPPPoECredentialsHolder = (GetPPPoECredentialsHolder) GsonUtil.convert(response, GetPPPoECredentialsHolder.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void getPPPoECredentialAction() throws IOException {
+        String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getPPPoECredentials.name(), deviceId)).getResult();
+        getPPPoECredentialsHolder = (GetPPPoECredentialsHolder) GsonUtil.convert(response, GetPPPoECredentialsHolder.class);
     }
 
     public GetPPPoECredentialsHolder getGetPPPoECredentialsHolder() {

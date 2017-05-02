@@ -1,18 +1,15 @@
 package controllers.comandos;
 
+import dal.arris.RequestCapabilityListCapabilityNames;
+import java.io.IOException;
 import java.util.List;
-
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import models.comandos.CapabilityNamesAction;
-import models.sys.AutenticacaoServico;
-import util.JSFUtil;
 
 @ManagedBean
 @ViewScoped
-public class CapabilityNames {
+public class CapabilityNames extends AcsAbstractBean {
 
     private List<String> capabilitValues;
 
@@ -50,102 +47,92 @@ public class CapabilityNames {
 
     private CapabilityNamesAction capabilityNamesAction;
 
-    @EJB
-    private AutenticacaoServico autenticacaoServico;
-
+//    @EJB
+//    private AutenticacaoServico autenticacaoServico;
     public CapabilityNames() {
 
         this.capabilityNamesAction = new CapabilityNamesAction();
 
     }
 
-    public void listCapabilityNamesFor(Integer deviceId, Boolean ativo) {
+    public void listCapabilityNamesFor(Integer deviceId, Boolean ativo) throws IOException {
 
-        try {
+        this.everyBodyFalse();
 
-            this.everyBodyFalse();
+        if (ativo) {
 
-            if (ativo) {
-
-                List<String> values = this.capabilityNamesAction.listCapabilityNamesFor(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-
-                for (String string : values) {
-
-                    if (string.equalsIgnoreCase("Reboot")) {
-
-                        this.reboot = true;
-
-                    } else if (string.equalsIgnoreCase("FactoryReset")) {
-
-                        this.factoryReset = true;
-
-                    } else if (string.equalsIgnoreCase("getLanHostsTable")) {
-
-                        this.lanHost = true;
-
-                    } else if (string.equalsIgnoreCase("getLanWiFiInfo")) {
-
-                        this.wifiInfo = true;
-
-                    } else if (string.equalsIgnoreCase("sipAccountProvisioning")) {
-
-                        this.fxs = true;
-
-                    } else if (string.equalsIgnoreCase("sipDiagnostics")) {
-
-                        this.sipDiagnostic = true;
-
-                    } else if (string.equalsIgnoreCase("getInterfaceStats")) {
-
-                        this.interfaceStatistics = true;
-
-                    } else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
-
-                        this.infoDslConnection = true;
-
-                    } else if (string.equalsIgnoreCase("getGatewayInfo")) {
-
-                        this.gateWayInfo = true;
-
-                    } else if (string.equalsIgnoreCase("getPortMappingTable")) {
-
-                        this.portMapping = true;
-
-                    } else if (string.equalsIgnoreCase("getLanEthernetInfo")) {
-
-                        this.lanEthernetInfo = true;
-
-                    } else if (string.equalsIgnoreCase("Ping")) {
-
-                        this.ping = true;
-
-                    } else if (string.equalsIgnoreCase("setWiFiConfig")) {
-
-                        this.setWiFiConfig = true;
-
-                    } else if (string.equalsIgnoreCase("setPPPoECredentials")) {
-
-                        this.pppoeCredentials = true;
-
-                    } else if (string.equalsIgnoreCase("getPPPoECredentials")) {
-
-                        this.getPPPoECredentials = true;
-
-                    } else if (string.equalsIgnoreCase("FirmwareDownload")) {
-
-                        this.setFirmwareDownload((Boolean) true);
-
-                    }
-
-                }
-
+            String result = dao.request(new RequestCapabilityListCapabilityNames(deviceId)).getResult();
+            String[] leResult = result.replace("[", "").replace("]", "").replace("\"", "").split(",");
+            for (String string : leResult) {
+                System.out.println(string);
             }
 
-        } catch (Exception e) {
-
-            JSFUtil.addErrorMessage(e.getMessage());
-            JSFUtil.addErrorMessage("Erro ao buscar Capability Names do Device");
-
+//            for (String string : values) {
+//
+//                if (string.equalsIgnoreCase("Reboot")) {
+//
+//                    this.reboot = true;
+//
+//                } else if (string.equalsIgnoreCase("FactoryReset")) {
+//
+//                    this.factoryReset = true;
+//
+//                } else if (string.equalsIgnoreCase("getLanHostsTable")) {
+//
+//                    this.lanHost = true;
+//
+//                } else if (string.equalsIgnoreCase("getLanWiFiInfo")) {
+//
+//                    this.wifiInfo = true;
+//
+//                } else if (string.equalsIgnoreCase("sipAccountProvisioning")) {
+//
+//                    this.fxs = true;
+//
+//                } else if (string.equalsIgnoreCase("sipDiagnostics")) {
+//
+//                    this.sipDiagnostic = true;
+//
+//                } else if (string.equalsIgnoreCase("getInterfaceStats")) {
+//
+//                    this.interfaceStatistics = true;
+//
+//                } else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
+//
+//                    this.infoDslConnection = true;
+//
+//                } else if (string.equalsIgnoreCase("getGatewayInfo")) {
+//
+//                    this.gateWayInfo = true;
+//
+//                } else if (string.equalsIgnoreCase("getPortMappingTable")) {
+//
+//                    this.portMapping = true;
+//
+//                } else if (string.equalsIgnoreCase("getLanEthernetInfo")) {
+//
+//                    this.lanEthernetInfo = true;
+//
+//                } else if (string.equalsIgnoreCase("Ping")) {
+//
+//                    this.ping = true;
+//
+//                } else if (string.equalsIgnoreCase("setWiFiConfig")) {
+//
+//                    this.setWiFiConfig = true;
+//
+//                } else if (string.equalsIgnoreCase("setPPPoECredentials")) {
+//
+//                    this.pppoeCredentials = true;
+//
+//                } else if (string.equalsIgnoreCase("getPPPoECredentials")) {
+//
+//                    this.getPPPoECredentials = true;
+//
+//                } else if (string.equalsIgnoreCase("FirmwareDownload")) {
+//
+//                    this.setFirmwareDownload((Boolean) true);
+//
         }
 
     }
@@ -154,7 +141,7 @@ public class CapabilityNames {
 
         /**
          * Every body wants a kung fu fighter =) False em todo mundo
-		 *
+         *
          */
         this.reboot = false;
 
