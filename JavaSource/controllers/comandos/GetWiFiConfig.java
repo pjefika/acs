@@ -1,6 +1,6 @@
 package controllers.comandos;
 
-import dal.arris.RequestCapabilityDiagnosticComplex;
+import dal.arris.RequestCapabilityExecuteInput;
 import dal.arris.capability.EnumCapabilityComplex;
 import entidades.wifiInfo.WifiConf;
 import entidades.wifiInfo.WifiInfoHolder;
@@ -23,18 +23,11 @@ public class GetWiFiConfig extends AcsAbstractBean {
 
     public void consultar() {
         try {
-            String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
-            String leResponse = response.replace("{\"pivotColumn\":null,\"values\":", "");
-//            String[] ola = leOi.split(",");
-//            for (String string : ola) {
-//                System.out.println(string);
-//                      
-//            }
-            infoHolder = (WifiInfoHolder[]) GsonUtil.convert(leResponse.substring(0, leResponse.length() - 2), WifiInfoHolder[].class);
+            String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
+            infoHolder = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public WifiConf getWifiConf() {
