@@ -13,6 +13,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import test.InitValues;
 import util.GsonUtil;
 
 /**
@@ -47,8 +48,9 @@ public class GetWiFiConfigTest {
     public void testConsultar() {
         System.out.println("consultar");
         try {
+            Integer deviceId = InitValues.deviceId;
             GetWiFiConfig instance = new GetWiFiConfig();
-            instance.setDeviceId(194859257);
+            instance.setDeviceId(deviceId);
             instance.consultar();
 
             for (WifiInfoHolder infoHolder : instance.getInfoHolder()) {
@@ -61,7 +63,6 @@ public class GetWiFiConfigTest {
         }
 
         // TODO review the generated test code and remove the default call to fail.
-        
     }
 
 }
