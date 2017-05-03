@@ -12,7 +12,7 @@ import util.JSFUtil;
 @RequestScoped
 public class InterfaceStatic extends AcsAbstractBean {
 
-    private Values[] valuesInterfaces;
+    private Values[] values;
 
     public InterfaceStatic() {
     }
@@ -22,7 +22,7 @@ public class InterfaceStatic extends AcsAbstractBean {
         try {
             String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getInterfaceStats.name(), deviceId)).getResult();
             System.out.println(response);
-            valuesInterfaces = (Values[]) GsonUtil.convert(response, Values[].class);
+            values = (Values[]) GsonUtil.convert(response, Values[].class);
 
             JSFUtil.addInfoMessage("Busca realizada com sucesso.");
         } catch (Exception e) {
@@ -31,12 +31,8 @@ public class InterfaceStatic extends AcsAbstractBean {
 
     }
 
-    public Values[] getValuesInterfaces() {
-        return valuesInterfaces;
-    }
-
-    public void setValuesInterfaces(Values[] valuesInterfaces) {
-        this.valuesInterfaces = valuesInterfaces;
+    public Values[] getValues() {
+        return values;
     }
 
 }
