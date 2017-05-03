@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package dal.arris.capability;
 
 /**
  *
  * @author G0042204
  */
-public class InitValues {
-
-    //197194995 - 345760666C90 - MITRASTAR
-    //197099633 - LU1322503001553 - SAGEMCOM (LAB CO)
-    public static Integer deviceId = 197099633;
-
+public enum EnumCapabilityExecuteComplex {
+    FirmwareDownload;
 }

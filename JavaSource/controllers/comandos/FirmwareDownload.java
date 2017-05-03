@@ -5,20 +5,14 @@
  */
 package controllers.comandos;
 
-import controllers.sys.LoginBean;
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.RequestCapabilityExecuteInput;
+import dal.arris.capability.EnumCapabilityExecuteComplex;
+import dal.arris.capability.EnumCapabilityExecuteSimple;
 import entidades.FirmwareDownload.FirmwareDownHolder;
-import entidades.PreferredFirmwareVersion.PreferredFirmwareVersion;
-import entidades.sys.Autenticacao;
-import entidades.sys.Logs;
-import java.util.Date;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import models.comandos.FirmwareDownloadAction;
-import models.comandos.GetPreferredFirmwareVersionAction;
-import models.sys.AutenticacaoServico;
-import models.sys.LogsServico;
+import util.GsonUtil;
 import util.JSFUtil;
 
 /**
@@ -27,107 +21,38 @@ import util.JSFUtil;
  */
 @ManagedBean
 @RequestScoped
-public class FirmwareDownload {
-
-    @ManagedProperty(value = "#{loginBean}")
-    private LoginBean sessao;
+public class FirmwareDownload extends AcsAbstractBean {
 
     private FirmwareDownHolder firmwareDownHolder;
 
-    private FirmwareDownloadAction firmwareDownloadAction;
-
-    private GetPreferredFirmwareVersionAction getPreferredFirmwareVersionAction;
-
-    private Integer count = 0;
-
-    @EJB
-    private LogsServico logsServico;
-
-    @EJB
-    private AutenticacaoServico autenticacaoServico;
-
     public FirmwareDownload() {
 
-        this.firmwareDownloadAction = new FirmwareDownloadAction();
-        
-        this.getPreferredFirmwareVersionAction = new GetPreferredFirmwareVersionAction();
-
     }
 
-    public void firmDown(Integer deviceId, String parametro) {
+    public void firmDown(Integer deviceId) {
 
         try {
-
-            Autenticacao autenticacao = this.autenticacaoServico.listarAutenticacaoAtiva();
-
-            PreferredFirmwareVersion preferredFirmwareVersion = this.getPreferredFirmwareVersionAction.getFirmware(deviceId, autenticacao);
-
-            this.firmwareDownHolder = this.firmwareDownloadAction.firmWareDownload(deviceId, autenticacao, preferredFirmwareVersion.getFilename());
+//
+            String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getPreferredFirmwareVersion.name(), deviceId)).getResult();
+            entidades.PreferredFirmwareVersion.PreferredFirmwareVersion preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
+//
+            String response1 = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityExecuteComplex.FirmwareDownload.name(), deviceId, preferredFirmwareVersion.getFilename())).getResult();
+//            String response1 = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityExecuteComplex.FirmwareDownload.name(), deviceId, "SG790131200114")).getResult();
+            this.firmwareDownHolder = (FirmwareDownHolder) GsonUtil.convert(response1, FirmwareDownHolder.class);
+//
+            System.out.println("dev");
 
             if (this.firmwareDownHolder.getStatus().equalsIgnoreCase("OK")) {
-
                 JSFUtil.addInfoMessage("Comando realizado com sucesso, aguarde...");
-
             } else {
-
                 JSFUtil.addErrorMessage("Erro ao realizar comando.");
-
             }
 
-            this.count = 0;
-
-            this.salvaLogReboot(parametro, this.getPreferredFirmwareVersionAction.getFirmware(deviceId, autenticacao).getFilename());
-
+            // this.salvarLog(parametro, response, response);
         } catch (Exception e) {
-
-            if (this.count < 11) {
-
-                this.count++;
-
-                this.firmDown(deviceId, parametro);
-
-            } else {
-
-                this.count = 0;
-
-                JSFUtil.addErrorMessage(e.getMessage());
-                JSFUtil.addErrorMessage("Erro ao realizar download de Firmware, Equipamento inativo / Firmware nulo.");
-
-            }
-
+            JSFUtil.addErrorMessage(e.getMessage());
         }
 
-    }
-
-    public void salvaLogReboot(String parametro, String valor) {
-
-        try {
-
-            Logs logs = new Logs();
-            Date date = new Date();
-
-            logs.setUsuarioEfika(this.sessao.getUsuario());
-            logs.setDataHora(date);
-            logs.setComando("FirmwareDownload");
-            logs.setParametro(parametro);
-            logs.setValor(valor);
-
-            this.logsServico.cadastrarLog(logs);
-
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
-
-        }
-
-    }
-
-    public LoginBean getSessao() {
-        return sessao;
-    }
-
-    public void setSessao(LoginBean sessao) {
-        this.sessao = sessao;
     }
 
     public FirmwareDownHolder getFirmwareDownHolder() {
