@@ -15,6 +15,9 @@ public class PingIn {
 
     private String hostAddress = "www.google.com";
 
+    public PingIn() {
+    }
+
     public Integer getRepetitions() {
         return repetitions;
     }
