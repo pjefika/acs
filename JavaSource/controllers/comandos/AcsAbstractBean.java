@@ -7,12 +7,16 @@ package controllers.comandos;
 
 import controllers.sys.LoginBean;
 import dal.arris.DeviceDAO;
+import dal.arris.RequestCapabilityDiagnosticSimple;
+import dal.arris.capability.EnumCapabilitySimple;
+import entidades.getInfo.InfoHolder;
 import entidades.sys.Logs;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
 import models.sys.AutenticacaoServico;
 import models.sys.LogsServico;
+import util.GsonUtil;
 
 /**
  *
@@ -28,10 +32,21 @@ public class AcsAbstractBean {
 
     @EJB
     protected AutenticacaoServico autenticacaoServico;
-    
-    protected Integer deviceId;
-    
+
     protected DeviceDAO dao = new DeviceDAO();
+
+    private InfoHolder infoHolder;
+
+    protected Boolean isDeviceOnline(Integer deviceId) {
+        try {
+            String response = dao.request(new RequestCapabilityDiagnosticSimple(EnumCapabilitySimple.getDeviceInfo, deviceId)).getResult();
+            infoHolder = (InfoHolder) GsonUtil.convert(response, InfoHolder.class);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
 
     public void salvarLog(String parametro, String valor, String comando) {
         try {
@@ -48,19 +63,11 @@ public class AcsAbstractBean {
         }
     }
 
-    public Integer getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(Integer deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public LoginBean getSessao() {
         return sessao;
     }
 
     public void setSessao(LoginBean sessao) {
         this.sessao = sessao;
-    }    
+    }
 }

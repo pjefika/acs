@@ -47,8 +47,7 @@ public class GetPPPoECredentialsTest {
         System.out.println("getPPPoECredentialAction");
         try {
             GetPPPoECredentials instance = new GetPPPoECredentials();
-            instance.setDeviceId(InitValues.deviceId);
-            instance.getPPPoECredentialAction();
+            instance.getPPPoECredentialAction(InitValues.deviceId);
             assertTrue(true);
         } catch (Exception e) {
             e.printStackTrace();

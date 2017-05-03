@@ -6,7 +6,6 @@ import entidades.getInfo.InfoHolder;
 import entidades.getInfo.Values;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import models.comandos.DeviceInfoAction;
 import util.GsonUtil;
 import util.JSFUtil;
 
@@ -24,14 +23,9 @@ public class DeviceInfo extends AcsAbstractBean {
 
     private Integer id;
 
-    private DeviceInfoAction deviceInfoAction;
-
     private String status = "Inativo";
 
     public DeviceInfo() {
-
-        this.deviceInfoAction = new DeviceInfoAction();
-
     }
 
     public void colocarDeviceId(Integer deviceId) {

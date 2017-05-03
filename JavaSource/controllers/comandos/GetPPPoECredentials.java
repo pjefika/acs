@@ -18,7 +18,7 @@ public class GetPPPoECredentials extends AcsAbstractBean {
         getPPPoECredentialsHolder = new GetPPPoECredentialsHolder();
     }
 
-    public void getPPPoECredentialAction() throws IOException {
+    public void getPPPoECredentialAction(Integer deviceId) throws IOException {
         String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getPPPoECredentials.name(), deviceId)).getResult();
         getPPPoECredentialsHolder = (GetPPPoECredentialsHolder) GsonUtil.convert(response, GetPPPoECredentialsHolder.class);
     }
