@@ -1,70 +1,34 @@
 package controllers.comandos;
 
-import javax.ejb.EJB;
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.capability.EnumCapabilityExecuteSimple;
+import entidades.lanHost.LanHostHolder;
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import entidades.lanHost.LanHostHolder;
-import models.comandos.LanHostsTableAction;
-import models.sys.AutenticacaoServico;
-import util.JSFUtil;
+import util.GsonUtil;
 
 @ManagedBean
 @RequestScoped
-public class LanHostsTable {
+public class LanHostsTable extends AcsAbstractBean {
 
-	private LanHostHolder[] lanHostHolders;
+    private LanHostHolder[] lanHostHolders;
 
-	private LanHostsTableAction lanHostsTableAction;
+    public LanHostsTable() {
+    }
 
-	private Integer cont = 0;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
+    public void getLanHostsTableAction(Integer deviceId) throws IOException {
+        String result = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getLanHostsTable.name(), deviceId)).getResult();
+        System.out.println(result);
+        lanHostHolders = (LanHostHolder[]) GsonUtil.convert(result, LanHostHolder[].class);
+    }
 
-	public LanHostsTable() {
+    public LanHostHolder[] getLanHostHolders() {
+        return lanHostHolders;
+    }
 
-		this.lanHostsTableAction = new LanHostsTableAction();
-
-	}
-
-	public void getLanHostsTableAction(Integer deviceId) {
-		
-		try {
-						
-			this.lanHostHolders = this.lanHostsTableAction.getLanHostsTable(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-
-			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
-
-			this.cont = 0;
-
-		} catch (Exception e) {
-
-			if (this.cont < 11) {
-
-				this.cont++;
-
-				this.getLanHostsTableAction(deviceId);
-
-			}else {
-
-				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao consultar tabela de Hosts, Equipamento inativo.");
-
-				this.cont = 0;
-
-			}
-
-		}
-
-	}
-
-	public LanHostHolder[] getLanHostHolders() {
-		return lanHostHolders;
-	}
-
-	public void setLanHostHolders(LanHostHolder[] lanHostHolders) {
-		this.lanHostHolders = lanHostHolders;
-	}	
+    public void setLanHostHolders(LanHostHolder[] lanHostHolders) {
+        this.lanHostHolders = lanHostHolders;
+    }
 
 }
