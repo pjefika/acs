@@ -75,10 +75,11 @@ public class DeviceDAO {
                             result.append(line);
                         }
 
-                        if (result.toString().contains("execution_error")) {
+                        if (result.toString().contains("already exists with another node")) {
+                            System.out.println("--------------------------");
+                            System.out.println("another node");
                             System.out.println(result.toString());
-                            System.out.println("execution_error");
-                            Thread.sleep(10000);
+                            Thread.sleep(5000);
                             return this.request(c);
                         }
 

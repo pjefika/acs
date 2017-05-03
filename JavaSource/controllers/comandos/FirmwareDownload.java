@@ -37,9 +37,9 @@ public class FirmwareDownload extends AcsAbstractBean {
             entidades.PreferredFirmwareVersion.PreferredFirmwareVersion preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
 //
             String response1 = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityExecuteComplex.FirmwareDownload.name(), deviceId, preferredFirmwareVersion.getFilename())).getResult();
-//            String response1 = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityExecuteComplex.FirmwareDownload.name(), deviceId, "SG790131200114")).getResult();
+//            String response1 = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityExecuteComplex.FirmwareDownload.name(), deviceId, "SG790131200114C")).getResult();
+            System.out.println(response1);
             this.firmwareDownHolder = (FirmwareDownHolder) GsonUtil.convert(response1, FirmwareDownHolder.class);
-//
             System.out.println("dev");
 
             if (this.firmwareDownHolder.getStatus().equalsIgnoreCase("OK")) {
