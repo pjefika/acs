@@ -1,132 +1,75 @@
 package controllers.comandos;
 
-import javax.ejb.EJB;
+import dal.arris.RequestCapabilityDiagnosticComplex;
+import dal.arris.capability.EnumCapabilityComplex;
+import entidades.sip.SipAccountProvisioning;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import entidades.sip.SipDiagnosticsHolder;
 import entidades.sip.Values;
-import models.comandos.SipDiagnosticsAction;
-import models.sys.AutenticacaoServico;
+import java.util.List;
+import util.GsonUtil;
 import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
-public class SipDiagnostics {
-	
-	private SipDiagnosticsHolder sipDiagnosticsHolder;
-	
-	private Values values;
-	
-	private String phyReferenceList = "1";
-	
-	private Integer contTentativas = 0;
-	
-	private SipDiagnosticsAction sipDiagnosticsAction;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
-	
-	public SipDiagnostics() {
-		
-		this.sipDiagnosticsAction = new SipDiagnosticsAction();
-		
-	}
-	
-	public void clearVariables() {
-		
-		this.values = null;
-		
-		this.sipDiagnosticsHolder = null;
-		
-	}
-	
-	public void sipDiagnostics(Integer deviceId) throws Exception {
+public class SipDiagnostics extends AcsAbstractBean {
 
-		try {
-									
-			this.sipDiagnosticsHolder = this.sipDiagnosticsAction.sipDiagnostics(deviceId, this.phyReferenceList, this.autenticacaoServico.listarAutenticacaoAtiva());
-			
-			int cont = 0;
+    private SipDiagnosticsHolder sipDiagnosticsHolder;
 
-			for (Values value : this.sipDiagnosticsHolder.getValues()) {
+    private SipAccountProvisioning sipAccountProvisioning;
 
-				if (cont == 0) {
-					
-					if (value.getStatus().equalsIgnoreCase("error")) {
-						
-						cont = 0;
-						
-						this.sipDiagnostics(deviceId);
-						
-					} else {
-						
-						this.values = value;
-						
-					}					
+    private Values values;
 
-				}
+    public SipDiagnostics() {
+        this.sipAccountProvisioning = new SipAccountProvisioning();
+    }
 
-				cont++;
+    public void clearVariables() {
+        this.values = null;
+        this.sipDiagnosticsHolder = null;
+    }
 
-			}
-			
-			this.contTentativas = 0;
-			
-			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
+    public void sipDiagnostics(Integer deviceId) throws Exception {
+        try {
+            String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.sipDiagnostics.name(), deviceId, this.sipAccountProvisioning)).getResult();
+            this.sipDiagnosticsHolder = (SipDiagnosticsHolder) GsonUtil.convert(response, SipDiagnosticsHolder.class);
+            int cont = 0;
+            for (Values value : this.sipDiagnosticsHolder.getValues()) {
+                if (cont == 0) {
+                    this.values = value;
+                }
+                cont++;
+            }
+            JSFUtil.addInfoMessage("Busca realizada com sucesso.");
+        } catch (Exception e) {
+            JSFUtil.addErrorMessage("Erro ao realizar Sip Diagnostics");
+        }
+    }
 
-		} catch (Exception e) {
-			
-			if (this.contTentativas < 11) {
-				
-				Thread.sleep(1500);
-				
-				this.contTentativas++;
-				
-				this.sipDiagnostics(deviceId);
-				
-			} else {
-				
-				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao realizar Sip Diagnostics");
-				this.contTentativas = 0;
-				
-			}		
+    public SipDiagnosticsHolder getSipDiagnosticsHolder() {
+        return sipDiagnosticsHolder;
+    }
 
-		}
+    public void setSipDiagnosticsHolder(SipDiagnosticsHolder sipDiagnosticsHolder) {
+        this.sipDiagnosticsHolder = sipDiagnosticsHolder;
+    }
 
-	}
+    public Values getValues() {
+        return values;
+    }
 
-	public SipDiagnosticsHolder getSipDiagnosticsHolder() {
-		return sipDiagnosticsHolder;
-	}
+    public void setValues(Values values) {
+        this.values = values;
+    }
 
-	public void setSipDiagnosticsHolder(SipDiagnosticsHolder sipDiagnosticsHolder) {
-		this.sipDiagnosticsHolder = sipDiagnosticsHolder;
-	}
+    public SipAccountProvisioning getSipAccountProvisioning() {
+        return sipAccountProvisioning;
+    }
 
-	public Values getValues() {
-		return values;
-	}
-
-	public void setValues(Values values) {
-		this.values = values;
-	}
-
-	public String getPhyReferenceList() {
-		return phyReferenceList;
-	}
-
-	public void setPhyReferenceList(String phyReferenceList) {
-		this.phyReferenceList = phyReferenceList;
-	}
-
-	public Integer getContTentativas() {
-		return contTentativas;
-	}
-
-	public void setContTentativas(Integer contTentativas) {
-		this.contTentativas = contTentativas;
-	}	
+    public void setSipAccountProvisioning(SipAccountProvisioning sipAccountProvisioning) {
+        this.sipAccountProvisioning = sipAccountProvisioning;
+    }
 
 }
