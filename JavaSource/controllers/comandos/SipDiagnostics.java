@@ -8,7 +8,6 @@ import javax.faces.bean.RequestScoped;
 
 import entidades.sip.SipDiagnosticsHolder;
 import entidades.sip.Values;
-import java.util.List;
 import util.GsonUtil;
 import util.JSFUtil;
 
