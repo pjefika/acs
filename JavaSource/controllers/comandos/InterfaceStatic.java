@@ -1,90 +1,42 @@
 package controllers.comandos;
 
-import javax.ejb.EJB;
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.capability.EnumCapabilitySimple;
+import entidades.interfaceStatics.Values;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import entidades.interfaceStatics.InterfaceStaticsHolder;
-import models.comandos.InterfaceStaticsAction;
-import models.sys.AutenticacaoServico;
+import util.GsonUtil;
 import util.JSFUtil;
-import entidades.interfaceStatics.Values;
 
 @ManagedBean
 @RequestScoped
-public class InterfaceStatic {
-	
-	private InterfaceStaticsHolder interfaceStaticsHolder;
-	
-	private Values[] valuesInterfaces;
-	
-	private InterfaceStaticsAction interfaceStaticsAction;
-	
-	private Integer cont = 0;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
-	
-	public InterfaceStatic() {
+public class InterfaceStatic extends AcsAbstractBean {
 
-		this.interfaceStaticsAction = new InterfaceStaticsAction();
-		
-	}
-	
-	public void interfaceStatics(Integer deviceId) {
+    private Values[] valuesInterfaces;
 
-		try {
+    public InterfaceStatic() {
+    }
 
-			this.interfaceStaticsHolder = this.interfaceStaticsAction.interfaceStatics(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
+    public void interfaceStatics(Integer deviceId) {
 
-			this.valuesInterfaces = this.interfaceStaticsHolder.getValues();
+        try {
+            String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getInterfaceStats.name(), deviceId)).getResult();
+            System.out.println(response);
+            valuesInterfaces = (Values[]) GsonUtil.convert(response, Values[].class);
 
-			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
+            JSFUtil.addInfoMessage("Busca realizada com sucesso.");
+        } catch (Exception e) {
+            JSFUtil.addErrorMessage(e.getMessage());
+        }
 
-			this.cont = 0;
+    }
 
-		} catch (Exception e) {
+    public Values[] getValuesInterfaces() {
+        return valuesInterfaces;
+    }
 
-			if (this.cont < 11) {
-				
-				this.cont++;
-								
-				this.interfaceStatics(deviceId);				
-
-			} else {
-
-				JSFUtil.addErrorMessage(e.getMessage());
-				
-				this.cont = 0;
-
-			}	
-
-		}
-
-	}
-
-	public InterfaceStaticsHolder getInterfaceStaticsHolder() {
-		return interfaceStaticsHolder;
-	}
-
-	public void setInterfaceStaticsHolder(InterfaceStaticsHolder interfaceStaticsHolder) {
-		this.interfaceStaticsHolder = interfaceStaticsHolder;
-	}
-
-	public Values[] getValuesInterfaces() {
-		return valuesInterfaces;
-	}
-
-	public void setValuesInterfaces(Values[] valuesInterfaces) {
-		this.valuesInterfaces = valuesInterfaces;
-	}
-
-	public Integer getCont() {
-		return cont;
-	}
-
-	public void setCont(Integer cont) {
-		this.cont = cont;
-	}	
+    public void setValuesInterfaces(Values[] valuesInterfaces) {
+        this.valuesInterfaces = valuesInterfaces;
+    }
 
 }

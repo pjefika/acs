@@ -26,11 +26,8 @@ public class JSFUtil {
         if (msg == null) {
             return;
         }
-
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", msg);
-
         FacesContext.getCurrentInstance().addMessage(null, message);
-
     }
 
     public static void addWarnMessage(String msg) {
