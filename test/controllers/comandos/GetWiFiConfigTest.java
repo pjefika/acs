@@ -50,8 +50,7 @@ public class GetWiFiConfigTest {
         try {
             Integer deviceId = InitValues.deviceId;
             GetWiFiConfig instance = new GetWiFiConfig();
-            instance.setDeviceId(deviceId);
-            instance.consultar();
+            instance.buscaInformacoesWifi(deviceId);
 
             for (WifiInfoHolder infoHolder : instance.getInfoHolder()) {
                 System.out.println(GsonUtil.serialize(infoHolder));

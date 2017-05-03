@@ -21,7 +21,7 @@ public class GetWiFiConfig extends AcsAbstractBean {
         wifiConf.setFrequency("2.4GHz");
     }
 
-    public void consultar() {
+    public void buscaInformacoesWifi(Integer deviceId) {
         try {
             String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
             infoHolder = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);
