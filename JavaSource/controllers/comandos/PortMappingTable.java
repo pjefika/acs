@@ -1,91 +1,45 @@
 package controllers.comandos;
 
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.capability.EnumCapabilitySimple;
 import entidades.portMapping.PortMappingTableHolder;
 import entidades.portMapping.Values;
-import models.comandos.PortMappingTableAction;
-import models.sys.AutenticacaoServico;
-import util.JSFUtil;
+import java.io.IOException;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import util.GsonUtil;
 
 @ManagedBean
 @RequestScoped
-public class PortMappingTable {
-	
-	private PortMappingTableHolder portMappingTableHolder;
-	
-	private Values[] values;
-	
-	private Integer cont = 0;
-	
-	private PortMappingTableAction portMappingTableAction;
-	
-	@EJB
-	private AutenticacaoServico autenticacaoServico;
-	
-	public PortMappingTable() {
+public class PortMappingTable extends AcsAbstractBean {
 
-		this.portMappingTableAction = new PortMappingTableAction();
-		
-	}
-	
-	public void getPortMappingTableAction(Integer deviceId) {
-		
-		try {
-			
-			this.portMappingTableHolder = this.portMappingTableAction.getPortMappingTable(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-			
-			this.values = this.portMappingTableHolder.getValues();
-			
-			JSFUtil.addInfoMessage("Busca realizada com sucesso.");
-			
-			this.cont = 0;			
-			
-		} catch (Exception e) {
-			
-			if (cont < 11) {
-				
-				cont++;
-				
-				this.getPortMappingTableAction(deviceId);
-				
-			} else {
-				
-				JSFUtil.addErrorMessage(e.getMessage());
-				JSFUtil.addErrorMessage("Erro ao buscar Port Mapping");
-				
-				this.cont = 0;
-				
-			}		
-			
-		}
-		
-	}
+    private PortMappingTableHolder portMappingTableHolder;
 
-	public PortMappingTableHolder getPortMappingTableHolder() {
-		return portMappingTableHolder;
-	}
+    private Values[] values;
 
-	public void setPortMappingTableHolder(PortMappingTableHolder portMappingTableHolder) {
-		this.portMappingTableHolder = portMappingTableHolder;
-	}
+    public PortMappingTable() {
+    }
 
-	public Values[] getValues() {
-		return values;
-	}
+    public void getPortMappingTableAction(Integer deviceId) throws IOException {
+        String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getPortMappingTable.name(), deviceId)).getResult();
+        System.out.println(result);
+        values = (Values[]) GsonUtil.convert(result, Values[].class);
+    }
 
-	public void setValues(Values[] values) {
-		this.values = values;
-	}
+    public PortMappingTableHolder getPortMappingTableHolder() {
+        return portMappingTableHolder;
+    }
 
-	public Integer getCont() {
-		return cont;
-	}
+    public void setPortMappingTableHolder(PortMappingTableHolder portMappingTableHolder) {
+        this.portMappingTableHolder = portMappingTableHolder;
+    }
 
-	public void setCont(Integer cont) {
-		this.cont = cont;
-	}	
+    public Values[] getValues() {
+        return values;
+    }
+
+    public void setValues(Values[] values) {
+        this.values = values;
+    }
 
 }
