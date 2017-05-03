@@ -5,12 +5,12 @@
  */
 package controllers.comandos;
 
-import javax.ejb.EJB;
+import dal.arris.RequestCapabilityExecute;
+import dal.arris.capability.EnumCapabilityExecuteSimple;
+import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import models.comandos.GetPreferredFirmwareVersionAction;
-import models.sys.AutenticacaoServico;
-import util.JSFUtil;
+import util.GsonUtil;
 
 /**
  *
@@ -18,52 +18,19 @@ import util.JSFUtil;
  */
 @ManagedBean
 @RequestScoped
-public class PreferredFirmwareVersion {
-    
+public class PreferredFirmwareVersion extends AcsAbstractBean {
+
     private entidades.PreferredFirmwareVersion.PreferredFirmwareVersion preferredFirmwareVersion;
-    
-    private GetPreferredFirmwareVersionAction getPreferredFirmwareVersionAction;
-    
-    private Integer count = 0;
 
-    @EJB
-    private AutenticacaoServico autenticacaoServico;
-    
     public PreferredFirmwareVersion() {
-        
-        this.preferredFirmwareVersion = new entidades.PreferredFirmwareVersion.PreferredFirmwareVersion();
-        
-        this.getPreferredFirmwareVersionAction = new GetPreferredFirmwareVersionAction();       
-        
     }
-    
-    public void buscaFirmware(Integer deviceId) {
-        
-        try {
-            
-            this.preferredFirmwareVersion = this.getPreferredFirmwareVersionAction.getFirmware(deviceId, this.autenticacaoServico.listarAutenticacaoAtiva());
-                        
-            this.count = 0;
-            
-        } catch (Exception e) {
-            
-            if (this.count < 11) {
-                
-                this.count++;
-                
-                this.buscaFirmware(deviceId);
-                
-            } else {
-                
-                this.count = 0;
 
-                JSFUtil.addErrorMessage(e.getMessage());
-                JSFUtil.addErrorMessage("Erro ao buscar Firmware Preferencial, Equipamento inativo.");
-                
-            }
-            
-        }
-        
+    public void buscaFirmware(Integer deviceId) throws IOException {
+
+        String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getPreferredFirmwareVersion.name(), deviceId)).getResult();
+        entidades.PreferredFirmwareVersion.PreferredFirmwareVersion preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
+        System.out.println(response);
+
     }
 
     public entidades.PreferredFirmwareVersion.PreferredFirmwareVersion getPreferredFirmwareVersion() {
@@ -72,7 +39,6 @@ public class PreferredFirmwareVersion {
 
     public void setPreferredFirmwareVersion(entidades.PreferredFirmwareVersion.PreferredFirmwareVersion preferredFirmwareVersion) {
         this.preferredFirmwareVersion = preferredFirmwareVersion;
-    } 
-    
-    
+    }
+
 }
