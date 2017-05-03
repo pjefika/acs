@@ -47,7 +47,7 @@ public class RequestCapabilityExecuteRequestJUnitTest {
 //            System.out.println(r.getRequestUrl());
 //        }
         PingHolder h = new PingHolder();
-        h.setHostAddress("www.google.com.br");
+        //h.setHostAddress("www.google.com.br");
         RequestCapabilityExecuteInput i = new RequestCapabilityExecuteInput(EnumCapabilityComplex.Ping.name(), 666, h);
         System.out.println(i.getRequestUrl());
 

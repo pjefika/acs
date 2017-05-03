@@ -1,55 +1,55 @@
 package entidades.ping;
 
 public class PingHolder {
-	
-	private String pingStatus;
-	
-	private Integer responseTime;
-	
-	private Integer successCount;
-	
-	private Integer repetitions;
-	
-	private String hostAddress;
 
-	public String getPingStatus() {
-		return pingStatus;
-	}
+    private String pingStatus;
 
-	public void setPingStatus(String pingStatus) {
-		this.pingStatus = pingStatus;
-	}
+    private Integer responseTime;
 
-	public Integer getResponseTime() {
-		return responseTime;
-	}
+    private Integer successCount;
 
-	public void setResponseTime(Integer responseTime) {
-		this.responseTime = responseTime;
-	}
+    private Integer repetitions = 4;
 
-	public Integer getSuccessCount() {
-		return successCount;
-	}
+    private String hostAddress = "www.google.com";
 
-	public void setSuccessCount(Integer successCount) {
-		this.successCount = successCount;
-	}
+    public String getPingStatus() {
+        return pingStatus;
+    }
 
-	public Integer getRepetitions() {
-		return repetitions;
-	}
+    public void setPingStatus(String pingStatus) {
+        this.pingStatus = pingStatus;
+    }
 
-	public void setRepetitions(Integer repetitions) {
-		this.repetitions = repetitions;
-	}
+    public Integer getResponseTime() {
+        return responseTime;
+    }
 
-	public String getHostAddress() {
-		return hostAddress;
-	}
+    public void setResponseTime(Integer responseTime) {
+        this.responseTime = responseTime;
+    }
 
-	public void setHostAddress(String hostAddress) {
-		this.hostAddress = hostAddress;
-	}	
+    public Integer getSuccessCount() {
+        return successCount;
+    }
+
+    public void setSuccessCount(Integer successCount) {
+        this.successCount = successCount;
+    }
+
+    public Integer getRepetitions() {
+        return repetitions;
+    }
+
+    public void setRepetitions(Integer repetitions) {
+        this.repetitions = repetitions;
+    }
+
+    public String getHostAddress() {
+        return hostAddress;
+    }
+
+    public void setHostAddress(String hostAddress) {
+        this.hostAddress = hostAddress;
+    }
 
 }

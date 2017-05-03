@@ -789,10 +789,10 @@
                         <h:panelGrid columns="1">
 
                             <h:outputText value="Endereço" />
-                            <p:inputText value="#{getPing.hostAdress}" />
+                            <p:inputText value="#{getPing.pingIn.hostAddress}" />
 
                             <h:outputText value="Numero de repetição" />
-                            <p:inputText value="#{getPing.numberRepetitions}" />
+                            <p:inputText value="#{getPing.pingIn.repetitions}" />
 
                             <p:commandButton value="Consultar"
                                              action="#{getPing.PingAction(deviceInfo.id)}"
@@ -805,23 +805,23 @@
                         <p:panelGrid columns="2" id="pingActions" style="width: 100%;">
 
                             <h:outputText value="Status" />
-                            <h:outputText value="#{getPing.pingHolder.pingStatus}"
+                            <h:outputText value="#{getPing.pingHolderShow.pingStatus}"
                                           styleClass="fontBlack" />
 
                             <h:outputText value="Response Time" />
-                            <h:outputText value="#{getPing.pingHolder.responseTime}"
+                            <h:outputText value="#{getPing.pingHolderShow.responseTime}"
                                           styleClass="fontBlack" />
 
                             <h:outputText value="Success Count" />
-                            <h:outputText value="#{getPing.pingHolder.successCount}"
+                            <h:outputText value="#{getPing.pingHolderShow.successCount}"
                                           styleClass="fontBlack" />
 
                             <h:outputText value="Repetitions" />
-                            <h:outputText value="#{getPing.pingHolder.repetitions}"
+                            <h:outputText value="#{getPing.pingHolderShow.repetitions}"
                                           styleClass="fontBlack" />
 
                             <h:outputText value="Host Adress" />
-                            <h:outputText value="#{getPing.pingHolder.hostAddress}"
+                            <h:outputText value="#{getPing.pingHolderShow.hostAddress}"
                                           styleClass="fontBlack" />
 
                         </p:panelGrid>
