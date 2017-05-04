@@ -876,6 +876,9 @@
                                     <f:selectItem itemLabel="WPA2-Personal(TKIP)" itemValue="TKIP" />
                                     <f:selectItem itemLabel="WPA-WPA2-Personal(AES)" itemValue="AES" />
                                 </p:selectOneMenu>
+                                <p:commandButton value="Modificar"
+                                                 action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 1)}"
+                                                 update="formTemplate:msgs" oncomplete="PF('wifiConfig').hide();" />
                             </h:panelGrid>
                         </p:tab>
                         <p:tab title="Rede 5GHz">
@@ -940,6 +943,9 @@
                                     <f:selectItem itemLabel="WPA2-Personal" itemValue="WPA2-Personal" />
                                     <f:selectItem itemLabel="WPA-WPA2-Personal" itemValue="WPA-WPA2-Personal" />
                                 </p:selectOneMenu>
+                                <p:commandButton value="Modificar"
+                                                 action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 2)}"
+                                                 update="formTemplate:msgs" oncomplete="PF('wifiConfig').hide();" />
                             </h:panelGrid>
                         </p:tab>
                     </p:tabView>

@@ -68,9 +68,15 @@ public class WifiConfig extends AcsAbstractBean {
         }
     }
 
-    public void setWiFiConfig(Integer deviceId) {
-        try {
-            String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, this.wifiConf)).getResult();
+    public void setWiFiConfig(Integer deviceId, Integer action) {
+        try {            
+            WifiInfoHolder hold;            
+            if (action == 1) {
+                hold = this.wifiInfoHolderRedeOne;
+            } else {
+                hold = this.wifiInfoHolderRedeTwo;
+            }
+            String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, hold)).getResult();
             this.setWiFiConfigHolder = (SetWiFiConfigHolder) GsonUtil.convert(response, SetWiFiConfigHolder.class);
             if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
                 JSFUtil.addInfoMessage("Comando executado com sucesso.");
