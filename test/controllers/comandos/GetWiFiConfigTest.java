@@ -48,8 +48,8 @@ public class GetWiFiConfigTest {
     public void testConsultar() {
         System.out.println("consultar");
         try {
-            Integer deviceId = InitValues.deviceId;
-            GetWiFiConfig instance = new GetWiFiConfig();
+            Integer deviceId = InitValues.deviceId;            
+            WifiConfig instance = new WifiConfig();
             instance.buscaInformacoesWifi(deviceId);
 
             for (WifiInfoHolder infoHolder : instance.getInfoHolder()) {
