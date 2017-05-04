@@ -5,6 +5,8 @@ public class WifiInfoHolder {
     public WifiInfoHolder() {
     }
 
+    private String frequency;
+
     private String errorsSent;
 
     private Boolean BroadcastEnabled;
@@ -17,7 +19,7 @@ public class WifiInfoHolder {
 
     private String Encryption;
 
-    private String SSID;
+    private String ssid;
 
     private String TransmitPower;
 
@@ -44,6 +46,14 @@ public class WifiInfoHolder {
     private String errorsReceived;
 
     private String ssidPassword;
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
 
     public String getErrorsSent() {
         return errorsSent;
@@ -93,12 +103,12 @@ public class WifiInfoHolder {
         Encryption = encryption;
     }
 
-    public String getSSID() {
-        return SSID;
+    public String getSsid() {
+        return ssid;
     }
 
-    public void setSSID(String sSID) {
-        SSID = sSID;
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
     }
 
     public String getTransmitPower() {

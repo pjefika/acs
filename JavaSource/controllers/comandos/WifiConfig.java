@@ -56,11 +56,12 @@ public class WifiConfig extends AcsAbstractBean {
             this.wifiInfoHolderRedeOne = new WifiInfoHolder();
             this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
             String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
-            WifiInfoHolder[] holders = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);            
-            int holdlenght = holders.length;            
+            WifiInfoHolder[] holders = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);
+            int holdlenght = holders.length;
             if (holdlenght == 1) {
                 this.wifiInfoHolderRedeOne = holders[0];
-            } else if (holdlenght == 2) {
+            } else if (holdlenght > 1) {
+                this.wifiInfoHolderRedeOne = holders[0];
                 this.wifiInfoHolderRedeTwo = holders[1];
             }
         } catch (Exception e) {
@@ -69,12 +70,14 @@ public class WifiConfig extends AcsAbstractBean {
     }
 
     public void setWiFiConfig(Integer deviceId, Integer action) {
-        try {            
-            WifiInfoHolder hold;            
+        try {
+            WifiInfoHolder hold;
             if (action == 1) {
                 hold = this.wifiInfoHolderRedeOne;
+                this.wifiInfoHolderRedeOne.setFrequency("2.4GHz");
             } else {
                 hold = this.wifiInfoHolderRedeTwo;
+                this.wifiInfoHolderRedeOne.setFrequency("5GHz");
             }
             String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, hold)).getResult();
             this.setWiFiConfigHolder = (SetWiFiConfigHolder) GsonUtil.convert(response, SetWiFiConfigHolder.class);
@@ -82,7 +85,7 @@ public class WifiConfig extends AcsAbstractBean {
                 JSFUtil.addInfoMessage("Comando executado com sucesso.");
                 //Salvar log
                 this.wifiConf = new WifiConf();
-            } else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("error")) {
+            } else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("nok")) {
                 JSFUtil.addInfoMessage("Erro ao executar commando.");
             }
         } catch (Exception e) {

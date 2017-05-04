@@ -19,7 +19,7 @@ public class GsonUtil {
     private static Gson gson = new Gson();
 
     public static Object convert(String str, Class c) {
-        JsonReader reader = new JsonReader(new StringReader(parseFakeBoolean(str)));
+        JsonReader reader = new JsonReader(new StringReader(parsessid(str)));
         reader.setLenient(true);
         return gson.fromJson(reader, c);
     }
@@ -28,11 +28,17 @@ public class GsonUtil {
         return gson.toJson(ob, ob.getClass());
     }
 
-    public static String parseFakeBoolean(String content) {
-        Pattern pYes = Pattern.compile("(\"On\"|\"Yes\"|\"true\")", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-        String yes = pYes.matcher(content).replaceAll("true");
-        Pattern pNo = Pattern.compile("(\"Off\"|\"No\"|\"false\")", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-        return pNo.matcher(yes).replaceAll("false");
+//    public static String parseFakeBoolean(String content) {
+//        Pattern pYes = Pattern.compile("(\"On\"|\"Yes\"|\"true\")", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+//        String yes = pYes.matcher(content).replaceAll("true");
+//        Pattern pNo = Pattern.compile("(\"Off\"|\"No\"|\"false\")", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+//        return pNo.matcher(yes).replaceAll("false");
+//    }
+    
+    public static String parsessid(String content) {
+            Pattern pYes = Pattern.compile("(\"SSID\")", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+            return pYes.matcher(content).replaceAll("ssid");
+            
     }
 
 }
