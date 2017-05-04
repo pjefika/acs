@@ -11,7 +11,6 @@ import dal.arris.RequestCapabilityDiagnosticSimple;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.getInfo.InfoHolder;
 import entidades.sys.Logs;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedProperty;
 import models.sys.AutenticacaoServico;
@@ -48,15 +47,13 @@ public class AcsAbstractBean {
 
     }
 
-    public void salvarLog(String parametro, String valor, String comando) {
+    public void salvarLog(String parametro, Object valor, String comando) {
         try {
             Logs logs = new Logs();
-            Date date = new Date();
             logs.setUsuarioEfika(this.sessao.getUsuario());
-            logs.setDataHora(date);
             logs.setComando(comando);
             logs.setParametro(parametro);
-            logs.setValor(valor);
+            logs.setValor(GsonUtil.serialize(valor));
             this.logsServico.cadastrarLog(logs);
         } catch (Exception e) {
             System.out.println(e.getMessage());

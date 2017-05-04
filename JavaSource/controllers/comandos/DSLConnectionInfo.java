@@ -24,9 +24,9 @@ public class DSLConnectionInfo extends AcsAbstractBean {
         if (isDeviceOnline(deviceId)) {
             try {
                 String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getDSLConnectionInfo.name(), deviceId)).getResult();
-                System.out.println(response);
                 valuesDslConnection = (Values[]) GsonUtil.convert(response, Values[].class);
-                this.salvarLog(deviceId.toString(), response, EnumCapabilitySimple.getDSLConnectionInfo.name());
+                System.out.println(response.length());
+                this.salvarLog(deviceId.toString(), valuesDslConnection, EnumCapabilitySimple.getDSLConnectionInfo.name());
                 JSFUtil.addInfoMessage("Parâmetros obtidos com sucesso.");
             } catch (Exception e) {
                 JSFUtil.addErrorMessage("Falha ao obter parâmetros.");

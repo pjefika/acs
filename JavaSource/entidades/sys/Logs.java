@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -27,11 +28,12 @@ public class Logs {
     private String comando;
 
     /**
-     * Designador, Numero de serie, Mac...
+     * Device Id.
      *
      */
     private String parametro;
 
+    @Lob
     private String valor;
 
     public Logs() {
