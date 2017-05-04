@@ -27,19 +27,42 @@ public class WifiConfig extends AcsAbstractBean {
     private SetWiFiConfigHolder setWiFiConfigHolder;
     private WifiInfoHolder[] infoHolder;
 
+    private WifiInfoHolder wifiInfoHolderRedeOne;
+    private WifiInfoHolder wifiInfoHolderRedeTwo;
+
     public WifiConfig() {
         this.wifiConf = new WifiConf();
-        this.wifiConf.setFrequency("2.4GHz");
+        this.wifiInfoHolderRedeOne = new WifiInfoHolder();
+        this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
     }
 
     public void clearVariables() {
         this.wifiConf = new WifiConf();
+        this.wifiInfoHolderRedeOne = new WifiInfoHolder();
+        this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
     }
 
     public void buscaInformacoesWifi(Integer deviceId) {
         try {
             String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
             infoHolder = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void buscaInformacoesWifiConf(Integer deviceId) {
+        try {
+            this.wifiInfoHolderRedeOne = new WifiInfoHolder();
+            this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
+            String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
+            WifiInfoHolder[] holders = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);            
+            int holdlenght = holders.length;            
+            if (holdlenght == 1) {
+                this.wifiInfoHolderRedeOne = holders[0];
+            } else if (holdlenght == 2) {
+                this.wifiInfoHolderRedeTwo = holders[1];
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,6 +106,22 @@ public class WifiConfig extends AcsAbstractBean {
 
     public void setInfoHolder(WifiInfoHolder[] infoHolder) {
         this.infoHolder = infoHolder;
+    }
+
+    public WifiInfoHolder getWifiInfoHolderRedeOne() {
+        return wifiInfoHolderRedeOne;
+    }
+
+    public void setWifiInfoHolderRedeOne(WifiInfoHolder wifiInfoHolderRedeOne) {
+        this.wifiInfoHolderRedeOne = wifiInfoHolderRedeOne;
+    }
+
+    public WifiInfoHolder getWifiInfoHolderRedeTwo() {
+        return wifiInfoHolderRedeTwo;
+    }
+
+    public void setWifiInfoHolderRedeTwo(WifiInfoHolder wifiInfoHolderRedeTwo) {
+        this.wifiInfoHolderRedeTwo = wifiInfoHolderRedeTwo;
     }
 
 }
