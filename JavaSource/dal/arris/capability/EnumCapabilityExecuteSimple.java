@@ -13,5 +13,6 @@ public enum EnumCapabilityExecuteSimple {
 
     getLanHostsTable,
     getPreferredFirmwareVersion,
+    changeURLtoMotive,
     Reboot;
 }

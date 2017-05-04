@@ -62,6 +62,7 @@ public class CapabilityNames extends AcsAbstractBean {
         if (ativo) {
 
             String result = dao.request(new RequestCapabilityListCapabilityNames(deviceId)).getResult();
+            System.out.println(result);
             String[] leResult = result.replace("[", "").replace("]", "").replace("\"", "").split(",");
 
             for (String string : leResult) {
