@@ -46,7 +46,7 @@ public class ChangeURLtoMotiveTest {
         Integer deviceId = null;
         String parametro = "";
         ChangeURLtoMotive instance = new ChangeURLtoMotive();
-        instance.action(deviceId, parametro);
+        instance.action(deviceId);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

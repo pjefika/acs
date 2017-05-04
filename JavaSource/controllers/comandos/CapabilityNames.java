@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import models.comandos.CapabilityNamesAction;
 
 @ManagedBean
 @ViewScoped
@@ -45,13 +44,11 @@ public class CapabilityNames extends AcsAbstractBean {
 
     private Boolean firmwareDownload = false;
 
-    private CapabilityNamesAction capabilityNamesAction;
+    private Boolean changeURLtoMotive = false;
 
 //    @EJB
 //    private AutenticacaoServico autenticacaoServico;
     public CapabilityNames() {
-
-        this.capabilityNamesAction = new CapabilityNamesAction();
 
     }
 
@@ -60,121 +57,72 @@ public class CapabilityNames extends AcsAbstractBean {
         this.everyBodyFalse();
 
         if (ativo) {
-
             String result = dao.request(new RequestCapabilityListCapabilityNames(deviceId)).getResult();
             System.out.println(result);
             String[] leResult = result.replace("[", "").replace("]", "").replace("\"", "").split(",");
-
             for (String string : leResult) {
-
                 if (string.equalsIgnoreCase("Reboot")) {
-
                     this.reboot = true;
-
                 } else if (string.equalsIgnoreCase("FactoryReset")) {
-
                     this.factoryReset = true;
-
                 } else if (string.equalsIgnoreCase("getLanHostsTable")) {
-
                     this.lanHost = true;
-
                 } else if (string.equalsIgnoreCase("getLanWiFiInfo")) {
-
                     this.wifiInfo = true;
-
                 } else if (string.equalsIgnoreCase("sipAccountProvisioning")) {
-
                     this.fxs = true;
-
                 } else if (string.equalsIgnoreCase("sipDiagnostics")) {
-
                     this.sipDiagnostic = true;
-
                 } else if (string.equalsIgnoreCase("getInterfaceStats")) {
-
                     this.interfaceStatistics = true;
-
                 } else if (string.equalsIgnoreCase("getDSLConnectionInfo")) {
-
                     this.infoDslConnection = true;
-
                 } else if (string.equalsIgnoreCase("getGatewayInfo")) {
-
                     this.gateWayInfo = true;
-
                 } else if (string.equalsIgnoreCase("getPortMappingTable")) {
-
                     this.portMapping = true;
-
                 } else if (string.equalsIgnoreCase("getLanEthernetInfo")) {
-
                     this.lanEthernetInfo = true;
-
                 } else if (string.equalsIgnoreCase("Ping")) {
-
                     this.ping = true;
-
                 } else if (string.equalsIgnoreCase("setWiFiConfig")) {
-
                     this.setWiFiConfig = true;
-
                 } else if (string.equalsIgnoreCase("setPPPoECredentials")) {
-
                     this.pppoeCredentials = true;
-
                 } else if (string.equalsIgnoreCase("getPPPoECredentials")) {
-
                     this.getPPPoECredentials = true;
-
                 } else if (string.equalsIgnoreCase("FirmwareDownload")) {
-
                     this.setFirmwareDownload((Boolean) true);
+                } else if (string.equalsIgnoreCase("changeURLtoMotive")) {
+                    this.changeURLtoMotive = true;
                 }
             }
-
         }
 
     }
 
     public void everyBodyFalse() {
-
         /**
          * Every body wants a kung fu fighter =) False em todo mundo
          *
          */
         this.reboot = false;
-
         this.factoryReset = false;
-
         this.lanHost = false;
-
         this.interfaceStatistics = false;
-
         this.infoDslConnection = false;
-
         this.gateWayInfo = false;
-
         this.wifiInfo = false;
-
         this.fxs = false;
-
         this.sipDiagnostic = false;
-
         this.portMapping = false;
-
         this.lanEthernetInfo = false;
-
         this.ping = false;
-
         this.setWiFiConfig = false;
-
         this.pppoeCredentials = false;
-
-        this.getPPPoECredentials = false;
-
+        this.getPPPoECredentials = false;        
+        this.changeURLtoMotive = false;
         this.setFirmwareDownload((Boolean) false);
-
     }
 
     public List<String> getCapabilitValues() {
@@ -313,4 +261,11 @@ public class CapabilityNames extends AcsAbstractBean {
         this.firmwareDownload = firmwareDownload;
     }
 
+    public Boolean getChangeURLtoMotive() {
+        return changeURLtoMotive;
+    }
+
+    public void setChangeURLtoMotive(Boolean changeURLtoMotive) {
+        this.changeURLtoMotive = changeURLtoMotive;
+    }
 }

@@ -18,19 +18,16 @@ public class ChangeURLtoMotive extends AcsAbstractBean {
     public ChangeURLtoMotive() {
     }
 
-    public void action(Integer deviceId, String parametro) {
-
+    public void action(Integer deviceId) {
         try {
-
             String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.changeURLtoMotive.name(), deviceId)).getResult();
             System.out.println(response);
             rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
-
             if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
                 salvarLog(deviceId, rebootHolder, EnumCapabilityExecuteSimple.changeURLtoMotive.name());
-                JSFUtil.addInfoMessage("Reboot realizado com sucesso, aguarde o modem autenticar.");
+                JSFUtil.addInfoMessage("Comando executado com sucesso.");
             } else {
-                JSFUtil.addInfoMessage("Reboot não realizado.");
+                JSFUtil.addInfoMessage("Comando não realizado.");
             }
         } catch (IOException e) {
             JSFUtil.addErrorMessage(e.getMessage());

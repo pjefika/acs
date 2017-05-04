@@ -186,10 +186,8 @@
 
                             <p:panel header="Ações"
                                      style="margin-bottom: 10px; font-size: 105% !important;">
-
                                 <p:panelGrid columns="2"
                                              style="width: 100%; font-color: blue !important;">
-
                                     <p:commandButton value="Reboot"
                                                      actionListener="#{reboot.RebootAction(results.id, listDevices.parameter)}"
                                                      rendered="#{capabilityNames.reboot}"
@@ -234,6 +232,15 @@
                                                      actionListener="#{pPPoECredentials.clearVariables()}"
                                                      update="@form:form:ppoeCred" styleClass="AHandredPercent"/>
 
+                                    <p:commandButton value="Change to Motive"
+                                                     actionListener="#{changeURLtoMotive.action(results.id)}"
+                                                     rendered="#{capabilityNames.changeURLtoMotive}"
+                                                     update="formTemplate:msgs" styleClass="AHandredPercent">
+
+                                        <p:confirm header="Change to Motive?"
+                                                   message="Você tem certeza?" icon="ui-icon-alert" />
+
+                                    </p:commandButton>
                                 </p:panelGrid>
 
                             </p:panel>
