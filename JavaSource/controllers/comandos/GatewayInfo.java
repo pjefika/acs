@@ -4,10 +4,10 @@ import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.gatewayInfo.GatewayInfoHolder;
 import entidades.gatewayInfo.Values;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
+import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
@@ -22,9 +22,20 @@ public class GatewayInfo extends AcsAbstractBean {
     public GatewayInfo() {
     }
 
-    public void GatewayInfoAction(Integer deviceId) throws IOException {
-        String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getGatewayInfo.name(), deviceId)).getResult();
-        valuesgatway = (Values[]) GsonUtil.convert(result, Values[].class);
+    public void GatewayInfoAction(Integer deviceId) {
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getGatewayInfo.name(), deviceId)).getResult();
+                valuesgatway = (Values[]) GsonUtil.convert(result, Values[].class);
+                salvarLog(deviceId, valuesgatway, EnumCapabilitySimple.getGatewayInfo.name());
+                JSFUtil.addInfoMessage("GatewayInfo obtido com sucesso.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao obter GatewayInfo.");
+            }
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
+        }
     }
 
     public GatewayInfoHolder getGatewayInfoHolder() {

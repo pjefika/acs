@@ -18,15 +18,18 @@ public class InterfaceStatic extends AcsAbstractBean {
     }
 
     public void interfaceStatics(Integer deviceId) {
-
-        try {
-            String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getInterfaceStats.name(), deviceId)).getResult();
-            System.out.println(response);
-            values = (Values[]) GsonUtil.convert(response, Values[].class);
-
-            JSFUtil.addInfoMessage("Busca realizada com sucesso.");
-        } catch (Exception e) {
-            JSFUtil.addErrorMessage(e.getMessage());
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getInterfaceStats.name(), deviceId)).getResult();
+                values = (Values[]) GsonUtil.convert(response, Values[].class);
+                salvarLog(deviceId, values, EnumCapabilitySimple.getInterfaceStats.name());
+                JSFUtil.addInfoMessage("Interface Statistics obtidas com sucesso.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao obter Interface Statistics.");
+            }
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
 
     }

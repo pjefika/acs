@@ -4,10 +4,10 @@ import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.LanEthernetInfo.LanEthernetInfoHolder;
 import entidades.LanEthernetInfo.Values;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
+import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
@@ -20,10 +20,21 @@ public class LanEthernetInfo extends AcsAbstractBean {
     public LanEthernetInfo() {
     }
 
-    public void getLanEthernetInfoAction(Integer deviceId) throws IOException {
-        String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getLanEthernetInfo.name(), deviceId)).getResult();
-        System.out.println(result);
-        values = (Values[]) GsonUtil.convert(result, Values[].class);
+    public void getLanEthernetInfoAction(Integer deviceId) {
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String result = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.getLanEthernetInfo.name(), deviceId)).getResult();
+                values = (Values[]) GsonUtil.convert(result, Values[].class);
+                salvarLog(deviceId, values, EnumCapabilitySimple.getLanEthernetInfo.name());
+                JSFUtil.addInfoMessage("Informações da Lan Ethernet obtidas com sucesso.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao obter Informações da Lan Ethernet.");
+            }
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
+        }
+
     }
 
     public LanEthernetInfoHolder getLanEthernetInfoHolder() {

@@ -27,6 +27,7 @@ public class ChangeURLtoMotive extends AcsAbstractBean {
             rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
 
             if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
+                salvarLog(deviceId, rebootHolder, EnumCapabilityExecuteSimple.changeURLtoMotive.name());
                 JSFUtil.addInfoMessage("Reboot realizado com sucesso, aguarde o modem autenticar.");
             } else {
                 JSFUtil.addInfoMessage("Reboot não realizado.");

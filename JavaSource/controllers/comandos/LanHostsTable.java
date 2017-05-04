@@ -3,10 +3,10 @@ package controllers.comandos;
 import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilityExecuteSimple;
 import entidades.lanHost.LanHostHolder;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
+import util.JSFUtil;
 
 @ManagedBean
 @RequestScoped
@@ -17,10 +17,21 @@ public class LanHostsTable extends AcsAbstractBean {
     public LanHostsTable() {
     }
 
-    public void getLanHostsTableAction(Integer deviceId) throws IOException {
-        String result = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getLanHostsTable.name(), deviceId)).getResult();
-        System.out.println(result);
-        lanHostHolders = (LanHostHolder[]) GsonUtil.convert(result, LanHostHolder[].class);
+    public void getLanHostsTableAction(Integer deviceId) {
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String result = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getLanHostsTable.name(), deviceId)).getResult();
+                lanHostHolders = (LanHostHolder[]) GsonUtil.convert(result, LanHostHolder[].class);
+                salvarLog(deviceId, lanHostHolders, EnumCapabilityExecuteSimple.getLanHostsTable.name());
+                JSFUtil.addInfoMessage("Tabela de Lan Hosts obtida com sucesso.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao obter Lan Hosts.");
+            }
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
+        }
+
     }
 
     public LanHostHolder[] getLanHostHolders() {

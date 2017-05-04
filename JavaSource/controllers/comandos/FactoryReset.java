@@ -19,22 +19,26 @@ public class FactoryReset extends AcsAbstractBean {
     }
 
     public void factoryResetAction(Integer deviceId, String parametro) {
-        try {
-            String response = dao.request(new RequestCoreDevice("factoryReset", deviceId)).getResult();
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String response = dao.request(new RequestCoreDevice("factoryReset", deviceId)).getResult();
 //            this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
-            System.out.println(response);
-            //Documentação errada nao volta Ok ou Error
+                //Documentação errada nao volta Ok ou Error
 
-            if (new Integer(response).compareTo(0) > 0) {
-                JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
-                //this.salvarLog(parametro, response, "Facoty Reset");
-            } else {
-                JSFUtil.addInfoMessage("Erro ao realizar Reset de fábrica.");
+                if (new Integer(response).compareTo(0) > 0) {
+                    JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
+                    salvarLog(deviceId, Boolean.TRUE, "factoryReset");
+                } else {
+                    JSFUtil.addInfoMessage("Erro ao realizar Reset de fábrica.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao realizar Reset de Fabrica.");
             }
-        } catch (Exception e) {
-            JSFUtil.addErrorMessage(e.getMessage());
-            JSFUtil.addErrorMessage("Erro ao realizar Reset de Fabrica, Equipamento inativo.");
+        }else{
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
+
     }
 
     public FactoryResetHolder getFactoryResetHolder() {

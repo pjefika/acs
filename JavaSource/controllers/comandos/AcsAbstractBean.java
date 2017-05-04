@@ -47,12 +47,12 @@ public class AcsAbstractBean {
 
     }
 
-    public void salvarLog(String parametro, Object valor, String comando) {
+    public void salvarLog(Integer devId, Object valor, String comando) {
         try {
             Logs logs = new Logs();
             logs.setUsuarioEfika(this.sessao.getUsuario());
             logs.setComando(comando);
-            logs.setParametro(parametro);
+            logs.setDeviceId(devId);
             logs.setValor(GsonUtil.serialize(valor));
             this.logsServico.cadastrarLog(logs);
         } catch (Exception e) {

@@ -3,7 +3,6 @@ package controllers.comandos;
 import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilityExecuteSimple;
 import entidades.reboot.RebootHolder;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
@@ -19,21 +18,25 @@ public class Reboot extends AcsAbstractBean {
     }
 
     public void RebootAction(Integer deviceId, String parametro) {
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.Reboot.name(), deviceId)).getResult();
+                rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
+                salvarLog(deviceId, rebootHolder, EnumCapabilityExecuteSimple.Reboot.name());
 
-        try {
-
-            String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.Reboot.name(), deviceId)).getResult();
-            System.out.println(response);
-            rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
-
-            if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
-                JSFUtil.addInfoMessage("Reboot realizado com sucesso, aguarde o modem autenticar.");
-            } else {
+                if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
+                    JSFUtil.addInfoMessage("Reboot realizado com sucesso, aguarde o modem autenticar.");
+                } else {
+                    JSFUtil.addInfoMessage("Reboot não realizado.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 JSFUtil.addInfoMessage("Reboot não realizado.");
             }
-        } catch (IOException e) {
-            JSFUtil.addErrorMessage(e.getMessage());
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
+
     }
 
     public RebootHolder getRebootHolder() {

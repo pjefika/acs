@@ -20,8 +20,8 @@ public class DeviceStatus extends AcsAbstractBean {
     public void getDeviceStatus(Integer deviceId) {
         try {
             String response = dao.request(new RequestCapabilityExecute(EnumCapabilitySimple.DeviceStatus.name(), deviceId)).getResult();
-            System.out.println(response);
             deviceStatusHolder = (DeviceStatusHolder) GsonUtil.convert(response, DeviceStatusHolder.class);
+            salvarLog(deviceId, deviceStatusHolder, EnumCapabilitySimple.DeviceStatus.name());
         } catch (Exception e) {
             JSFUtil.addErrorMessage(e.getMessage());
         }

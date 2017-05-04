@@ -31,18 +31,25 @@ public class GetPing extends AcsAbstractBean {
     }
 
     public void PingAction(Integer deviceId) {
-        try {
-            String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.Ping.name(), deviceId, this.pingIn)).getResult();
-            PingOut out = (PingOut) GsonUtil.convert(response, PingOut.class);
-            this.pingHolderShow = out.getValues()[0];
-            if (this.pingHolderShow != null) {
-                JSFUtil.addInfoMessage("Comando executado com sucesso.");
-            } else {
-                JSFUtil.addErrorMessage("Erro ao realizar comando ping");
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.Ping.name(), deviceId, this.pingIn)).getResult();
+                PingOut out = (PingOut) GsonUtil.convert(response, PingOut.class);
+                this.pingHolderShow = out.getValues()[0];
+                salvarLog(deviceId, pingHolderShow, EnumCapabilityComplex.Ping.name());
+                if (this.pingHolderShow != null) {
+                    JSFUtil.addInfoMessage("Comando executado com sucesso.");
+                } else {
+                    JSFUtil.addErrorMessage("Erro ao realizar comando ping.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao realizar comando ping.");
             }
-        } catch (Exception e) {
-            JSFUtil.addErrorMessage(e.getMessage());
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
+
     }
 
     public PingHolder getPingHolderShow() {

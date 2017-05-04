@@ -70,27 +70,33 @@ public class WifiConfig extends AcsAbstractBean {
     }
 
     public void setWiFiConfig(Integer deviceId, Integer action) {
-        try {
-            WifiInfoHolder hold;
-            if (action == 1) {
-                hold = this.wifiInfoHolderRedeOne;
-                this.wifiInfoHolderRedeOne.setFrequency("2.4GHz");
-            } else {
-                hold = this.wifiInfoHolderRedeTwo;
-                this.wifiInfoHolderRedeOne.setFrequency("5GHz");
+        if (isDeviceOnline(deviceId)) {
+            try {
+                WifiInfoHolder hold;
+                if (action == 1) {
+                    hold = this.wifiInfoHolderRedeOne;
+                    this.wifiInfoHolderRedeOne.setFrequency("2.4GHz");
+                } else {
+                    hold = this.wifiInfoHolderRedeTwo;
+                    this.wifiInfoHolderRedeOne.setFrequency("5GHz");
+                }
+                String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, hold)).getResult();
+                this.setWiFiConfigHolder = (SetWiFiConfigHolder) GsonUtil.convert(response, SetWiFiConfigHolder.class);
+                salvarLog(deviceId, setWiFiConfigHolder, EnumCapabilityComplex.getLanWiFiInfo.name());
+                if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
+                    JSFUtil.addInfoMessage("Comando executado com sucesso.");
+                    this.wifiConf = new WifiConf();
+                } else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("nok")) {
+                    JSFUtil.addErrorMessage("Erro ao executar commando.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao executar commando.");
             }
-            String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, hold)).getResult();
-            this.setWiFiConfigHolder = (SetWiFiConfigHolder) GsonUtil.convert(response, SetWiFiConfigHolder.class);
-            if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
-                JSFUtil.addInfoMessage("Comando executado com sucesso.");
-                //Salvar log
-                this.wifiConf = new WifiConf();
-            } else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("nok")) {
-                JSFUtil.addInfoMessage("Erro ao executar commando.");
-            }
-        } catch (Exception e) {
-            JSFUtil.addErrorMessage(e.getMessage());
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
+
     }
 
     public WifiConf getWifiConf() {

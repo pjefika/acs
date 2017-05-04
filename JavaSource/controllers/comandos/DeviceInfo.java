@@ -1,6 +1,6 @@
 package controllers.comandos;
 
-import dal.arris.RequestCapabilityDiagnosticSimple;
+import dal.arris.RequestCapabilityDiagnostic;
 import dal.arris.capability.EnumCapabilitySimple;
 import entidades.getInfo.InfoHolder;
 import entidades.getInfo.Values;
@@ -50,8 +50,9 @@ public class DeviceInfo extends AcsAbstractBean {
     public void getDeviceInfoActionValue(Integer deviceId) {
         try {
             this.values2 = null;
-            String response = dao.request(new RequestCapabilityDiagnosticSimple(EnumCapabilitySimple.getDeviceInfo, deviceId)).getResult();
+            String response = dao.request(new RequestCapabilityDiagnostic(EnumCapabilitySimple.getDeviceInfo.name(), deviceId)).getResult();
             this.infoHolder = (InfoHolder) GsonUtil.convert(response, InfoHolder.class);
+            salvarLog(deviceId, infoHolder, EnumCapabilitySimple.getDeviceInfo.name());
             int cont = 0;
             for (Values values2 : this.infoHolder.getValues()) {
                 if (cont == 0) {

@@ -31,7 +31,7 @@ public class Logs {
      * Device Id.
      *
      */
-    private String parametro;
+    private Integer deviceId;
 
     @Lob
     private String valor;
@@ -80,12 +80,12 @@ public class Logs {
         this.valor = valor;
     }
 
-    public String getParametro() {
-        return parametro;
+    public Integer getDeviceId() {
+        return deviceId;
     }
 
-    public void setParametro(String parametro) {
-        this.parametro = parametro;
+    public void setDeviceId(Integer parametro) {
+        this.deviceId = parametro;
     }
 
 }

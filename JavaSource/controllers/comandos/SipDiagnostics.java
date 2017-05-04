@@ -3,11 +3,10 @@ package controllers.comandos;
 import dal.arris.RequestCapabilityDiagnosticComplex;
 import dal.arris.capability.EnumCapabilityComplex;
 import entidades.sip.SipAccountProvisioning;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
 import entidades.sip.SipDiagnosticsHolder;
 import entidades.sip.Values;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
 import util.JSFUtil;
 
@@ -30,21 +29,28 @@ public class SipDiagnostics extends AcsAbstractBean {
         this.sipDiagnosticsHolder = null;
     }
 
-    public void sipDiagnostics(Integer deviceId) throws Exception {
-        try {
-            String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.sipDiagnostics.name(), deviceId, this.sipAccountProvisioning)).getResult();
-            this.sipDiagnosticsHolder = (SipDiagnosticsHolder) GsonUtil.convert(response, SipDiagnosticsHolder.class);
-            int cont = 0;
-            for (Values value : this.sipDiagnosticsHolder.getValues()) {
-                if (cont == 0) {
-                    this.values = value;
+    public void sipDiagnostics(Integer deviceId) {
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.sipDiagnostics.name(), deviceId, this.sipAccountProvisioning)).getResult();
+                this.sipDiagnosticsHolder = (SipDiagnosticsHolder) GsonUtil.convert(response, SipDiagnosticsHolder.class);
+                int cont = 0;
+                for (Values value : this.sipDiagnosticsHolder.getValues()) {
+                    if (cont == 0) {
+                        this.values = value;
+                    }
+                    cont++;
                 }
-                cont++;
+                salvarLog(deviceId, values, EnumCapabilityComplex.sipDiagnostics.name());
+                JSFUtil.addInfoMessage("Busca realizada com sucesso.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Erro ao realizar Sip Diagnostics.");
             }
-            JSFUtil.addInfoMessage("Busca realizada com sucesso.");
-        } catch (Exception e) {
-            JSFUtil.addErrorMessage("Erro ao realizar Sip Diagnostics");
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
+
     }
 
     public SipDiagnosticsHolder getSipDiagnosticsHolder() {
