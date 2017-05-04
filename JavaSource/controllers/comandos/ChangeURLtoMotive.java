@@ -19,19 +19,25 @@ public class ChangeURLtoMotive extends AcsAbstractBean {
     }
 
     public void action(Integer deviceId) {
-        try {
-            String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.changeURLtoMotive.name(), deviceId)).getResult();
-            System.out.println(response);
-            rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
-            if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
+        if (isDeviceOnline(deviceId)) {
+            try {
+                String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.changeURLtoMotive.name(), deviceId)).getResult();
+                rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
                 salvarLog(deviceId, rebootHolder, EnumCapabilityExecuteSimple.changeURLtoMotive.name());
-                JSFUtil.addInfoMessage("Comando executado com sucesso.");
-            } else {
-                JSFUtil.addInfoMessage("Comando não realizado.");
+                if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
+                    salvarLog(deviceId, rebootHolder, EnumCapabilityExecuteSimple.changeURLtoMotive.name());
+                    JSFUtil.addInfoMessage("Comando executado com sucesso.");
+                } else {
+                    JSFUtil.addErrorMessage("Comando não realizado.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JSFUtil.addErrorMessage("Comando não realizado.");
             }
-        } catch (IOException e) {
-            JSFUtil.addErrorMessage(e.getMessage());
+        } else {
+            JSFUtil.addErrorMessage("Modem inativo.");
         }
+
     }
 
     public RebootHolder getRebootHolder() {
