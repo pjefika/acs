@@ -9,13 +9,13 @@ public class WifiInfoHolder {
 
     private String errorsSent;
 
-    private Boolean BroadcastEnabled;
+    private String BroadcastEnabled;
 
-    private Boolean EnableStatus;
+    private String EnableStatus;
 
     private String Channel;
 
-    private Boolean radioStatus;
+    private String radioStatus;
 
     private String Encryption;
 
@@ -63,36 +63,12 @@ public class WifiInfoHolder {
         this.errorsSent = errorsSent;
     }
 
-    public Boolean getBroadcastEnabled() {
-        return BroadcastEnabled;
-    }
-
-    public void setBroadcastEnabled(Boolean BroadcastEnabled) {
-        this.BroadcastEnabled = BroadcastEnabled;
-    }
-
-    public Boolean getEnableStatus() {
-        return EnableStatus;
-    }
-
-    public void setEnableStatus(Boolean EnableStatus) {
-        this.EnableStatus = EnableStatus;
-    }
-
     public String getChannel() {
         return Channel;
     }
 
     public void setChannel(String channel) {
         Channel = channel;
-    }
-
-    public Boolean getRadioStatus() {
-        return radioStatus;
-    }
-
-    public void setRadioStatus(Boolean radioStatus) {
-        this.radioStatus = radioStatus;
     }
 
     public String getEncryption() {
@@ -213,6 +189,30 @@ public class WifiInfoHolder {
 
     public void setSsidPassword(String ssidPassword) {
         this.ssidPassword = ssidPassword;
+    }
+
+    public String getBroadcastEnabled() {
+        return BroadcastEnabled;
+    }
+
+    public void setBroadcastEnabled(String BroadcastEnabled) {
+        this.BroadcastEnabled = BroadcastEnabled;
+    }
+
+    public String getEnableStatus() {
+        return EnableStatus;
+    }
+
+    public void setEnableStatus(String EnableStatus) {
+        this.EnableStatus = EnableStatus;
+    }
+
+    public String getRadioStatus() {
+        return radioStatus;
+    }
+
+    public void setRadioStatus(String radioStatus) {
+        this.radioStatus = radioStatus;
     }
 
 }
