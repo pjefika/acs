@@ -63,7 +63,7 @@
                             <h:outputText value="Tempo Online: " styleClass="fontBlack" />
                             <h:outputText value="#{deviceInfo.values2.uptime}" />
                         </p:panelGrid>
-                        <h:panelGroup style="float: left; width: 45%;" id="panelsButton">
+                        <h:panelGroup style="float: left; width: 45%;" id="panelsButton" rendered="#{deviceInfo.ativo}">
                             <p:panel header="Informações" style="font-size: 105% !important;" >
                                 <p:panelGrid columns="2" style="width: 100%; color: blue;">
                                     <p:commandButton value="Tabela de Hosts"
