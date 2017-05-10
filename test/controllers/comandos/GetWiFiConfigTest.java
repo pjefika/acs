@@ -45,17 +45,17 @@ public class GetWiFiConfigTest {
      * Test of consultar method, of class GetWiFiConfig.
      */
     @Test
-    public void testConsultar() {
+    public void buscaInformacoesWifi() {
         System.out.println("consultar");
         try {
-            Integer deviceId = InitValues.deviceId;            
+            Integer deviceId = InitValues.deviceId;
             WifiConfig instance = new WifiConfig();
             instance.buscaInformacoesWifi(deviceId);
 
             for (WifiInfoHolder infoHolder : instance.getInfoHolder()) {
                 System.out.println(GsonUtil.serialize(infoHolder));
             }
-            assertTrue(true);
+            assertTrue(instance.getInfoHolder() != null);
         } catch (Exception e) {
             e.printStackTrace();
             fail("The test case is a prototype.");
