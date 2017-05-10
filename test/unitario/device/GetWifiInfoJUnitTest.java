@@ -10,7 +10,6 @@ import dal.arris.DeviceDAO;
 import dal.arris.RequestCapabilityDiagnosticComplex;
 import dal.arris.capability.EnumCapabilityComplex;
 import entidades.wifiInfo.WifiInfoHolder;
-import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,7 +44,7 @@ public class GetWifiInfoJUnitTest {
     }
 
     @Test
-    public void getWifiInfo() throws IOException {
+    public void getWifiInfo() throws Exception {
         DeviceDAO instance = new DeviceDAO();
         ComandoArris result = instance.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.getLanWiFiInfo.name(), 194859257, "\"frequency\"=\"2.4Ghz\""));
         System.out.println(result.getResult());

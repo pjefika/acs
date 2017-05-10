@@ -10,7 +10,6 @@ import dal.arris.RequestCapabilityDiagnosticComplex;
 import dal.arris.capability.EnumCapabilityComplex;
 import entidades.ping.PingIn;
 import entidades.ping.PingOut;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -62,7 +61,7 @@ public class GetPingTest {
             response = dao.request(new RequestCapabilityDiagnosticComplex(EnumCapabilityComplex.Ping.name(), deviceId, new PingIn())).getResult();
             this.pingOut = (PingOut) GsonUtil.convert(response, PingOut.class);
             System.out.println("end");
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(GetPingTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
