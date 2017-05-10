@@ -1,7 +1,6 @@
 package controllers.comandos;
 
 import dal.arris.RequestCapabilityListCapabilityNames;
-import java.io.IOException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -52,7 +51,7 @@ public class CapabilityNames extends AcsAbstractBean {
 
     }
 
-    public void listCapabilityNamesFor(Integer deviceId, Boolean ativo) throws IOException {
+    public void listCapabilityNamesFor(Integer deviceId, Boolean ativo) throws Exception {
 
         this.everyBodyFalse();
 
@@ -120,7 +119,7 @@ public class CapabilityNames extends AcsAbstractBean {
         this.ping = false;
         this.setWiFiConfig = false;
         this.pppoeCredentials = false;
-        this.getPPPoECredentials = false;        
+        this.getPPPoECredentials = false;
         this.changeURLtoMotive = false;
         this.setFirmwareDownload((Boolean) false);
     }

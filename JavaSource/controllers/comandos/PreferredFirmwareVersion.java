@@ -7,7 +7,6 @@ package controllers.comandos;
 
 import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilityExecuteSimple;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
@@ -25,7 +24,7 @@ public class PreferredFirmwareVersion extends AcsAbstractBean {
     public PreferredFirmwareVersion() {
     }
 
-    public String buscaFirmware(Integer deviceId) throws IOException {
+    public String buscaFirmware(Integer deviceId) throws Exception {
         String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getPreferredFirmwareVersion.name(), deviceId)).getResult();
         preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
         return preferredFirmwareVersion.getFilename();

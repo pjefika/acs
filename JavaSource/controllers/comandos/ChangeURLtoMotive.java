@@ -3,7 +3,6 @@ package controllers.comandos;
 import dal.arris.RequestCapabilityExecute;
 import dal.arris.capability.EnumCapabilityExecuteSimple;
 import entidades.reboot.RebootHolder;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import util.GsonUtil;
@@ -30,7 +29,7 @@ public class ChangeURLtoMotive extends AcsAbstractBean {
                 } else {
                     JSFUtil.addErrorMessage("Comando não realizado.");
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 JSFUtil.addErrorMessage("Comando não realizado.");
             }
