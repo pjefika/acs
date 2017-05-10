@@ -13,6 +13,7 @@ public class InitValues {
 
     //197194995 - 345760666C90 - MITRASTAR
     //197099633 - LU1322503001553 - SAGEMCOM (LAB CO)
-    public static Integer deviceId = 197099633;
+    //196252658 - QX4S1EB598946 - DLink DSL-2740E
+    public static Integer deviceId = 196252658;
 
 }

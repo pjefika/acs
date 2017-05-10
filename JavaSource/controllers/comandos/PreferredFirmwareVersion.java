@@ -25,12 +25,10 @@ public class PreferredFirmwareVersion extends AcsAbstractBean {
     public PreferredFirmwareVersion() {
     }
 
-    public void buscaFirmware(Integer deviceId) throws IOException {
-
+    public String buscaFirmware(Integer deviceId) throws IOException {
         String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getPreferredFirmwareVersion.name(), deviceId)).getResult();
-        entidades.PreferredFirmwareVersion.PreferredFirmwareVersion preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
-        System.out.println(response);
-
+        preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
+        return preferredFirmwareVersion.getFilename();
     }
 
     public entidades.PreferredFirmwareVersion.PreferredFirmwareVersion getPreferredFirmwareVersion() {

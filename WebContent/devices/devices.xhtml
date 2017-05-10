@@ -35,11 +35,10 @@
                 <p:dataGrid value="#{listDevices.listaResults}" var="results" columns="1" layout="grid" id="dataGridResults" emptyMessage="Nenhum registro encontrado">
                     <h:outputText value="#{deviceInfo.getDeviceInfoActionValue(results.id)}" />
                     <h:outputText value="#{capabilityNames.listCapabilityNamesFor(results.id, deviceInfo.ativo)}" />
-                    <h:outputText value="#{preferredFirmwareVersion.buscaFirmware(results.id)}" />
                     <p:panel header="#{results.vendor} #{results.model}" styleClass="#{deviceInfo.ativo ? 'colorSeAtivo' : 'colorSeFalse'}" style="height: 100%;">
                         <p:panelGrid columns="2" style="float: left; width: 50%; margin-bottom: 5px; margin-right: 2%;">
                             <f:facet name="header">
-                                <h:outputText value="Informação do device"/>
+                                <h:outputText value="Informações do Equipamento"/>
                             </f:facet>
                             <h:outputText value="Numero de Serie: " styleClass="fontBlack" />
                             <h:outputText value="#{results.serialNumber}" />
@@ -48,7 +47,16 @@
                             <h:outputText value="Designador: " styleClass="fontBlack" />
                             <h:outputText value="#{results.userKey3}"  />
                             <h:outputText value="Firmware: " styleClass="fontBlack" />
-                            <h:outputText value="#{results.softwareVersion}" />
+                            <p:column colspan="3">
+                                <h:outputText value="#{results.softwareVersion}"
+                                              styleClass="#{results.softwareVersion != preferredFirmwareVersion.buscaFirmware(results.id) ? 'colorRed' : ''}"/>
+                                <p:commandButton action="#{firmwareDownload.firmDown(results.id)}"
+                                                 update="dataGridResults formTemplate:msgs"
+                                                 rendered="#{results.softwareVersion != preferredFirmwareVersion.buscaFirmware(results.id)}"
+                                                 value="Atualizar" icon="fa fa-fw fa-download">
+                                    <p:ajaxStatus onstart="PF('loadingDialogInfo').show();" onsuccess="PF('loadingDialogInfo').hide();" />
+                                </p:commandButton>
+                            </p:column>
                             <h:outputText value="Ip: " styleClass="fontBlack" />
                             <h:outputText value="#{results.ip}"  />
                             <h:outputText value="Primeiro contato: " styleClass="fontBlack" />
@@ -64,7 +72,7 @@
                             <h:outputText value="#{deviceInfo.values2.uptime}" />
                         </p:panelGrid>
                         <h:panelGroup style="float: left; width: 45%;" id="panelsButton" rendered="#{deviceInfo.ativo}">
-                            <p:panel header="Informações" style="font-size: 105% !important;" >
+                            <p:panel header="Consultas" style="font-size: 105% !important;" >
                                 <p:panelGrid columns="2" style="width: 100%; color: blue;">
                                     <p:commandButton value="Tabela de Hosts"
                                                      update="@form:infoLanHosts formTemplate:msgs"
@@ -429,11 +437,11 @@
                     </p:panelGrid>
                 </p:dialog>
                 <p:dialog header="Configurar Wifi" widgetVar="configurarWifi" resizable="false" width="350" minWidth="350" height="380" minHeight="380" modal="true">
-                    <p:tabView id="formConfigWifi">                        
+                    <p:tabView id="formConfigWifi">
                         <p:tab title="Rede 2.4GHz">
-                            <h:panelGrid>                                    
+                            <h:panelGrid>
                                 <h:outputText value="Nome da rede" />
-                                <p:inputText value="#{wifiConfig.wifiInfoHolderRedeOne.ssid}" />  
+                                <p:inputText value="#{wifiConfig.wifiInfoHolderRedeOne.ssid}" />
                                 <h:outputText value="Senha" />
                                 <p:inputText value="#{wifiConfig.wifiInfoHolderRedeOne.ssidPassword}" />
                                 <h:outputText value="standard" />
@@ -485,14 +493,14 @@
                                     <f:selectItem itemLabel="WPA2-Personal(TKIP)" itemValue="TKIP" />
                                     <f:selectItem itemLabel="WPA2-Personal(AES)" itemValue="AES" />
                                     <f:selectItem itemLabel="WPA-WPA2-Personal(AES-TKIP)" itemValue="AES-TKIP" />
-                                </p:selectOneMenu>                                
+                                </p:selectOneMenu>
                             </h:panelGrid>
                             <p:commandButton value="Modificar" action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 1)}" update="formTemplate:msgs" oncomplete="PF('configurarWifi').hide();" />
                         </p:tab>
                         <p:tab title="Rede 5GHz">
-                            <h:panelGrid>                                    
+                            <h:panelGrid>
                                 <h:outputText value="Nome da rede" />
-                                <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssid}" />  
+                                <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssid}" />
                                 <h:outputText value="Senha" />
                                 <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssidPassword}" />
                                 <h:outputText value="standard" />
@@ -541,7 +549,7 @@
                                     <f:selectItem itemLabel="" />
                                     <f:selectItem itemLabel="WPA2-Personal" itemValue="WPA2-Personal" />
                                     <f:selectItem itemLabel="WPA-WPA2-Personal" itemValue="WPA-WPA2-Personal" />
-                                </p:selectOneMenu>                                
+                                </p:selectOneMenu>
                             </h:panelGrid>
                             <p:commandButton value="Modificar" action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 2)}" update="formTemplate:msgs" oncomplete="PF('configurarWifi').hide();" />
                         </p:tab>
