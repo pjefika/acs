@@ -40,7 +40,7 @@ public class WifiConfIn {
         this.setSsid(h.getSsid());
         this.setStandard(h.getStandard());
         this.setSsidPassword(h.getSsidPassword());
-        this.setFrequency(EnumFrequency.DEFAULT.getValor());
+        this.setFrequency(h.getFrequency());
     }
 
     public String getIndex() {

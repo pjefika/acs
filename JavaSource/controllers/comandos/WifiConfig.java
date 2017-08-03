@@ -74,9 +74,10 @@ public class WifiConfig extends AcsAbstractBean {
             try {
                 WifiInfoHolder hold;
 //                if (action == 1) {
-                hold = this.wifiInfoHolderRedeOne;
 
                 this.wifiInfoHolderRedeOne.setFrequency("2.4GHz");
+
+                hold = this.wifiInfoHolderRedeOne;
                 WifiConfIn w = new WifiConfIn(hold);
 
 //                } else {
@@ -86,13 +87,19 @@ public class WifiConfig extends AcsAbstractBean {
                 String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, w)).getResult();
                 System.out.println(response);
                 this.setWiFiConfigHolder = (SetWifiConfResult) GsonUtil.convert(response, SetWifiConfResult.class);
-                
+
                 salvarLog(deviceId, setWiFiConfigHolder, EnumCapabilityComplex.getLanWiFiInfo.name());
                 if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
                     JSFUtil.addInfoMessage("Comando executado com sucesso.");
                     this.wifiConf = new WifiConfIn();
                 } else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("nok")) {
-                    JSFUtil.addErrorMessage("Erro ao executar commando.");
+                    if (this.setWiFiConfigHolder.getException().contains("CPE_INVALID_PARAMETER_NAMES")) {
+                        JSFUtil.addInfoMessage("Comando executado com sucesso.");
+                        this.wifiConf = new WifiConfIn();
+                    } else {
+                        JSFUtil.addErrorMessage("Erro ao executar commando.");
+                    }
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
