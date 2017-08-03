@@ -8,12 +8,12 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import entidades.sys.Autenticacao;
-import entidades.wifiInfo.SetWiFiConfigHolder;
+import entidades.wifiInfo.SetWifiConfResult;
 import util.JSFUtil;
 
 public class SetWiFiConfigAction {
 	
-	public SetWiFiConfigHolder setWiFiConfig(Integer deviceId, Autenticacao autenticacao, String wifiConfig) throws Exception {
+	public SetWifiConfResult setWiFiConfig(Integer deviceId, Autenticacao autenticacao, String wifiConfig) throws Exception {
 		
 		Client client = Client.create();
 		
@@ -33,7 +33,7 @@ public class SetWiFiConfigAction {
 
 		Gson gson = new Gson();	
 				
-		SetWiFiConfigHolder setWiFiConfigHolder = gson.fromJson(output, SetWiFiConfigHolder.class);
+		SetWifiConfResult setWiFiConfigHolder = gson.fromJson(output, SetWifiConfResult.class);
 				
 		clientResponse.close();
 		
