@@ -1,6 +1,6 @@
 package entidades.wifiInfo;
 
-public class SetWiFiConfigHolder {
+public class SetWifiConfResult {
 	
 	private String status;
 	

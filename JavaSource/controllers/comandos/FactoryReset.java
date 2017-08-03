@@ -22,10 +22,12 @@ public class FactoryReset extends AcsAbstractBean {
         if (isDeviceOnline(deviceId)) {
             try {
                 String response = dao.request(new RequestCoreDevice("factoryReset", deviceId)).getResult();
-//            this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
+//                this.factoryResetHolder = (FactoryResetHolder) GsonUtil.convert(response, FactoryResetHolder.class);
+                
                 //Documentação errada nao volta Ok ou Error
+                
 
-                if (new Integer(response).compareTo(0) > 0) {
+                if (new Long(response).compareTo(0l) > 0) {
                     JSFUtil.addInfoMessage("Reset de fábrica realizado com sucesso.");
                     salvarLog(deviceId, Boolean.TRUE, "factoryReset");
                 } else {

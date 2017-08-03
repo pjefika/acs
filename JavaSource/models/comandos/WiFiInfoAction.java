@@ -5,14 +5,13 @@ import dal.arris.ComandoArris;
 import dal.arris.RequestCapabilityExecuteInput;
 import dal.arris.capability.EnumCapabilityComplex;
 import entidades.sys.Autenticacao;
-import entidades.wifiInfo.WifiConf;
+import entidades.wifiInfo.WifiConfIn;
 import entidades.wifiInfo.WifiInfoHolder;
 
 public class WiFiInfoAction extends AbstractAction {
 
     public WifiInfoHolder[] getWiFiInfo(Integer deviceId, Autenticacao autenticacao, String frequency) throws Exception {
-        WifiConf in = new WifiConf();
-        in.setFrequency("2.4GHz");
+        WifiConfIn in = new WifiConfIn();
 
         Gson gson = new Gson();
 

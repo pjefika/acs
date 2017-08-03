@@ -2,7 +2,9 @@ package entidades.wifiInfo;
 
 import model.EnumFrequency;
 
-public class WifiConf {
+public class WifiConfIn {
+
+    private String index = "1";
 
     private String frequency;
 
@@ -24,11 +26,32 @@ public class WifiConf {
 
     private String radioEnable;
 
-    public WifiConf() {
+    public WifiConfIn() {
         this.frequency = EnumFrequency.DEFAULT.getValor();
     }
 
-    public WifiConf(EnumFrequency f) {
+    public WifiConfIn(WifiInfoHolder h) {
+        this.setAuthentication(h.getAuthentication());
+        this.setBroadcastEnabled(h.getBroadcastEnabled());
+        this.setChannel(h.getChannel());
+        this.setEnableStatus(h.getEnableStatus());
+        this.setEncryption(h.getEncryption());
+        this.setRadioEnable(h.getRadioStatus());
+        this.setSsid(h.getSsid());
+        this.setStandard(h.getStandard());
+        this.setSsidPassword(h.getSsidPassword());
+        this.setFrequency(h.getFrequency());
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public WifiConfIn(EnumFrequency f) {
         this.frequency = f.getValor();
     }
 

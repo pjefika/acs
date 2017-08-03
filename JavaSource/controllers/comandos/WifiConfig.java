@@ -7,8 +7,8 @@ package controllers.comandos;
 
 import dal.arris.RequestCapabilityExecuteInput;
 import dal.arris.capability.EnumCapabilityComplex;
-import entidades.wifiInfo.SetWiFiConfigHolder;
-import entidades.wifiInfo.WifiConf;
+import entidades.wifiInfo.SetWifiConfResult;
+import entidades.wifiInfo.WifiConfIn;
 import entidades.wifiInfo.WifiInfoHolder;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -23,21 +23,21 @@ import util.JSFUtil;
 @RequestScoped
 public class WifiConfig extends AcsAbstractBean {
 
-    private WifiConf wifiConf;
-    private SetWiFiConfigHolder setWiFiConfigHolder;
+    private WifiConfIn wifiConf;
+    private SetWifiConfResult setWiFiConfigHolder;
     private WifiInfoHolder[] infoHolder;
 
     private WifiInfoHolder wifiInfoHolderRedeOne;
     private WifiInfoHolder wifiInfoHolderRedeTwo;
 
     public WifiConfig() {
-        this.wifiConf = new WifiConf();
+        this.wifiConf = new WifiConfIn();
         this.wifiInfoHolderRedeOne = new WifiInfoHolder();
         this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
     }
 
     public void clearVariables() {
-        this.wifiConf = new WifiConf();
+        this.wifiConf = new WifiConfIn();
         this.wifiInfoHolderRedeOne = new WifiInfoHolder();
         this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
     }
@@ -73,21 +73,33 @@ public class WifiConfig extends AcsAbstractBean {
         if (isDeviceOnline(deviceId)) {
             try {
                 WifiInfoHolder hold;
-                if (action == 1) {
-                    hold = this.wifiInfoHolderRedeOne;
-                    this.wifiInfoHolderRedeOne.setFrequency("2.4GHz");
-                } else {
-                    hold = this.wifiInfoHolderRedeTwo;
-                    this.wifiInfoHolderRedeOne.setFrequency("5GHz");
-                }
-                String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, hold)).getResult();
-                this.setWiFiConfigHolder = (SetWiFiConfigHolder) GsonUtil.convert(response, SetWiFiConfigHolder.class);
+//                if (action == 1) {
+
+                this.wifiInfoHolderRedeOne.setFrequency("2.4GHz");
+
+                hold = this.wifiInfoHolderRedeOne;
+                WifiConfIn w = new WifiConfIn(hold);
+
+//                } else {
+//                    hold = this.wifiInfoHolderRedeTwo;
+//                    this.wifiInfoHolderRedeOne.setFrequency("5GHz");
+//                }
+                String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.setWiFiConfig.name(), deviceId, w)).getResult();
+                System.out.println(response);
+                this.setWiFiConfigHolder = (SetWifiConfResult) GsonUtil.convert(response, SetWifiConfResult.class);
+
                 salvarLog(deviceId, setWiFiConfigHolder, EnumCapabilityComplex.getLanWiFiInfo.name());
                 if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("ok")) {
                     JSFUtil.addInfoMessage("Comando executado com sucesso.");
-                    this.wifiConf = new WifiConf();
+                    this.wifiConf = new WifiConfIn();
                 } else if (this.setWiFiConfigHolder.getStatus().equalsIgnoreCase("nok")) {
-                    JSFUtil.addErrorMessage("Erro ao executar commando.");
+                    if (this.setWiFiConfigHolder.getException().contains("CPE_INVALID_PARAMETER_NAMES")) {
+                        JSFUtil.addInfoMessage("Comando executado com sucesso.");
+                        this.wifiConf = new WifiConfIn();
+                    } else {
+                        JSFUtil.addErrorMessage("Erro ao executar commando.");
+                    }
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -99,19 +111,19 @@ public class WifiConfig extends AcsAbstractBean {
 
     }
 
-    public WifiConf getWifiConf() {
+    public WifiConfIn getWifiConf() {
         return wifiConf;
     }
 
-    public void setWifiConf(WifiConf wifiConf) {
+    public void setWifiConf(WifiConfIn wifiConf) {
         this.wifiConf = wifiConf;
     }
 
-    public SetWiFiConfigHolder getSetWiFiConfigHolder() {
+    public SetWifiConfResult getSetWiFiConfigHolder() {
         return setWiFiConfigHolder;
     }
 
-    public void setSetWiFiConfigHolder(SetWiFiConfigHolder setWiFiConfigHolder) {
+    public void setSetWiFiConfigHolder(SetWifiConfResult setWiFiConfigHolder) {
         this.setWiFiConfigHolder = setWiFiConfigHolder;
     }
 
