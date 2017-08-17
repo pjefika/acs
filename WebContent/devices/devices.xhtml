@@ -40,6 +40,8 @@
                             <f:facet name="header">
                                 <h:outputText value="Informações do Equipamento"/>
                             </f:facet>
+                            <h:outputText value="DeviceGUID: " styleClass="fontBlack" />
+                            <h:outputText value="#{results.id}" />
                             <h:outputText value="Numero de Serie: " styleClass="fontBlack" />
                             <h:outputText value="#{results.serialNumber}" />
                             <h:outputText value="Mac: " styleClass="fontBlack" />
@@ -137,9 +139,6 @@
                                                      update="formTemplate:msgs" styleClass="AHandredPercent">
                                         <p:confirm header="Reset de Fabrica?" message="Você tem certeza?" icon="ui-icon-alert" />
                                     </p:commandButton>
-                                    <p:commandButton value="FXS" rendered="#{capabilityNames.fxs}"
-                                                     actionListener="#{deviceInfo.colocarDeviceId(results.id)}"
-                                                     onclick="PF('sipAccountPro').show();" styleClass="AHandredPercent"/>
                                     <p:commandButton value="Ping" rendered="#{capabilityNames.ping}"
                                                      oncomplete="PF('pingAction').show()"
                                                      action="#{deviceInfo.colocarDeviceId(results.id)}"
@@ -157,35 +156,35 @@
                                                      action="#{deviceInfo.colocarDeviceId(results.id)}"
                                                      actionListener="#{pPPoECredentials.clearVariables()}"
                                                      update="@form:form:ppoeCred" styleClass="AHandredPercent"/>
-                                    <p:commandButton value="Change to Motive"
-                                                     actionListener="#{changeURLtoMotive.action(results.id)}"
-                                                     rendered="#{capabilityNames.changeURLtoMotive}"
-                                                     update="formTemplate:msgs" styleClass="AHandredPercent">
-                                        <p:confirm header="Change to Motive?" message="Você tem certeza?" icon="ui-icon-alert" />
-                                    </p:commandButton>
                                 </p:panelGrid>
                             </p:panel>
                         </h:panelGroup>
                     </p:panel>
                 </p:dataGrid>
                 <p:dialog header="Tabela de Hosts" widgetVar="infoLanHosts" resizable="true" width="750" minWidth="750" height="400" minHeight="400" modal="true" closeOnEscape="true">
-                    <p:dataGrid id="infoLanHosts" value="#{lanHostsTable.lanHostHolders}" var="lanHost" columns="3" layout="grid" emptyMessage="Nenhum registro encontrado">
-                        <p:panel header="#{lanHost.hostinst}" style="height:100%; font-size: 110% !important;">
-                            <p:panelGrid columns="2">
-                                <h:outputText value="Nome do Host " />
-                                <h:outputText value="#{lanHost.hostname}" styleClass="fontBlack" />
-                                <h:outputText value="Status: " />
-                                <h:outputText value="Ativo" rendered="#{lanHost.status}" styleClass="fontBlack" />
-                                <h:outputText value="Inativo" rendered="#{!lanHost.status}" styleClass="fontBlack" />
-                                <h:outputText value="Tipo conexão: " />
-                                <h:outputText value="#{lanHost.iftype}" styleClass="fontBlack" />
-                                <h:outputText value="Mac: " />
-                                <h:outputText value="#{lanHost.hostmac}" styleClass="fontBlack" />
-                                <h:outputText value="Tempo de Conexão: " />
-                                <h:outputText value="#{lanHost.ltremain}" styleClass="fontBlack" />
-                            </p:panelGrid>
-                        </p:panel>
-                    </p:dataGrid>
+                    <p:dataTable id="infoLanHosts" var="lanHost" value="#{lanHostsTable.lanHostHolders}">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{lanHost.hostname}"  />
+                        </p:column>
+
+                        <p:column headerText="Status">
+                            <h:outputText value="#{lanHost.status}"  />
+                        </p:column>
+
+                        <p:column headerText="Conexão">
+                            <h:outputText value="#{lanHost.iftype}"  />
+                        </p:column>
+
+                        <p:column headerText="MAC">
+                            <h:outputText value="#{lanHost.hostmac}"  />
+                        </p:column>
+
+                        <p:column headerText="Uptime">
+                            <h:outputText value="#{lanHost.ltremain}"  />
+                        </p:column>     
+
+                    </p:dataTable>
+
                 </p:dialog>
                 <p:dialog header="Estatisticas de Interface" widgetVar="interfaceStatistic" resizable="true" width="850" minWidth="850" height="320" minHeight="320" modal="true" style="overflow-y: auto;" closeOnEscape="true">
                     <p:scrollPanel mode="native" style="width: 100%; height: 100%; font-size: 110% !important;">
