@@ -24,7 +24,7 @@ public class Reboot extends AcsAbstractBean {
                 rebootHolder = (RebootHolder) GsonUtil.convert(response, RebootHolder.class);
                 salvarLog(deviceId, rebootHolder, EnumCapabilityExecuteSimple.Reboot.name());
 
-                System.out.println(GsonUtil.serialize(rebootHolder));
+//                System.out.println(GsonUtil.serialize(rebootHolder));
                 if (this.rebootHolder.getStatus().equalsIgnoreCase("OK")) {
                     JSFUtil.addInfoMessage("Reboot realizado com sucesso, aguarde o modem autenticar.");
                 } else {
