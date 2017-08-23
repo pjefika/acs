@@ -162,7 +162,7 @@
                     </p:panel>
                 </p:dataGrid>
                 <p:dialog header="Tabela de Hosts" widgetVar="infoLanHosts" resizable="true" width="750" minWidth="750" height="400" minHeight="400" modal="true" closeOnEscape="true">
-                    <p:dataTable id="infoLanHosts" var="lanHost" value="#{lanHostsTable.lanHostHolders}">
+                    <p:dataTable  id="infoLanHosts" var="lanHost" value="#{lanHostsTable.lanHostHolders}">
                         <p:column headerText="Nome">
                             <h:outputText value="#{lanHost.hostname}"  />
                         </p:column>
@@ -170,6 +170,10 @@
                         <p:column headerText="Status">
                             <h:outputText value="#{lanHost.status}"  />
                         </p:column>
+
+                        <p:column headerText="IP">
+                            <h:outputText value="#{lanHost.hostip}"  />
+                        </p:column>     
 
                         <p:column headerText="Conexão">
                             <h:outputText value="#{lanHost.iftype}"  />
@@ -443,16 +447,16 @@
                                 <p:inputText value="#{wifiConfig.wifiInfoHolderRedeOne.ssid}" />
                                 <h:outputText value="Senha" />
                                 <p:inputText value="#{wifiConfig.wifiInfoHolderRedeOne.ssidPassword}" />
-                                <h:outputText value="standard" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.standard}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="b" itemValue="b" />
-                                    <f:selectItem itemLabel="g" itemValue="g" />
-                                    <f:selectItem itemLabel="n" itemValue="n" />
-                                    <f:selectItem itemLabel="ac" itemValue="ac" />
-                                    <f:selectItem itemLabel="b,g,n" itemValue="b,g,n" />
-                                    <f:selectItem itemLabel="gn" itemValue="gn" />
-                                </p:selectOneMenu>
+                                <!--                                <h:outputText value="standard" />
+                                                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.standard}">
+                                                                    <f:selectItem itemLabel="" />
+                                                                    <f:selectItem itemLabel="b" itemValue="b" />
+                                                                    <f:selectItem itemLabel="g" itemValue="g" />
+                                                                    <f:selectItem itemLabel="n" itemValue="n" />
+                                                                    <f:selectItem itemLabel="ac" itemValue="ac" />
+                                                                    <f:selectItem itemLabel="b,g,n" itemValue="b,g,n" />
+                                                                    <f:selectItem itemLabel="gn" itemValue="gn" />
+                                                                </p:selectOneMenu>-->
                                 <h:outputText value="Canal" />
                                 <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.channel}">
                                     <f:selectItem itemLabel="" />
@@ -468,90 +472,90 @@
                                     <f:selectItem itemLabel="10" itemValue="10" />
                                     <f:selectItem itemLabel="11" itemValue="11" />
                                 </p:selectOneMenu>
-                                <h:outputText value="Status" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.enableStatus}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="On" itemValue="On" />
-                                    <f:selectItem itemLabel="Off" itemValue="Off" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Status Broadcast" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.broadcastEnabled}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
-                                    <f:selectItem itemLabel="No" itemValue="No" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Status Radio" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.radioStatus}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="On" itemValue="On" />
-                                    <f:selectItem itemLabel="Off" itemValue="Off" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Criptografia" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.encryption}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="WPA2-Personal(TKIP)" itemValue="TKIP" />
-                                    <f:selectItem itemLabel="WPA2-Personal(AES)" itemValue="AES" />
-                                    <f:selectItem itemLabel="WPA-WPA2-Personal(AES-TKIP)" itemValue="AES-TKIP" />
-                                </p:selectOneMenu>
+                                <!--                                <h:outputText value="Status" />
+                                                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.enableStatus}">
+                                                                    <f:selectItem itemLabel="" />
+                                                                    <f:selectItem itemLabel="On" itemValue="On" />
+                                                                    <f:selectItem itemLabel="Off" itemValue="Off" />
+                                                                </p:selectOneMenu>-->
+                                <!--                                <h:outputText value="Status Broadcast" />
+                                                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.broadcastEnabled}">
+                                                                    <f:selectItem itemLabel="" />
+                                                                    <f:selectItem itemLabel="Yes" itemValue="Yes" />
+                                                                    <f:selectItem itemLabel="No" itemValue="No" />
+                                                                </p:selectOneMenu>-->
+                                <!--                                <h:outputText value="Status Radio" />
+                                                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.radioStatus}">
+                                                                    <f:selectItem itemLabel="" />
+                                                                    <f:selectItem itemLabel="On" itemValue="On" />
+                                                                    <f:selectItem itemLabel="Off" itemValue="Off" />
+                                                                </p:selectOneMenu>-->
+                                <!--                                <h:outputText value="Criptografia" />
+                                                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeOne.encryption}">
+                                                                    <f:selectItem itemLabel="" itemValue="" />
+                                                                    <f:selectItem itemLabel="WPA2-Personal(TKIP)" itemValue="TKIP" />
+                                                                    <f:selectItem itemLabel="WPA2-Personal(AES)" itemValue="AES" />
+                                                                    <f:selectItem itemLabel="WPA-WPA2-Personal(AES-TKIP)" itemValue="AES-TKIP" />
+                                                                </p:selectOneMenu>-->
                             </h:panelGrid>
                             <p:commandButton value="Modificar" action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 1)}" update="formTemplate:msgs" oncomplete="PF('configurarWifi').hide();" />
                         </p:tab>
-                        <p:tab title="Rede 5GHz">
-                            <h:panelGrid>
-                                <h:outputText value="Nome da rede" />
-                                <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssid}" />
-                                <h:outputText value="Senha" />
-                                <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssidPassword}" />
-                                <h:outputText value="standard" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.standard}">
-                                    <f:selectItem itemLabel="b" itemValue="b" />
-                                    <f:selectItem itemLabel="g" itemValue="g" />
-                                    <f:selectItem itemLabel="n" itemValue="n" />
-                                    <f:selectItem itemLabel="ac" itemValue="ac" />
-                                    <f:selectItem itemLabel="bgn" itemValue="bgn" />
-                                    <f:selectItem itemLabel="gn" itemValue="gn" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Canal" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.channel}">
-                                    <f:selectItem itemLabel="1" itemValue="1" />
-                                    <f:selectItem itemLabel="2" itemValue="2" />
-                                    <f:selectItem itemLabel="3" itemValue="3" />
-                                    <f:selectItem itemLabel="4" itemValue="4" />
-                                    <f:selectItem itemLabel="5" itemValue="5" />
-                                    <f:selectItem itemLabel="6" itemValue="6" />
-                                    <f:selectItem itemLabel="7" itemValue="7" />
-                                    <f:selectItem itemLabel="8" itemValue="8" />
-                                    <f:selectItem itemLabel="9" itemValue="9" />
-                                    <f:selectItem itemLabel="10" itemValue="10" />
-                                    <f:selectItem itemLabel="11" itemValue="11" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Status" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.enableStatus}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="On" itemValue="On" />
-                                    <f:selectItem itemLabel="Off" itemValue="Off" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Status Broadcast" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.broadcastEnabled}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="true" itemValue="true" />
-                                    <f:selectItem itemLabel="false" itemValue="false" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Status Radio" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.radioStatus}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="On" itemValue="On" />
-                                    <f:selectItem itemLabel="Off" itemValue="Off" />
-                                </p:selectOneMenu>
-                                <h:outputText value="Criptografia" />
-                                <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.encryption}">
-                                    <f:selectItem itemLabel="" />
-                                    <f:selectItem itemLabel="WPA2-Personal" itemValue="WPA2-Personal" />
-                                    <f:selectItem itemLabel="WPA-WPA2-Personal" itemValue="WPA-WPA2-Personal" />
-                                </p:selectOneMenu>
-                            </h:panelGrid>
-                            <p:commandButton value="Modificar" action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 2)}" update="formTemplate:msgs" oncomplete="PF('configurarWifi').hide();" />
-                        </p:tab>
+                        <!--                        <p:tab title="Rede 5GHz">
+                                                    <h:panelGrid>
+                                                        <h:outputText value="Nome da rede" />
+                                                        <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssid}" />
+                                                        <h:outputText value="Senha" />
+                                                        <p:inputText value="#{wifiConfig.wifiInfoHolderRedeTwo.ssidPassword}" />
+                                                        <h:outputText value="standard" />
+                                                        <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.standard}">
+                                                            <f:selectItem itemLabel="b" itemValue="b" />
+                                                            <f:selectItem itemLabel="g" itemValue="g" />
+                                                            <f:selectItem itemLabel="n" itemValue="n" />
+                                                            <f:selectItem itemLabel="ac" itemValue="ac" />
+                                                            <f:selectItem itemLabel="bgn" itemValue="bgn" />
+                                                            <f:selectItem itemLabel="gn" itemValue="gn" />
+                                                        </p:selectOneMenu>
+                                                        <h:outputText value="Canal" />
+                                                        <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.channel}">
+                                                            <f:selectItem itemLabel="1" itemValue="1" />
+                                                            <f:selectItem itemLabel="2" itemValue="2" />
+                                                            <f:selectItem itemLabel="3" itemValue="3" />
+                                                            <f:selectItem itemLabel="4" itemValue="4" />
+                                                            <f:selectItem itemLabel="5" itemValue="5" />
+                                                            <f:selectItem itemLabel="6" itemValue="6" />
+                                                            <f:selectItem itemLabel="7" itemValue="7" />
+                                                            <f:selectItem itemLabel="8" itemValue="8" />
+                                                            <f:selectItem itemLabel="9" itemValue="9" />
+                                                            <f:selectItem itemLabel="10" itemValue="10" />
+                                                            <f:selectItem itemLabel="11" itemValue="11" />
+                                                        </p:selectOneMenu>
+                                                        <h:outputText value="Status" />
+                                                        <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.enableStatus}">
+                                                            <f:selectItem itemLabel="" />
+                                                            <f:selectItem itemLabel="On" itemValue="On" />
+                                                            <f:selectItem itemLabel="Off" itemValue="Off" />
+                                                        </p:selectOneMenu>
+                                                        <h:outputText value="Status Broadcast" />
+                                                        <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.broadcastEnabled}">
+                                                            <f:selectItem itemLabel="" />
+                                                            <f:selectItem itemLabel="true" itemValue="true" />
+                                                            <f:selectItem itemLabel="false" itemValue="false" />
+                                                        </p:selectOneMenu>
+                                                        <h:outputText value="Status Radio" />
+                                                        <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.radioStatus}">
+                                                            <f:selectItem itemLabel="" />
+                                                            <f:selectItem itemLabel="On" itemValue="On" />
+                                                            <f:selectItem itemLabel="Off" itemValue="Off" />
+                                                        </p:selectOneMenu>
+                                                        <h:outputText value="Criptografia" />
+                                                        <p:selectOneMenu value="#{wifiConfig.wifiInfoHolderRedeTwo.encryption}">
+                                                            <f:selectItem itemLabel="" />
+                                                            <f:selectItem itemLabel="WPA2-Personal" itemValue="WPA2-Personal" />
+                                                            <f:selectItem itemLabel="WPA-WPA2-Personal" itemValue="WPA-WPA2-Personal" />
+                                                        </p:selectOneMenu>
+                                                    </h:panelGrid>
+                                                    <p:commandButton value="Modificar" action="#{wifiConfig.setWiFiConfig(deviceInfo.id, 2)}" update="formTemplate:msgs" oncomplete="PF('configurarWifi').hide();" />
+                                                </p:tab>-->
                     </p:tabView>
                 </p:dialog>
                 <p:dialog header="Informações Lan Ethernet" widgetVar="infoLanEthernetInfo" resizable="true" width="600" minWidth="600" height="280" minHeight="280">

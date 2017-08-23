@@ -2,9 +2,6 @@ package entidades.wifiInfo;
 
 public class WifiInfoHolder {
 
-    public WifiInfoHolder() {
-    }
-
     private String frequency;
 
     private String errorsSent;
@@ -46,6 +43,9 @@ public class WifiInfoHolder {
     private String errorsReceived;
 
     private String ssidPassword;
+
+    public WifiInfoHolder() {
+    }
 
     public String getFrequency() {
         return frequency;

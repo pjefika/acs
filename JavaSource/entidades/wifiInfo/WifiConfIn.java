@@ -18,7 +18,7 @@ public class WifiConfIn {
 
     private String standard;
 
-    private String channel;
+    private Integer channel;
 
     private String enableStatus;
 
@@ -31,12 +31,12 @@ public class WifiConfIn {
     }
 
     public WifiConfIn(WifiInfoHolder h) {
-        this.setAuthentication(h.getAuthentication());
-        this.setBroadcastEnabled(h.getBroadcastEnabled());
-        this.setChannel(h.getChannel());
-        this.setEnableStatus(h.getEnableStatus());
-        this.setEncryption(h.getEncryption());
-        this.setRadioEnable(h.getRadioStatus());
+        this.setAuthentication("Shared-Key");
+        this.setBroadcastEnabled("true");
+        this.setChannel(new Integer(h.getChannel()));
+        this.setEnableStatus("true");
+        this.setEncryption("AES-TKIP");
+        this.setRadioEnable("true");
         this.setSsid(h.getSsid());
         this.setStandard(h.getStandard());
         this.setSsidPassword(h.getSsidPassword());
@@ -103,11 +103,11 @@ public class WifiConfIn {
         this.standard = standard;
     }
 
-    public String getChannel() {
+    public Integer getChannel() {
         return channel;
     }
 
-    public void setChannel(String channel) {
+    public void setChannel(Integer channel) {
         this.channel = channel;
     }
 

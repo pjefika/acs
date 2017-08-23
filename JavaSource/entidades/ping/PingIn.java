@@ -31,7 +31,7 @@ public class PingIn {
     }
 
     public void setHostAddress(String hostAddress) {
-        this.hostAddress = hostAddress;
+        this.hostAddress = hostAddress.trim();
     }
 
 }

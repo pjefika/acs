@@ -57,13 +57,14 @@ public class WifiConfig extends AcsAbstractBean {
             this.wifiInfoHolderRedeTwo = new WifiInfoHolder();
             String response = dao.request(new RequestCapabilityExecuteInput(EnumCapabilityComplex.getLanWiFiInfo.name(), deviceId, wifiConf)).getResult();
             WifiInfoHolder[] holders = (WifiInfoHolder[]) GsonUtil.convert(response, WifiInfoHolder[].class);
-            int holdlenght = holders.length;
-            if (holdlenght == 1) {
-                this.wifiInfoHolderRedeOne = holders[0];
-            } else if (holdlenght > 1) {
-                this.wifiInfoHolderRedeOne = holders[0];
-                this.wifiInfoHolderRedeTwo = holders[1];
+            
+            for (WifiInfoHolder holder : holders) {
+                if(!holder.getSsid().equalsIgnoreCase("GVT Wi-Fi")){
+                     this.wifiInfoHolderRedeOne = holder;
+                }
+                
             }
+          
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,6 +80,7 @@ public class WifiConfig extends AcsAbstractBean {
 
                 hold = this.wifiInfoHolderRedeOne;
                 WifiConfIn w = new WifiConfIn(hold);
+                System.out.println(GsonUtil.serialize(w));
 
 //                } else {
 //                    hold = this.wifiInfoHolderRedeTwo;
