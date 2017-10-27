@@ -8,7 +8,7 @@ public class PingHolder {
 
     private Integer successCount;
 
-    private Integer repetitions = 4;
+    private Integer repetitions;
 
     private String hostAddress = "www.google.com";
 
