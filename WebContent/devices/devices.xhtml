@@ -48,17 +48,6 @@
                             <h:outputText value="#{results.mac}" />
                             <h:outputText value="Designador: " styleClass="fontBlack" />
                             <h:outputText value="#{results.userKey3}"  />
-                            <h:outputText value="Firmware: " styleClass="fontBlack" />
-                            <p:column colspan="3">
-                                <h:outputText value="#{results.softwareVersion}"
-                                              styleClass="#{results.softwareVersion != preferredFirmwareVersion.buscaFirmware(results.id) ? 'colorRed' : ''}"/>
-                                <p:commandButton action="#{firmwareDownload.firmDown(results.id)}"
-                                                 update="dataGridResults formTemplate:msgs"
-                                                 rendered="#{results.softwareVersion != preferredFirmwareVersion.buscaFirmware(results.id)}"
-                                                 value="Atualizar" icon="fa fa-fw fa-download">
-                                    <p:ajaxStatus onstart="PF('loadingDialogInfo').show();" onsuccess="PF('loadingDialogInfo').hide();" />
-                                </p:commandButton>
-                            </p:column>
                             <h:outputText value="Ip: " styleClass="fontBlack" />
                             <h:outputText value="#{results.ip}"  />
                             <h:outputText value="Primeiro contato: " styleClass="fontBlack" />
