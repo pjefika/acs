@@ -25,6 +25,7 @@ public class PreferredFirmwareVersion extends AcsAbstractBean {
     }
 
     public String buscaFirmware(Integer deviceId) throws Exception {
+        System.out.println("Consultou firmware");
         String response = dao.request(new RequestCapabilityExecute(EnumCapabilityExecuteSimple.getPreferredFirmwareVersion.name(), deviceId)).getResult();
         preferredFirmwareVersion = (entidades.PreferredFirmwareVersion.PreferredFirmwareVersion) GsonUtil.convert(response, entidades.PreferredFirmwareVersion.PreferredFirmwareVersion.class);
         return preferredFirmwareVersion.getFilename();

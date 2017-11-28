@@ -48,6 +48,16 @@
                             <h:outputText value="#{results.mac}" />
                             <h:outputText value="Designador: " styleClass="fontBlack" />
                             <h:outputText value="#{results.userKey3}"  />
+                            <h:outputText value="Firmware: " styleClass="fontBlack" />		
+                            <p:column colspan="3">		
+                                <h:outputText value="#{results.softwareVersion}"/>		
+                                <p:commandButton action="#{firmwareDownload.firmDown(results.id)}"
+                                                 update="dataGridResults formTemplate:msgs"		
+                                                 rendered="#{results.softwareVersion != preferredFirmwareVersion.buscaFirmware(results.id)}"		
+                                                 value="Atualizar" icon="fa fa-fw fa-download" style="color: red;">		
+                                    <p:ajaxStatus onstart="PF('loadingDialogInfo').show();" onsuccess="PF('loadingDialogInfo').hide();" />		
+                                </p:commandButton>		
+                            </p:column>
                             <h:outputText value="Ip: " styleClass="fontBlack" />
                             <h:outputText value="#{results.ip}"  />
                             <h:outputText value="Primeiro contato: " styleClass="fontBlack" />
@@ -410,8 +420,8 @@
                     <h:panelGrid columns="1">
                         <h:outputText value="Endereço" />
                         <p:inputText value="#{getPing.pingIn.hostAddress}" />
-<!--                        <h:outputText value="Numero de repetição" />
-                        <p:inputText value="#{getPing.pingIn.repetitions}" />-->
+                        <!--                        <h:outputText value="Numero de repetição" />
+                                                <p:inputText value="#{getPing.pingIn.repetitions}" />-->
                         <p:commandButton value="Consultar" action="#{getPing.PingAction(deviceInfo.id)}" update="@form:form:pingActions formTemplate:msgs" />
                     </h:panelGrid>
                     <br />

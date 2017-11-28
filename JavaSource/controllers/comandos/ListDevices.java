@@ -1,7 +1,6 @@
 package controllers.comandos;
 
 import dal.arris.RequestCoreDeviceList;
-import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -9,8 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import entidades.dados.Results;
 import entidades.dados.ResultsHolder;
-import models.comandos.ListDevicesServico;
-import models.sys.AutenticacaoServico;
 import util.GsonUtil;
 import util.JSFUtil;
 
